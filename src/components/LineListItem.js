@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { CardSection, Button } from './common';
 
-class ListItem extends Component {
+class LineListItem extends Component {
 
   render() {
     const { trainline, onButtonPress } = this.props;
     return (
       <CardSection>
         <Button
-          onPress={()=>onButtonPress(trainline.name)}
+          onPress={()=>onButtonPress(trainline)}
           overwriteTextStyle={{color: `${trainline.textcolor}`}}
           overwriteButtonStyle={{borderColor: `${trainline.name}`, backgroundColor: `${trainline.name}`}}
         >
@@ -19,4 +19,4 @@ class ListItem extends Component {
   }
 }
 
-export default ListItem;
+export default LineListItem;

@@ -1,15 +1,20 @@
 import React, { Component } from 'react';
 import { HeaderBackButton } from 'react-navigation';
-// import { FlatList } from 'react-native';
+import { FlatList } from 'react-native';
 import { Card, CardSection, Button, Header } from './common';
-import { Stops } from '../data'
-// import ListItem from './ListItem';
+// import { trainLines } from '../data'
+import StopListItem from './StopListItem';
 
 class StopList extends Component {
 
-  // onButtonPress(line) {
-  //   console.log(line)
-  // }
+  onButtonPress(trainstop) {
+    // const navigateAction = NavigationActions.navigate({
+    //   routeName: 'StopList',
+    //   params: { trainline }
+    // })
+    // this.props.navigation.dispatch(navigateAction);
+    console.log(trainstop);
+  }
 
   static navigationOptions = ({ navigation }) => {
     return {
@@ -18,19 +23,23 @@ class StopList extends Component {
     }
   };
   render() {
-    // console.log(this.props.navigation.state.params) //{trainline: "red"} from FavStopCreate
-
-    // const { trainline } = this.props.navigation.state.params;
-    // console.log(trainline)
+    const { trainline } = this.props.navigation.state.params; //{trainline: "red"} from params in NavigationActions
+    const trainStops = trainline.stops;
+    // console.log(trainline);
 
     return (
       <Card>
         <Header headerText={"Choose Stop"} />
-        {/* <FlatList
-          data={trainLines}
-          renderItem={({item}) => <ListItem trainline={item} onButtonPress={this.onButtonPress}/>}
-          keyExtractor={(item)=>item.name}
-        /> */}
+        <FlatList
+          data={trainStops}
+          renderItem={({item}) => <StopListItem
+                        trainstop={item}
+                        onButtonPress={this.onButtonPress}
+                        trainlineName={trainline.name}
+                        trainlineText={trainline.textcolor}
+                      />}
+          keyExtractor={(item)=>item}
+        />
       </Card>
     )
   }
