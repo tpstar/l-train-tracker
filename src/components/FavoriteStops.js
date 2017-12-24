@@ -1,26 +1,28 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { NavigationActions } from 'react-navigation';
+import { Text, Button } from 'react-native';
 import { CardSection } from './common';
 
 class FavoriteStops extends Component {
 
   static navigationOptions = ({ navigation }) => {
+    const navigateToCreateFavStops = NavigationActions.navigate({
+      routeName: 'FavStopCreate'
+    })
     return {
       title: "Favorite Stops",
-      // headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />
+      headerRight: <Button title="Add" onPress={() => navigation.dispatch(navigateToCreateFavStops)}/>
     }
   };
 
   render() {
 
     return (
-        <View>
-          <CardSection>
-            <Text style={styles.titleStyle}>
-              Roosebelt
-            </Text>
-          </CardSection>
-        </View>
+      <CardSection>
+        <Text style={styles.titleStyle}>
+          Roosebelt
+        </Text>
+      </CardSection>
     )
   }
 }
