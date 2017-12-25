@@ -36,11 +36,62 @@ export const trainLines = [
       '79th',
       '87th',
       '95th/Dan Ryan'
-    ]
+    ],
+    direction: {
+      1: 'N',
+      5: 'S'
+    },
+    destination: {
+      1: 'Howard',
+      5: '95th/Dan Ryan'
+    }
   },
   {
     name: 'blue',
-    textcolor: 'white'
+    textcolor: 'white',
+    stops: [
+      'O\'Hare',
+      'Rosemont',
+      'Cumberland',
+      'Harlem',
+      'Jefferson Park',
+      'Montrose',
+      'Irving Park',
+      'Addison',
+      'Belmont',
+      'Logan Square',
+      'California',
+      'Western',
+      'Damen',
+      'Division',
+      'Chicago',
+      'Grand',
+      'Clark/Lake',
+      'Washington',
+      'Monroe',
+      'Jackson',
+      'LaSalle',
+      'Clinton',
+      'UIC-Halsted',
+      'Racine',
+      'Illinois Medical District',
+      'Western',
+      'Kedzie-Homan',
+      'Pulaski',
+      'Cicero',
+      'Austin',
+      'Oak Park',
+      'Harlem',
+      'Forest Park'
+    ],
+    direction: {
+      1: 'NW',
+      5: 'W'
+    },
+    destination: {
+      1: 'O\'Hare',
+      5: 'Forest Park'
+    }
   },
   {
     name: 'green',
