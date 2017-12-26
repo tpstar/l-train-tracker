@@ -4,7 +4,8 @@ import { CardSection, Button } from './common';
 class StopListItem extends Component {
 
   render() {
-    const { trainstop, onButtonPress, trainline } = this.props;
+    const { trainstopName, onButtonPress, trainline, trainstopIndex } = this.props;
+    const trainstop = { name: trainstopName, index: trainstopIndex };
     return (
       <CardSection>
         <Button
@@ -12,7 +13,7 @@ class StopListItem extends Component {
            overwriteTextStyle={{color: `${trainline.textcolor}`}}
            overwriteButtonStyle={{borderColor: `${trainline.name}`, backgroundColor: `${trainline.name}`}}
          >
-           {trainstop}
+           {trainstopName}
         </Button>
       </CardSection>
     )

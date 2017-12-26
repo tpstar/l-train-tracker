@@ -1,18 +1,22 @@
 import React, { Component } from 'react';
-import { HeaderBackButton } from 'react-navigation';
+import { HeaderBackButton, NavigationActions } from 'react-navigation';
 import { FlatList } from 'react-native';
+import { connect } from 'react-redux';
+import { createFavStop } from '../actions';
 import { Card, CardSection, Button, Header } from './common';
 import DirListItem from './DirListItem';
 
 class DirList extends Component {
 
   onButtonPress(destination) {
-    // const navigateAction = NavigationActions.navigate({
-    //   routeName: 'StopList',
-    //   params: { trainline }
-    // })
-    // this.props.navigation.dispatch(navigateAction);
-    console.log(destination);
+    const navigateAction = NavigationActions.navigate({
+      routeName: 'FavoriteStops',
+    })
+    this.props.navigation.dispatch(navigateAction);
+    const { trainline, trainstop } = this.props.navigation.state.params;
+
+    this.props.createFavStop({ trainline, trainstop, destination });
+    // console.log(trainline, trainstop, destination);
   }
 
   static navigationOptions = ({ navigation }) => {
@@ -23,7 +27,7 @@ class DirList extends Component {
   };
   render() {
     const { trainline, trainstop } = this.props.navigation.state.params; //{trainline: "red"} from params in NavigationActions
-    console.log(trainline, trainstop)
+    // console.log(trainline, trainstop)
 
     return (
       <Card>
@@ -43,4 +47,4 @@ class DirList extends Component {
   }
 }
 
-export default DirList;
+export default connect(null, { createFavStop })(DirList);

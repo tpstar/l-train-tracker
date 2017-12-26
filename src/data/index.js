@@ -37,13 +37,15 @@ export const trainLines = [
       '87th',
       '95th/Dan Ryan'
     ],
-    direction: {
-      1: 'N',
-      5: 'S'
-    },
     destination: {
-      1: 'Howard',
-      5: '95th/Dan Ryan'
+      1: {
+        name: 'Howard',
+        direction: 'N'
+      },
+      5: {
+        name: '95th/Dan Ryan',
+        direction: 'S'
+      }
     }
   },
   {
@@ -84,13 +86,15 @@ export const trainLines = [
       'Harlem',
       'Forest Park'
     ],
-    direction: {
-      1: 'NW',
-      5: 'W'
-    },
     destination: {
-      1: 'O\'Hare',
-      5: 'Forest Park'
+      1: {
+        name: 'O\'Hare',
+        direction: 'NW'
+      },
+      5: {
+        name: 'Forest Park',
+        direction: 'W'
+      }
     }
   },
   {

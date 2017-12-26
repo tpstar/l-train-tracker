@@ -12,7 +12,7 @@ class DirListItem extends Component {
           overwriteTextStyle={{color: `${trainline.textcolor}`}}
           overwriteButtonStyle={{borderColor: `${trainline.name}`, backgroundColor: `${trainline.name}`}}
         >
-          {destination}
+          {destination.name}
         </Button>
       </CardSection>
     )

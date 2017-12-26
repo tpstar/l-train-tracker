@@ -30,8 +30,9 @@ class StopList extends Component {
         <Header headerText={"Choose Stop"} />
         <FlatList
           data={trainStops}
-          renderItem={({item}) => <StopListItem
-                        trainstop={item}
+          renderItem={({item, index}) => <StopListItem
+                        trainstopName={item}
+                        trainstopIndex={index}
                         onButtonPress={this.onButtonPress.bind(this)}
                         trainline={trainline}
                       />}

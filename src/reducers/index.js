@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 import navReducer from './navReducer';
-import trainReducer from './trainReducer';
+import trainStopReducer from './trainStopReducer';
 
 export default combineReducers({
   nav: navReducer,
-  trains: trainReducer,
+  trainstops: trainStopReducer,
 })
