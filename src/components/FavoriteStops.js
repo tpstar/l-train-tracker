@@ -7,11 +7,12 @@ import FavStopItem from './FavStopItem';
 
 class FavoriteStops extends Component {
 
-  onButtonPress(destination) {
-    // const navigateAction = NavigationActions.navigate({
-    //   routeName: 'FavoriteStops',
-    // })
-    // this.props.navigation.dispatch(navigateAction);
+  onButtonPress(favstop) {
+    const navigateAction = NavigationActions.navigate({
+      routeName: 'FavStop',
+      params: { favstop }
+    });
+    this.props.navigation.dispatch(navigateAction);
     // const { trainline, trainstop } = this.props.navigation.state.params;
     //
     // this.props.createFavStop({ trainline, trainstop, destination });
@@ -38,7 +39,6 @@ class FavoriteStops extends Component {
       <FlatList
         data={this.props.favtrainstops}
         renderItem={({ item })=><FavStopItem favstop={item}
-                                             navigation={this.props.navigation}
                                              onButtonPress={this.onButtonPress.bind(this)}/>}
         keyExtractor={(item, index)=>index}
       />

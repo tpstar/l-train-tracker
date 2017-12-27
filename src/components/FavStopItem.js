@@ -4,12 +4,11 @@ import { CardSection, Button } from './common';
 class FavStopItem extends Component {
 
   render() {
-    const { favstop, navigation } = this.props;
-    console.log(favstop)
+    const { favstop, onButtonPress } = this.props;
     return (
       <CardSection>
         <Button
-          onPress={()=>onButtonPress(destination)}
+          onPress={()=>onButtonPress(favstop)}
           overwriteTextStyle={{color: `${favstop.trainline.textcolor}`}}
           overwriteButtonStyle={{borderColor: `${favstop.trainline.name}`,
                                  backgroundColor: `${favstop.trainline.name}`}}
