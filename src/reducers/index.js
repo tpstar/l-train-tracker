@@ -4,5 +4,5 @@ import trainStopReducer from './trainStopReducer';
 
 export default combineReducers({
   nav: navReducer,
-  trainstops: trainStopReducer,
+  favtrainstops: trainStopReducer,
 })

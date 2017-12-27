@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { HeaderBackButton, NavigationActions } from 'react-navigation';
 import { FlatList } from 'react-native';
-import { connect } from 'react-redux';
 import { Card, CardSection, Button, Header } from './common';
 import { trainLines } from '../data'
 import LineListItem from './LineListItem';
@@ -36,12 +35,4 @@ class FavStopCreate extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  console.log(state.trainstops);
-  // const employees = _.map(state.employees, (val, uid) => {
-  //   return { ...val, uid }; // {shift: 'Monday', name: 'S', id: 'kl;djs;'}
-  // })
-  // return { employees };
-}
-
-export default connect(mapStateToProps, {})(FavStopCreate);
+export default FavStopCreate;

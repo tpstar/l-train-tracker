@@ -1,9 +1,22 @@
 import React, { Component } from 'react';
 import { NavigationActions } from 'react-navigation';
-import { Text, Button } from 'react-native';
+import { connect } from 'react-redux';
+import { FlatList, Text, Button, View } from 'react-native';
 import { CardSection } from './common';
+import FavStopItem from './FavStopItem';
 
 class FavoriteStops extends Component {
+
+  onButtonPress(destination) {
+    // const navigateAction = NavigationActions.navigate({
+    //   routeName: 'FavoriteStops',
+    // })
+    // this.props.navigation.dispatch(navigateAction);
+    // const { trainline, trainstop } = this.props.navigation.state.params;
+    //
+    // this.props.createFavStop({ trainline, trainstop, destination });
+    // // console.log(trainline, trainstop, destination);
+  }
 
   static navigationOptions = ({ navigation }) => {
     const navigateToCreateFavStops = NavigationActions.navigate({
@@ -18,11 +31,18 @@ class FavoriteStops extends Component {
   render() {
 
     return (
-      <CardSection>
-        <Text style={styles.titleStyle}>
-          Roosebelt
-        </Text>
-      </CardSection>
+      <View>
+      <Text style={styles.titleStyle}>
+        Hello
+      </Text>
+      <FlatList
+        data={this.props.favtrainstops}
+        renderItem={({ item })=><FavStopItem favstop={item}
+                                             navigation={this.props.navigation}
+                                             onButtonPress={this.onButtonPress.bind(this)}/>}
+        keyExtractor={(item, index)=>index}
+      />
+      </View>
     )
   }
 }
@@ -34,4 +54,10 @@ const styles = {
   }
 }
 
-export default FavoriteStops;
+const mapStateToProps = state => {
+  const { favtrainstops } = state; //favtrainsstops from reducers/index.js
+    console.log(favtrainstops);
+  return { favtrainstops };
+}
+
+export default connect(mapStateToProps, {})(FavoriteStops);
