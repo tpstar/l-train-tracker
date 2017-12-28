@@ -56,7 +56,6 @@ const styles = {
 
 const mapStateToProps = state => {
   const { favtrainstops } = state; //favtrainsstops from reducers/index.js
-    console.log(favtrainstops);
   return { favtrainstops };
 }
 

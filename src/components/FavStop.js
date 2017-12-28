@@ -1,11 +1,19 @@
 import React, { Component } from 'react';
 import { FlatList } from 'react-native';
+import { connect } from 'react-redux';
 import { HeaderBackButton } from 'react-navigation';
 import { Card, Header } from './common';
-
+import { arrivalTimeFetch } from '../actions';
 
 class FavStop extends Component {
 
+
+
+  componentWillMount() {
+    const { favstop } = this.props.navigation.state.params; //from params in NavigationActions
+    console.log(favstop);
+    this.props.arrivalTimeFetch({ favstop }); // put favstop as argument
+  }
   static navigationOptions = ({ navigation }) => {
     return {
       title: "Arrival Times",
@@ -13,8 +21,7 @@ class FavStop extends Component {
     }
   };
   render() {
-    const { favstop } = this.props.navigation.state.params; //{trainline: "red"} from params in NavigationActions
-    // const trainStops = trainline.stops;
+    const { favstop } = this.props.navigation.state.params; //from params in NavigationActions
 
     return (
       <Card>
@@ -34,4 +41,4 @@ class FavStop extends Component {
   }
 }
 
-export default FavStop;
+export default connect(null, { arrivalTimeFetch })(FavStop);

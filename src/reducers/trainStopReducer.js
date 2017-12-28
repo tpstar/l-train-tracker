@@ -1,12 +1,14 @@
-import { CREATE_FAV_STOP } from '../actions/types';
+import { CREATE_FAV_STOP, FETCH_ARRIVAL_TIME } from '../actions/types';
 
 const INITIAL_STATE = {};
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case CREATE_FAV_STOP:
-      // console.log(action)
       return [...state, action.payload];
+    case FETCH_ARRIVAL_TIME:
+      console.log(action.payload)
+      return state;
     default:
       return state;
   }
