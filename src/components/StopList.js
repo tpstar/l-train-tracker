@@ -7,7 +7,7 @@ import StopListItem from './StopListItem';
 class StopList extends Component {
 
   onButtonPress(trainline, trainstop) {
-    // console.log(trainline, trainstop)
+    console.log(trainline, trainstop)
     const navigateAction = NavigationActions.navigate({
       routeName: 'DirList',
       params: { trainline, trainstop }
@@ -24,19 +24,17 @@ class StopList extends Component {
   render() {
     const { trainline } = this.props.navigation.state.params; //{trainline: "red"} from params in NavigationActions
     const trainStops = trainline.stops;
-
     return (
       <Card>
         <Header headerText={"Choose Stop"} />
         <FlatList
           data={trainStops}
-          renderItem={({item, index}) => <StopListItem
-                        trainstopName={item}
-                        trainstopIndex={index}
+          renderItem={({ item }) => <StopListItem
+                        trainstop={item}
                         onButtonPress={this.onButtonPress.bind(this)}
                         trainline={trainline}
                       />}
-          keyExtractor={(item, index)=>index}
+          keyExtractor={(item)=>item.staId}
         />
       </Card>
     )

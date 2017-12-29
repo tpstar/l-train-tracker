@@ -4,16 +4,16 @@ import { CardSection, Button } from './common';
 class StopListItem extends Component {
 
   render() {
-    const { trainstopName, onButtonPress, trainline, trainstopIndex } = this.props;
-    const trainstop = { name: trainstopName, index: trainstopIndex };
+    const { trainstop, onButtonPress, trainline } = this.props;
+    const trainLine = { name: trainline.name, textcolor: trainline.textcolor, destination: trainline.destination }; //remove stops from trainline
     return (
       <CardSection>
         <Button
-           onPress={()=>onButtonPress(trainline, trainstop)}
+           onPress={()=>onButtonPress(trainLine, trainstop)}
            overwriteTextStyle={{color: `${trainline.textcolor}`}}
            overwriteButtonStyle={{borderColor: `${trainline.name}`, backgroundColor: `${trainline.name}`}}
          >
-           {trainstopName}
+           {trainstop.name}
         </Button>
       </CardSection>
     )

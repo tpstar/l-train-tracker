@@ -3,39 +3,81 @@ export const trainLines = [
     name: 'red',
     textcolor: 'white',
     stops: [
-      'Howard',
-      'Jarvis',
-      'Morse',
-      'Loyola',
-      'Granville',
-      'Thorndale',
-      'Bryn Mawr',
-      'Berwyn',
-      'Argyle',
-      'Lawrence',
-      'Wilson',
-      'Sheridan',
-      'Addison',
-      'Belmont',
-      'Fullerton',
-      'North/Clybourn',
-      'Clark/Division',
-      'Chicago',
-      'Grand',
-      'Lake',
-      'Monroe',
-      'Jackson',
-      'Harrison',
-      'Roosevelt',
-      'Cermak-Chinatwon',
-      'Sox-35th',
-      '47th',
-      'Garfield',
-      '63rd',
-      '69th',
-      '79th',
-      '87th',
-      '95th/Dan Ryan'
+      {
+        name: 'Howard',
+        staId: 40900,
+        stpId: {
+          N: 30173,
+          S: 30174,  
+        } 
+      },
+      {
+        name: 'Jarvis',
+        staId: 41190,
+        stpId: {
+          N: 30227,
+          S: 30228,  
+        } 
+      },
+      {
+        name: 'Morse',
+        staId: 40100,
+        stpId: {
+          N: 30020,
+          S: 30021,  
+        } 
+      },
+      {
+        name: 'Loyola',
+        staId: 41300,
+        stpId: {
+          N: 30251,
+          S: 30252,  
+        } 
+      },
+      {
+        name: 'Granville',
+        staId: 40760,
+        stpId: {
+          N: 30147,
+          S: 30148,  
+        } 
+      },
+      {
+        name: 'Thorndale',
+        staId: 40880,
+        stpId: {
+          N: 30169,
+          S: 30170,  
+        } 
+      },
+      // 'Bryn Mawr',
+      // 'Berwyn',
+      // 'Argyle',
+      // 'Lawrence',
+      // 'Wilson',
+      // 'Sheridan',
+      // 'Addison',
+      // 'Belmont',
+      // 'Fullerton',
+      // 'North/Clybourn',
+      // 'Clark/Division',
+      // 'Chicago',
+      // 'Grand',
+      // 'Lake',
+      // 'Monroe',
+      // 'Jackson',
+      // 'Harrison',
+      // 'Roosevelt',
+      // 'Cermak-Chinatwon',
+      // 'Sox-35th',
+      // '47th',
+      // 'Garfield',
+      // '63rd',
+      // '69th',
+      // '79th',
+      // '87th',
+      // '95th/Dan Ryan'
     ],
     destination: {
       1: {
