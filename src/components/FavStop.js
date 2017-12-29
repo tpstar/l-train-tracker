@@ -14,6 +14,7 @@ class FavStop extends Component {
     console.log(favstop);
     this.props.arrivalTimeFetch({ favstop }); // put favstop as argument
   }
+
   static navigationOptions = ({ navigation }) => {
     return {
       title: "Arrival Times",
@@ -41,4 +42,10 @@ class FavStop extends Component {
   }
 }
 
-export default connect(null, { arrivalTimeFetch })(FavStop);
+const mapStateToProps = state => {
+  const { arrivaltimes } = state; //arrivaltimes from reducers/index.js
+  console.log(arrivaltimes);
+  return { arrivaltimes };
+}
+
+export default connect(mapStateToProps, { arrivalTimeFetch })(FavStop);
