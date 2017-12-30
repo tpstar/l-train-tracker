@@ -3,13 +3,13 @@ import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 import { FlatList, Text, Button, View } from 'react-native';
 import { CardSection } from './common';
-import FavStopItem from './FavStopItem';
+import FavStopListItem from './FavStopListItem';
 
-class FavoriteStops extends Component {
+class FavStopList extends Component {
 
   onButtonPress(favstop) {
     const navigateAction = NavigationActions.navigate({
-      routeName: 'FavStop',
+      routeName: 'ArrivalTimes',
       params: { favstop }
     });
     this.props.navigation.dispatch(navigateAction);
@@ -21,7 +21,7 @@ class FavoriteStops extends Component {
 
   static navigationOptions = ({ navigation }) => {
     const navigateToCreateFavStops = NavigationActions.navigate({
-      routeName: 'FavStopCreate'
+      routeName: 'LineList'
     })
     return {
       title: "Favorite Stops",
@@ -37,8 +37,8 @@ class FavoriteStops extends Component {
         Hello
       </Text>
       <FlatList
-        data={this.props.favtrainstops}
-        renderItem={({ item })=><FavStopItem favstop={item}
+        data={this.props.favstops}
+        renderItem={({ item })=><FavStopListItem favstop={item}
                                              onButtonPress={this.onButtonPress.bind(this)}/>}
         keyExtractor={(item, index)=>index}
       />
@@ -55,8 +55,9 @@ const styles = {
 }
 
 const mapStateToProps = state => {
-  const { favtrainstops } = state; //favtrainsstops from reducers/index.js
-  return { favtrainstops };
+  const { favstops } = state; //favtrainsstops from reducers/index.js
+  console.log(favstops);
+  return { favstops };
 }
 
-export default connect(mapStateToProps, {})(FavoriteStops);
+export default connect(mapStateToProps, {})(FavStopList);

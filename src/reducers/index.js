@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 import navReducer from './navReducer';
-import trainStopReducer from './trainStopReducer';
+import favStopReducer from './favStopReducer';
 import arrivalTimeReducer from './arrivalTimeReducer';
 
 export default combineReducers({
   nav: navReducer,
-  favtrainstops: trainStopReducer,
+  favstops: favStopReducer,
   arrivaltimes: arrivalTimeReducer,
 })

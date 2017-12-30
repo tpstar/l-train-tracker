@@ -10,7 +10,7 @@ class DirList extends Component {
 
   onButtonPress(destination) {
     const navigateAction = NavigationActions.navigate({
-      routeName: 'FavoriteStops',
+      routeName: 'FavStopList',
     })
     this.props.navigation.dispatch(navigateAction);
     const { trainline, trainstop } = this.props.navigation.state.params;

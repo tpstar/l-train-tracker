@@ -5,7 +5,7 @@ import { Card, CardSection, Button, Header } from './common';
 import { trainLines } from '../data'
 import LineListItem from './LineListItem';
 
-class FavStopCreate extends Component {
+class LineList extends Component {
 
   onButtonPress(trainline) {
     const navigateAction = NavigationActions.navigate({
@@ -35,4 +35,4 @@ class FavStopCreate extends Component {
   }
 }
 
-export default FavStopCreate;
+export default LineList;

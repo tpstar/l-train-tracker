@@ -1,7 +1,7 @@
 import AppNavigator from "../navigation/AppNavigator";
 
 const initialState = AppNavigator.router.getStateForAction(
-  AppNavigator.router.getActionForPathAndParams('FavoriteStops')
+  AppNavigator.router.getActionForPathAndParams('FavStopList')
 );
 
 const navReducer = (state = initialState, action) => {

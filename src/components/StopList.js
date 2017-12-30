@@ -1,15 +1,25 @@
 import React, { Component } from 'react';
 import { HeaderBackButton, NavigationActions } from 'react-navigation';
 import { FlatList } from 'react-native';
+import { connect } from 'react-redux';
 import { Card, CardSection, Button, Header } from './common';
 import StopListItem from './StopListItem';
+import { createFavStop } from '../actions';
 
 class StopList extends Component {
 
   onButtonPress(trainline, trainstop) {
     console.log(trainline, trainstop)
+    let routeTo = 'DirList';
+    if (trainstop.stpId.L) { //console.log('You are in Loop!')
+      // need to skip choosing direction
+      routeTo = 'FavStopList';
+      const destination = { direction: 'L', name: trainline.destination.oppositeToL.name}
+      // once you are in the Chicago loop, destination is the one opposite to L (e.g. Midway)
+      this.props.createFavStop({ trainline, trainstop, destination });
+    }
     const navigateAction = NavigationActions.navigate({
-      routeName: 'DirList',
+      routeName: routeTo,
       params: { trainline, trainstop }
     })
     this.props.navigation.dispatch(navigateAction);
@@ -41,4 +51,4 @@ class StopList extends Component {
   }
 }
 
-export default StopList;
+export default connect(null, { createFavStop })(StopList);

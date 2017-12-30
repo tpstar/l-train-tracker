@@ -145,7 +145,87 @@ export const trainLines = [
   },
   {
     name: 'orange',
-    textcolor: 'black'
+    textcolor: 'black',
+    stops: [
+      {
+        name: 'Roosevelt',
+        staId: 41400,
+        stpId: {
+          N: 30080,
+          S: 30081,  
+        } 
+      },
+      {
+        name: 'H.W. Library',
+        staId: 40850,
+        stpId: {
+          L: 30166,
+        } 
+      },
+      {
+        name: 'LaSalle/Van Buren',
+        staId: 40160,
+        stpId: {
+          L: 30031,
+        } 
+      },
+      {
+        name: 'Quincy/Wells',
+        staId: 40040,
+        stpId: {
+          L: 30007,
+        } 
+      },
+      {
+        name: 'Washington/Wells',
+        staId: 40730,
+        stpId: {
+          L: 30141,
+        } 
+      },
+      {
+        name: 'Clark/Lake',
+        staId: 40380,
+        stpId: {
+          L: 30074,
+        } 
+      },
+      {
+        name: 'State/Lake',
+        staId: 40260,
+        stpId: {
+          L: 30050,
+        } 
+      },
+      {
+        name: 'Washington/Wabash',
+        staId: 41700,
+        stpId: {
+          L: 30384,
+        } 
+      },
+      {
+        name: 'Adams/Wabash',
+        staId: 40680,
+        stpId: {
+          L: 30132,
+        } 
+      },
+
+    ],
+    destination: {
+      1: {
+        name: 'Loop',
+        direction: 'N'
+      },
+      5: {
+        name: 'Midway',
+        direction: 'S'
+      },
+      oppositeToL: {
+        name: 'Midway'
+      }
+    }
   },
   {
     name: 'brown',

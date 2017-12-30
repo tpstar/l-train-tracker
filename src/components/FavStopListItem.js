@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { CardSection, Button } from './common';
 
-class FavStopItem extends Component {
+class FavStopListItem extends Component {
 
   render() {
     const { favstop, onButtonPress } = this.props;
@@ -13,11 +13,11 @@ class FavStopItem extends Component {
           overwriteButtonStyle={{borderColor: `${favstop.trainline.name}`,
                                  backgroundColor: `${favstop.trainline.name}`}}
         >
-          {favstop.trainstop.name}  -  {favstop.destination.direction} ({favstop.destination.name})
+          {favstop.trainstop.name} ({favstop.destination.name} bound)
         </Button>
       </CardSection>
     )
   }
 }
 
-export default FavStopItem;
+export default FavStopListItem;

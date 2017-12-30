@@ -1,16 +1,16 @@
 import { StackNavigator } from "react-navigation";
-import FavoriteStops from '../components/FavoriteStops';
-import FavStopCreate from '../components/FavStopCreate';
+import FavStopList from '../components/FavStopList';
+import LineList from '../components/LineList';
 import StopList from '../components/StopList';
 import DirList from '../components/DirList';
-import FavStop from '../components/FavStop'
+import ArrivalTimes from '../components/ArrivalTimes'
 
 const AppNavigator = StackNavigator({
-  FavoriteStops: { screen: FavoriteStops },
-  FavStopCreate: { screen: FavStopCreate },
+  FavStopList: { screen: FavStopList },
+  LineList: { screen: LineList },
   StopList: { screen: StopList },
   DirList: { screen: DirList },
-  FavStop: { screen: FavStop }
+  ArrivalTimes: { screen: ArrivalTimes }
 });
 
 export default AppNavigator;

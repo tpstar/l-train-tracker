@@ -5,9 +5,7 @@ import { HeaderBackButton } from 'react-navigation';
 import { Card, Header } from './common';
 import { arrivalTimeFetch } from '../actions';
 
-class FavStop extends Component {
-
-
+class ArrivalTimes extends Component {
 
   componentWillMount() {
     const { favstop } = this.props.navigation.state.params; //from params in NavigationActions
@@ -22,7 +20,8 @@ class FavStop extends Component {
     }
   };
   render() {
-    const { favstop } = this.props.navigation.state.params; //from params in NavigationActions
+    const { favstop } = this.props.navigation.state.params;
+    //from params in NavigationActions either from StopList or DirList
 
     return (
       <Card>
@@ -48,4 +47,4 @@ const mapStateToProps = state => {
   return { arrivaltimes };
 }
 
-export default connect(mapStateToProps, { arrivalTimeFetch })(FavStop);
+export default connect(mapStateToProps, { arrivalTimeFetch })(ArrivalTimes);
