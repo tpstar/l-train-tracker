@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { FlatList } from 'react-native';
 import { connect } from 'react-redux';
 import { HeaderBackButton } from 'react-navigation';
-import { Card, Header } from './common';
+import { Card, Header, Button } from './common';
 import { arrivalTimeFetch } from '../actions';
 
 class ArrivalTimes extends Component {
@@ -22,20 +22,23 @@ class ArrivalTimes extends Component {
   render() {
     const { favstop } = this.props.navigation.state.params;
     //from params in NavigationActions either from StopList or DirList
+    const { arrivaltimes } = this.props;
+    let timestamp = '';
+    if (arrivaltimes.tmst) {
+      timestamp = arrivaltimes.tmst.split('T')[1];
+    }
+    console.log(arrivaltimes);
+    const { eta } = arrivaltimes;
 
     return (
       <Card>
         <Header headerText={`Arrivals at ${favstop.trainstop.name}`} />
-        {/* <FlatList
-          data={trainStops}
-          renderItem={({item, index}) => <StopListItem
-                        trainstopName={item}
-                        trainstopIndex={index}
-                        onButtonPress={this.onButtonPress.bind(this)}
-                        trainline={trainline}
-                      />}
-          keyExtractor={(item, index)=>index}
-        /> */}
+        <Header headerText={`Updated ${timestamp}`} />
+        <FlatList
+          data={eta}
+          renderItem={({item}) => <Button>{Math.round(parseFloat(Date.parse(item.arrT)-Date.parse(arrivaltimes.tmst))/60000)}</Button>}
+
+        />
       </Card>
     )
   }
@@ -43,7 +46,6 @@ class ArrivalTimes extends Component {
 
 const mapStateToProps = state => {
   const { arrivaltimes } = state; //arrivaltimes from reducers/index.js
-  console.log(arrivaltimes);
   return { arrivaltimes };
 }
 
