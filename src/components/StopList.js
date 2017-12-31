@@ -18,8 +18,9 @@ class StopList extends Component {
       const destination = { direction: 'L', name: trainline.destination.oppositeToL.name}
       // once you are in the Chicago loop, destination is the one opposite to L (e.g. Midway)
       this.props.createFavStop({ trainline, trainstop, destination });
+    } else {
+      trainline.destination = _.pick(trainline.destination, [1, 5]); //remove destination.oppositeToL
     }
-    trainline.destination = _.pick(trainline.destination, [1, 5]); //remove destination.oppositeToL 
     const navigateAction = NavigationActions.navigate({
       routeName: routeTo,
       params: { trainline, trainstop }

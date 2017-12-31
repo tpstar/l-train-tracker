@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 import { CardSection, Button } from './common';
 
 class ArrivalTimeItem extends Component {
@@ -9,8 +10,8 @@ class ArrivalTimeItem extends Component {
     const waitingMin =
       Math.round(
         parseFloat(
-          Date.parse(arrivaltime.arrT) - Date.parse(arrivaltime.prdt)
-        )/60000
+          moment(arrivaltime.arrT).diff(moment(arrivaltime.prdt))
+        )/60/1000 //milliseconds to minutes
       )
     return (
       <CardSection>

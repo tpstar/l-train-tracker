@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { FlatList } from 'react-native';
 import { connect } from 'react-redux';
 import { HeaderBackButton } from 'react-navigation';
+import moment from 'moment';
 import { Card, Header, Button } from './common';
 import { arrivalTimeFetch } from '../actions';
 import ArrivalTimeItem from './ArrivalTimeItem';
@@ -27,9 +28,9 @@ class ArrivalTimes extends Component {
     const timestampRaw = arrivaldata.tmst;
     let timestamp = '';
     if (timestampRaw) {
-      timestamp = timestampRaw.split('T')[1];
+      timestamp = moment(timestampRaw).format('h:mm:ss a');
     }
-    console.log(arrivaldata);
+    // console.log(arrivaldata);
     const arrivaltimes = arrivaldata.eta;
 
     return (
