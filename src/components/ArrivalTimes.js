@@ -42,7 +42,6 @@ class ArrivalTimes extends Component {
                         arrivaltime={item}
                         // onButtonPress={this.onButtonPress.bind(this)}
                         favstop={favstop}
-                        currenttime={timestampRaw}
                       />}
           keyExtractor={(item)=>item.rn}
         />

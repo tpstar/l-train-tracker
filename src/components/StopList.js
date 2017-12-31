@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { HeaderBackButton, NavigationActions } from 'react-navigation';
 import { FlatList } from 'react-native';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 import { Card, CardSection, Button, Header } from './common';
 import StopListItem from './StopListItem';
 import { createFavStop } from '../actions';
@@ -18,6 +19,7 @@ class StopList extends Component {
       // once you are in the Chicago loop, destination is the one opposite to L (e.g. Midway)
       this.props.createFavStop({ trainline, trainstop, destination });
     }
+    trainline.destination = _.pick(trainline.destination, [1, 5]); //remove destination.oppositeToL 
     const navigateAction = NavigationActions.navigate({
       routeName: routeTo,
       params: { trainline, trainstop }
