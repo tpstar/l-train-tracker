@@ -12,7 +12,7 @@ export const createFavStop = ({ trainline, trainstop, destination }) => {
 export const arrivalTimeFetch = ({ favstop }) => {
   console.log(favstop.trainstop.stpId[favstop.destination.direction]);
   const stopId = favstop.trainstop.stpId[favstop.destination.direction];
-  const url = `http://lapi.transitchicago.com/api/1.0/ttarrivals.aspx?key=${CTA_API_KEY}&stpid=${stopId}&outputType=JSON`;
+  const url = `http://lapi.transitchicago.com/api/1.0/ttarrivals.aspx?key=${CTA_API_KEY}&stpid=${stopId}&outputType=JSON&max=3`;
   return (dispatch) => {
     fetch(url)
       .then((data)=>data.json())
