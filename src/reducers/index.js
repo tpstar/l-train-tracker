@@ -6,5 +6,5 @@ import arrivalTimeReducer from './arrivalTimeReducer';
 export default combineReducers({
   nav: navReducer,
   favstops: favStopReducer,
-  arrivaltimes: arrivalTimeReducer,
+  arrivaldata: arrivalTimeReducer,
 })

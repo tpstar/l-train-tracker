@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { HeaderBackButton } from 'react-navigation';
 import { Card, Header, Button } from './common';
 import { arrivalTimeFetch } from '../actions';
+import ArrivalTimeItem from './ArrivalTimeItem';
 
 class ArrivalTimes extends Component {
 
@@ -22,22 +23,28 @@ class ArrivalTimes extends Component {
   render() {
     const { favstop } = this.props.navigation.state.params;
     //from params in NavigationActions either from StopList or DirList
-    const { arrivaltimes } = this.props;
+    const { arrivaldata } = this.props;
+    const timestampRaw = arrivaldata.tmst;
     let timestamp = '';
-    if (arrivaltimes.tmst) {
-      timestamp = arrivaltimes.tmst.split('T')[1];
+    if (timestampRaw) {
+      timestamp = timestampRaw.split('T')[1];
     }
-    console.log(arrivaltimes);
-    const { eta } = arrivaltimes;
+    console.log(arrivaldata);
+    const arrivaltimes = arrivaldata.eta;
 
     return (
       <Card>
         <Header headerText={`Arrivals at ${favstop.trainstop.name}`} />
         <Header headerText={`Updated ${timestamp}`} />
         <FlatList
-          data={eta}
-          renderItem={({item}) => <Button>{Math.round(parseFloat(Date.parse(item.arrT)-Date.parse(arrivaltimes.tmst))/60000)}</Button>}
-
+          data={arrivaltimes}
+          renderItem={({ item }) => <ArrivalTimeItem
+                        arrivaltime={item}
+                        // onButtonPress={this.onButtonPress.bind(this)}
+                        favstop={favstop}
+                        currenttime={timestampRaw}
+                      />}
+          keyExtractor={(item)=>item.rn}
         />
       </Card>
     )
@@ -45,8 +52,8 @@ class ArrivalTimes extends Component {
 }
 
 const mapStateToProps = state => {
-  const { arrivaltimes } = state; //arrivaltimes from reducers/index.js
-  return { arrivaltimes };
+  const { arrivaldata } = state; //arrivaldata from reducers/index.js
+  return { arrivaldata };
 }
 
 export default connect(mapStateToProps, { arrivalTimeFetch })(ArrivalTimes);
