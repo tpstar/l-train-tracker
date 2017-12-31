@@ -148,6 +148,62 @@ export const trainLines = [
     textcolor: 'black',
     stops: [
       {
+        name: 'Midway',
+        staId: 40930,
+        stpId: {
+          N: 30181,
+          S: 30182,  
+        } 
+      },
+      {
+        name: 'Pulaski',
+        staId: 40960,
+        stpId: {
+          N: 30185,
+          S: 30186,  
+        } 
+      },
+      {
+        name: 'Kedzie',
+        staId: 41150,
+        stpId: {
+          N: 30219,
+          S: 30220,  
+        } 
+      },
+      {
+        name: 'Western',
+        staId: 40310,
+        stpId: {
+          N: 30060,
+          S: 30061,  
+        } 
+      },
+      {
+        name: '35th/Archer',
+        staId: 40120,
+        stpId: {
+          N: 30022,
+          S: 30023,  
+        } 
+      },
+      {
+        name: 'Ashland',
+        staId: 41060,
+        stpId: {
+          N: 30205,
+          S: 30206,  
+        } 
+      },
+      {
+        name: 'Halsted',
+        staId: 41130,
+        stpId: {
+          N: 30215,
+          S: 30216,  
+        } 
+      },
+      {
         name: 'Roosevelt',
         staId: 41400,
         stpId: {
@@ -211,7 +267,6 @@ export const trainLines = [
           L: 30132,
         } 
       },
-
     ],
     destination: {
       1: {

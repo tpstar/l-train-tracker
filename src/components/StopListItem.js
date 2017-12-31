@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { View } from 'react-native';
 import { CardSection, Button } from './common';
 
 class StopListItem extends Component {
