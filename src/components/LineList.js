@@ -4,6 +4,7 @@ import { FlatList } from 'react-native';
 import { Card, CardSection, Button, Header } from './common';
 import { trainLines } from '../data'
 import LineListItem from './LineListItem';
+import { NavigateTo } from './helper';
 
 class LineList extends Component {
 
@@ -18,7 +19,9 @@ class LineList extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: "Create Favorite Stop",
-      headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />
+      // headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />
+      headerLeft: NavigateTo(navigation, 'navigate-before', 'DrawerNavigation')
+                           // navigation, material icon name, route name
     }
   };
   render() {
