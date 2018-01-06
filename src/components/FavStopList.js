@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 import { FlatList, Text, Button, View } from 'react-native';
-// import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { CardSection } from './common';
 import FavStopListItem from './FavStopListItem';
+
 
 class FavStopList extends Component {
 
@@ -16,46 +17,18 @@ class FavStopList extends Component {
     });
     this.props.navigation.dispatch(navigateAction);
   }
+  // the header was moved to FavStopList's parent stackNavigator 'DrawerNavigation'
 
-  // static navigationOptions = ({ navigation }) => {
-  //   const navigateToCreateFavStops = NavigationActions.navigate({
-  //     routeName: 'LineList'
-  //   });
-  //   const addButton = (navigation) => {
-  //     return (
-  //       <MaterialIcons
-  //         style={{padding: 5, color: '#3F51B5'}}
-  //         name="add-circle"
-  //         size={36}
-  //         onPress={() => navigation.dispatch(navigateToCreateFavStops)}
-  //       />
-  //     )
-  //   }
-  //   const drawerButton = (navigation) => {
-  //     console.log(navigation.state)
-  //     return (
-  //       <MaterialIcons
-  //         style={{padding: 5, color: '#3F51B5'}}
-  //         name="menu"
-  //         size={36}
-  //         onPress={() => {
-  //           if (navigation.state.index === 0) {
-  //             navigation.navigate('DrawerOpen')
-  //           } else {
-  //             navigation.navigate('DrawerClose')
-  //           }
-  //         }}
-  //       />
-  //
-  //     )
-  //   }
-  //   return {
-  //     title: "Favorite Stops",
-  //     headerRight: addButton(navigation),
-  //     headerLeft: drawerButton(navigation)
-  //   }
-  // };
-
+  static navigationOptions = {
+    drawerLabel: 'Favorite Stops',
+    drawerIcon: () => (
+      <MaterialIcons
+        style={{width: 40, height: 40, borderRadius: 15}}
+        name={'place'}
+        size={36}
+      />
+    )
+  }
   render() {
     return (
       <View>
@@ -84,7 +57,6 @@ const styles = {
 
 const mapStateToProps = state => {
   const { favstops } = state; //favtrainsstops from reducers/index.js
-  // console.log(favstops);
   return { favstops };
 }
 

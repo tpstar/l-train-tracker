@@ -10,7 +10,7 @@ class LineList extends Component {
 
   onButtonPress(trainline) {
     const navigateAction = NavigationActions.navigate({
-      routeName: 'StopList',
+      routeName: 'StopListStack',
       params: { trainline }
     })
     this.props.navigation.dispatch(navigateAction);
@@ -18,7 +18,7 @@ class LineList extends Component {
 
   static navigationOptions = ({ navigation }) => {
     return {
-      title: "Create Favorite Stop",
+      title: "CTA Train Lines",
       // headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />
       headerLeft: NavigateTo(navigation, 'navigate-before', 'DrawerNavigation')
                            // navigation, material icon name, route name

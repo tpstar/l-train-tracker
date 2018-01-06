@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
-import { HeaderBackButton, NavigationActions } from 'react-navigation';
-import { FlatList } from 'react-native';
+import { View, FlatList } from 'react-native';
+import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 import _ from 'lodash';
-import { Card, CardSection, Button, Header } from './common';
+import { Header } from './common';
 import StopListItem from './StopListItem';
 import { createFavStop } from '../actions';
 
 class StopList extends Component {
-
   onButtonPress(trainline, trainstop) {
-    console.log(trainline, trainstop)
     let routeTo = 'DirList';
     if (trainstop.stpId.L) { //console.log('You are in Loop!')
       // need to skip choosing direction
@@ -28,17 +26,15 @@ class StopList extends Component {
     this.props.navigation.dispatch(navigateAction);
   }
 
-  static navigationOptions = ({ navigation }) => {
-    return {
-      title: "Create Favorite Stop",
-      headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />
-    }
-  };
   render() {
-    const { trainline } = this.props.navigation.state.params; //{trainline: "red"} from params in NavigationActions
+    //console.log(this.props.trainline);
+    const { trainline } = this.props.trainline || this.props.navigation.state.params;
+    // trainline can come from linelist or from redlist in drawer stack
+    //{name: "red", ...} from params in NavigationActions
     const trainStops = trainline.stops;
+
     return (
-      <Card>
+      <View style={{flex: 1}}>
         <Header headerText={"Choose Stop"} />
         <FlatList
           data={trainStops}
@@ -49,7 +45,7 @@ class StopList extends Component {
                       />}
           keyExtractor={(item)=>item.staId}
         />
-      </Card>
+      </View>
     )
   }
 }

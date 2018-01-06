@@ -51,24 +51,152 @@ export const trainLines = [
           S: 30170,  
         } 
       },
-      // 'Bryn Mawr',
-      // 'Berwyn',
-      // 'Argyle',
-      // 'Lawrence',
-      // 'Wilson',
-      // 'Sheridan',
-      // 'Addison',
-      // 'Belmont',
-      // 'Fullerton',
-      // 'North/Clybourn',
-      // 'Clark/Division',
-      // 'Chicago',
-      // 'Grand',
-      // 'Lake',
-      // 'Monroe',
-      // 'Jackson',
-      // 'Harrison',
-      // 'Roosevelt',
+      {
+        name: 'Bryn Mawr',
+        staId: 41380,
+        stpId: {
+          N: 30267,
+          S: 30268,  
+        } 
+      },
+      {
+        name: 'Berwyn',
+        staId: 40340,
+        stpId: {
+          N: 30066,
+          S: 30067,  
+        } 
+      },
+      {
+        name: 'Argyle',
+        staId: 41200,
+        stpId: {
+          N: 30229,
+          S: 30230,  
+        } 
+      },
+      {
+        name: 'Lawrence',
+        staId: 40770,
+        stpId: {
+          N: 30149,
+          S: 30150,  
+        } 
+      },
+      {
+        name: 'Wilson',
+        staId: 40540,
+        stpId: {
+          N: 30105,
+          S: 30106,  
+        } 
+      },
+      {
+        name: 'Sheridan',
+        staId: 40080,
+        stpId: {
+          N: 30016,
+          S: 30017,  
+        } 
+      },
+      {
+        name: 'Addison',
+        staId: 41420,
+        stpId: {
+          N: 30273,
+          S: 30274,  
+        } 
+      },
+      {
+        name: 'Belmont',
+        staId: 41320,
+        stpId: {
+          N: 30255,
+          S: 30256,  
+        } 
+      },
+      {
+        name: 'Fullerton',
+        staId: 41220,
+        stpId: {
+          N: 30233,
+          S: 30234,  
+        } 
+      },
+      {
+        name: 'North/Clybourn',
+        staId: 40650,
+        stpId: {
+          N: 30125,
+          S: 30126,  
+        } 
+      },
+      {
+        name: 'Clark/Division',
+        staId: 40630,
+        stpId: {
+          N: 30121,
+          S: 30122,  
+        } 
+      },
+      {
+        name: 'Chicago',
+        staId: 41450,
+        stpId: {
+          N: 30279,
+          S: 30280,  
+        } 
+      },
+      {
+        name: 'Grand',
+        staId: 40330,
+        stpId: {
+          N: 30064,
+          S: 30065,  
+        } 
+      },
+      {
+        name: 'Lake',
+        staId: 41660,
+        stpId: {
+          N: 30289,
+          S: 30290,  
+        } 
+      },
+      {
+        name: 'Monroe',
+        staId: 41090,
+        stpId: {
+          N: 30211,
+          S: 30212,  
+        } 
+      },
+      {
+        name: 'Jackson',
+        staId: 40560,
+        stpId: {
+          N: 30109,
+          S: 30110,  
+        } 
+      },
+      {
+        name: 'Harrison',
+        staId: 41490,
+        stpId: {
+          N: 30285,
+          S: 30286,  
+        } 
+      },
+      {
+        name: 'Roosevelt',
+        staId: 41400,
+        stpId: {
+          N: 30269,
+          S: 30270,  
+        } 
+      },
+
+
       // 'Cermak-Chinatwon',
       // 'Sox-35th',
       // '47th',

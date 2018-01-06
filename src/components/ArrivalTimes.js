@@ -5,7 +5,7 @@ import moment from 'moment';
 import { Card, Header, Button } from './common';
 import { arrivalTimeFetch } from '../actions';
 import ArrivalTimeItem from './ArrivalTimeItem';
-import { NavigateTo } from './helper'
+import { NavigateTo } from './helper';
 
 class ArrivalTimes extends Component {
 
