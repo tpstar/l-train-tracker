@@ -6,15 +6,19 @@ import LineList from '../components/LineList';
 import StopListStack from '../components/StopListStack';
 import DirList from '../components/DirList';
 import ArrivalTimes from '../components/ArrivalTimes';
-import RedList  from '../components/RedList';
+import StopListFromDrawer  from '../components/StopListFromDrawer';
+import DrawerContainer from '../components/DrawerContainer';
 import { NavigateTo } from '../components/helper';
 
 const DrawerStack = DrawerNavigator({
   FavStopList: { screen: FavStopList },
-  RedList: { screen: RedList }
-// }, {
-
-})
+  StopListFromDrawer: { screen: StopListFromDrawer }
+}, {
+  contentComponent: DrawerContainer,
+  drawerOpenRoute: 'DrawerOpen',
+  drawerCloseRoute: 'DrawerClose',
+  drawerToggleRoute: 'DrawerToggle'
+});
 
 const DrawerNavigation = StackNavigator({
   //to build a header for the DrawerNavigation pages

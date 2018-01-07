@@ -27,8 +27,8 @@ class StopList extends Component {
   }
 
   render() {
-    //console.log(this.props.trainline);
-    const { trainline } = this.props.trainline || this.props.navigation.state.params;
+    // console.log(this.props.trainline);
+    const { trainline } = this.props.navigation.state.params;
     // trainline can come from linelist or from redlist in drawer stack
     //{name: "red", ...} from params in NavigationActions
     const trainStops = trainline.stops;
