@@ -1,13 +1,21 @@
 import React from 'react';
 import { trainLines } from '../data';
-import { StyleSheet, Text, View, Image } from 'react-native'
-import { NavigationActions } from 'react-navigation'
+import { StyleSheet, Text, View, Image, FlatList } from 'react-native';
+import { NavigationActions } from 'react-navigation';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 export default class DrawerContainer extends React.Component {
 
+  onButtonPress(trainline) {
+    const navigateAction = NavigationActions.navigate({
+      routeName: 'StopListStack',
+      params: { trainline }
+    })
+    this.props.navigation.dispatch(navigateAction);
+  }
 
   render() {
+
     const { navigation } = this.props
     return (
       <View style={styles.container}>
@@ -16,6 +24,26 @@ export default class DrawerContainer extends React.Component {
           style={styles.drawerItem}>
           Favorite Stop List
         </Text>
+
+        <FlatList
+          data={trainLines}
+          renderItem={({item, index}) => (
+            <Text
+              onPress={() => navigation.navigate('StopListFromDrawer', {trainline: trainLines[index]})}
+              style={styles.drawerItem}>
+              <MaterialIcons
+                style={{width: 38, height: 40, borderRadius: 15, color: 'red'}}
+                name={'train'}
+                size={36}
+              />
+              {item.name} Line
+            </Text>
+          )}
+        />
+          {/* <LineListItem trainline={item} onButtonPress={this.onButtonPress.bind(this)}/>}
+          keyExtractor={(item)=>item.name}
+
+
         <Text
           onPress={() => navigation.navigate('StopListFromDrawer', {trainline: trainLines[0]})}
           style={styles.drawerItem}>
@@ -35,7 +63,7 @@ export default class DrawerContainer extends React.Component {
             size={36}
           />
           Orange Line
-        </Text>
+        </Text> */}
       </View>
     )
   }
