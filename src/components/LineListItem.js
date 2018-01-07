@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import _ from 'lodash';
 import { CardSection, Button } from './common';
 
 class LineListItem extends Component {
@@ -12,7 +13,7 @@ class LineListItem extends Component {
           overwriteTextStyle={{color: `${trainline.textcolor}`}}
           overwriteButtonStyle={{borderColor: `${trainline.name}`, backgroundColor: `${trainline.name}`}}
         >
-          {trainline.name.charAt(0).toUpperCase() + trainline.name.slice(1)}
+          {_.capitalize(trainline.name)}
         </Button>
       </CardSection>
     )

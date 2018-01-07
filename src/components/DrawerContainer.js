@@ -1,8 +1,9 @@
 import React from 'react';
-import { trainLines } from '../data';
 import { StyleSheet, Text, View, Image, FlatList } from 'react-native';
 import { NavigationActions } from 'react-navigation';
+import _ from 'lodash';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { trainLines } from '../data';
 
 export default class DrawerContainer extends React.Component {
 
@@ -15,7 +16,7 @@ export default class DrawerContainer extends React.Component {
   }
 
   render() {
-
+    console.log({...styles.drawerItem, color: "white"})
     const { navigation } = this.props
     return (
       <View style={styles.container}>
@@ -30,46 +31,24 @@ export default class DrawerContainer extends React.Component {
           renderItem={({item, index}) => (
             <Text
               onPress={() => navigation.navigate('StopListFromDrawer', {trainline: trainLines[index]})}
-              style={styles.drawerItem}>
+              style={{...styles.drawerItem, color: item.name}}
+            >
               <MaterialIcons
-                style={{width: 38, height: 40, borderRadius: 15, color: 'red'}}
+                style={{width: 38, height: 40, borderRadius: 15, color: item.name}}
                 name={'train'}
                 size={36}
               />
-              {item.name} Line
+              {_.capitalize(item.name)} Line
             </Text>
           )}
+          keyExtractor={(item, index)=>index}
         />
-          {/* <LineListItem trainline={item} onButtonPress={this.onButtonPress.bind(this)}/>}
-          keyExtractor={(item)=>item.name}
-
-
-        <Text
-          onPress={() => navigation.navigate('StopListFromDrawer', {trainline: trainLines[0]})}
-          style={styles.drawerItem}>
-          <MaterialIcons
-            style={{width: 38, height: 40, borderRadius: 15, color: 'red'}}
-            name={'train'}
-            size={36}
-          />
-          Red Line
-        </Text>
-        <Text
-          onPress={() => navigation.navigate('StopListFromDrawer', {trainline: trainLines[3]})}
-          style={styles.drawerItem}>
-          <MaterialIcons
-            style={{width: 38, height: 40, borderRadius: 15, color: 'orange'}}
-            name={'train'}
-            size={36}
-          />
-          Orange Line
-        </Text> */}
       </View>
     )
   }
 }
 
-const styles = StyleSheet.create({
+const styles = {
   container: {
     flex: 1,
     backgroundColor: '#f6f6f6',
@@ -79,7 +58,7 @@ const styles = StyleSheet.create({
   drawerItem: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#E73536',
+    // color: '#E73536',
     // padding: 15,
     // margin: 5,
     // borderRadius: 2,
@@ -87,4 +66,4 @@ const styles = StyleSheet.create({
     // borderWidth: 1,
     // textAlign: 'center'
   }
-})
+}
