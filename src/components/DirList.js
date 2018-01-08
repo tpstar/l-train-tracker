@@ -9,19 +9,23 @@ import DirListItem from './DirListItem';
 class DirList extends Component {
 
   onButtonPress(destination) {
+    // const navigateAction = NavigationActions.navigate({
+    //   routeName: 'DrawerNavigation',
+    // })
+    const { trainline, trainstop } = this.props.navigation.state.params;
     const navigateAction = NavigationActions.navigate({
-      routeName: 'DrawerNavigation',
+      routeName: 'ArrivalTimes',
+      params: { trainline, trainstop, destination }
     })
     this.props.navigation.dispatch(navigateAction);
-    const { trainline, trainstop } = this.props.navigation.state.params;
 
-    this.props.createFavStop({ trainline, trainstop, destination });
-    // console.log(trainline, trainstop, destination);
+    // this.props.createFavStop({ trainline, trainstop, destination });
+    // // console.log(trainline, trainstop, destination);
   }
 
   static navigationOptions = ({ navigation }) => {
     return {
-      title: "Create Favorite Stop",
+      title: "Directions",
       headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />
     }
   };

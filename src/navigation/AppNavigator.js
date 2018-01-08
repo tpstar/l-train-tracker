@@ -15,7 +15,7 @@ const DrawerStack = DrawerNavigator({
   StopListFromDrawer: { screen: StopListFromDrawer }
 }, {
   contentComponent: DrawerContainer,
-  drawerOpenRoute: 'DrawerOpen',
+  drawerOpenRoute: 'DrawerOpen', //fix react navigation bug
   drawerCloseRoute: 'DrawerClose',
   drawerToggleRoute: 'DrawerToggle'
 });
@@ -38,7 +38,7 @@ const DrawerNavigation = StackNavigator({
     }
     return {
       title: "Favorite Stops",
-      headerRight: NavigateTo(navigation, 'add-circle', 'LineList'),
+      headerRight: NavigateTo(navigation, 'search', 'LineList'),
                            // navigation, material icon name, route name
       headerLeft: drawerButton(navigation)
     }

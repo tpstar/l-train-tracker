@@ -10,18 +10,20 @@ import { createFavStop } from '../actions';
 class StopList extends Component {
   onButtonPress(trainline, trainstop) {
     let routeTo = 'DirList';
+    let destination = '';
     if (trainstop.stpId.L) { //console.log('You are in Loop!')
       // need to skip choosing direction
-      routeTo = 'FavStopList';
-      const destination = { direction: 'L', name: trainline.destination.oppositeToL.name}
+      routeTo = 'ArrivalTimes';
+      destination = { direction: 'L', name: trainline.destination.oppositeToL.name}
       // once you are in the Chicago loop, destination is the one opposite to L (e.g. Midway)
-      this.props.createFavStop({ trainline, trainstop, destination });
+      // this.props.createFavStop({ trainline, trainstop, destination });
+
     } else {
       trainline.destination = _.pick(trainline.destination, [1, 5]); //remove destination.oppositeToL
     }
     const navigateAction = NavigationActions.navigate({
       routeName: routeTo,
-      params: { trainline, trainstop }
+      params: { trainline, trainstop, destination }
     })
     this.props.navigation.dispatch(navigateAction);
   }

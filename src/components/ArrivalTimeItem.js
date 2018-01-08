@@ -5,8 +5,8 @@ import { CardSection, Button } from './common';
 class ArrivalTimeItem extends Component {
 
   render() {
-    const { favstop, arrivaltime } = this.props;
-    const { textcolor, name } = favstop.trainline;
+    const { trainline, destination, arrivaltime } = this.props;
+    const { textcolor, name } = trainline;
     const waitingMin =
       Math.round(
         parseFloat(
@@ -20,7 +20,7 @@ class ArrivalTimeItem extends Component {
            overwriteTextStyle={{color: `${textcolor}`}}
            overwriteButtonStyle={{borderColor: `${name}`, backgroundColor: `${name}`}}
          >
-           {favstop.destination.name} bound {waitingMin} min
+           {destination.name} bound {waitingMin} min
         </Button>
       </CardSection>
     )

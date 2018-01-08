@@ -195,17 +195,78 @@ export const trainLines = [
           S: 30270,  
         } 
       },
-
-
-      // 'Cermak-Chinatwon',
-      // 'Sox-35th',
-      // '47th',
-      // 'Garfield',
-      // '63rd',
-      // '69th',
-      // '79th',
-      // '87th',
-      // '95th/Dan Ryan'
+      {
+        name: 'Cermak-Chinatown',
+        staId: 41000,
+        stpId: {
+          N: 30193,
+          S: 30194,  
+        } 
+      },
+      {
+        name: 'Sox-35th',
+        staId: 40190,
+        stpId: {
+          N: 30036,
+          S: 30037,  
+        } 
+      },
+      {
+        name: '47th',
+        staId: 41230,
+        stpId: {
+          N: 30237,
+          S: 30238,  
+        } 
+      },
+      {
+        name: 'Garfield',
+        staId: 41170,
+        stpId: {
+          N: 30223,
+          S: 30224,  
+        } 
+      },
+      {
+        name: '63rd',
+        staId: 40910,
+        stpId: {
+          N: 30177,
+          S: 30178,  
+        } 
+      },
+      {
+        name: '69th',
+        staId: 40990,
+        stpId: {
+          N: 30191,
+          S: 30192,  
+        } 
+      },
+      {
+        name: '79th',
+        staId: 40240,
+        stpId: {
+          N: 30046,
+          S: 30047,  
+        } 
+      },
+      {
+        name: '87th',
+        staId: 41430,
+        stpId: {
+          N: 30275,
+          S: 30276,  
+        } 
+      },
+      {
+        name: '95th/Dan Ryan',
+        staId: 40450,
+        stpId: {
+          N: 30088,
+          S: 30089,  
+        } 
+      },
     ],
     destination: {
       1: {
@@ -222,28 +283,205 @@ export const trainLines = [
     name: 'blue',
     textcolor: 'white',
     stops: [
-      'O\'Hare',
-      'Rosemont',
-      'Cumberland',
-      'Harlem',
-      'Jefferson Park',
-      'Montrose',
-      'Irving Park',
-      'Addison',
-      'Belmont',
-      'Logan Square',
-      'California',
-      'Western',
-      'Damen',
-      'Division',
-      'Chicago',
-      'Grand',
-      'Clark/Lake',
-      'Washington',
-      'Monroe',
-      'Jackson',
-      'LaSalle',
-      'Clinton',
+      {
+        name: 'O\'Hare',
+        staId: 40890,
+        stpId: {
+          N: 30171,
+          S: 30172,  
+        } 
+      },
+      {
+        name: 'Rosemont',
+        staId: 40820,
+        stpId: {
+          N: 30159,
+          S: 30160,  
+        } 
+      },
+      {
+        name: 'Cumberland',
+        staId: 40230,
+        stpId: {
+          N: 30044,
+          S: 30045,  
+        } 
+      },
+      {
+        name: 'Harlem',
+        staId: 40750,
+        stpId: {
+          N: 30145,
+          S: 30146,  
+        } 
+      },
+      // {
+      //   name: 'Harlem',
+      //   staId: 40980, //line between Harlem and O'Hare?
+      //   stpId: {
+      //     E: 30189, //O'Hare bound
+      //     W: 30190
+      //   }
+      // },
+      {
+        name: 'Jefferson Park',
+        staId: 41280,
+        stpId: {
+          N: 30247,
+          S: 30248,  
+        } 
+      },
+      {
+        name: 'Montrose',
+        staId: 41330,
+        stpId: {
+          N: 30259,
+          S: 30260,  
+        } 
+      },
+      {
+        name: 'Irving Park',
+        staId: 40550,
+        stpId: {
+          N: 30107,
+          S: 30108,  
+        } 
+      },
+      {
+        name: 'Addison',
+        staId: 41240 ,
+        stpId: {
+          N: 30239,
+          S: 30240,  
+        } 
+      },
+      {
+        name: 'Belmont',
+        staId: 40060,
+        stpId: {
+          N: 30012,
+          S: 30013,  
+        } 
+      },
+      {
+        name: 'Logan Square',
+        staId: 41020,
+        stpId: {
+          N: 30197,
+          S: 30198,  
+        } 
+      },
+      {
+        name: 'California',
+        staId: 40570,
+        stpId: {
+          N: 30111,
+          S: 30112,  
+        } 
+      },
+      {
+        name: 'Western',
+        staId: 40670,
+        stpId: {
+          N: 30129,
+          S: 30130,  
+        } 
+      },
+      {
+        name: 'Damen/Milwaukee',
+        staId: 40590,
+        stpId: {
+          N: 30115,
+          S: 30116,  
+        } 
+      },
+      {
+        name: 'Division',
+        staId: 40320,
+        stpId: {
+          N: 30062,
+          S: 30063,  
+        } 
+      },
+      {
+        name: 'Chicago',
+        staId: 41410 ,
+        stpId: {
+          N: 30271,
+          S: 30272,  
+        } 
+      },
+      {
+        name: 'Grand/Milwaukee',
+        staId: 40490,
+        stpId: {
+          N: 30095,
+          S: 30096,  
+        } 
+      },
+      {
+        name: 'Washington',
+        staId: 40370,
+        stpId: {
+          N: 30072,
+          S: 30073,  
+        } 
+      },
+      {
+        name: 'Monroe',
+        staId: 40790 ,
+        stpId: {
+          N: 30153,
+          S: 30154,  
+        } 
+      },
+      {
+        name: 'Jackson/Dearborn',
+        staId: 40070,
+        stpId: {
+          N: 30014,
+          S: 30015,  
+        } 
+      },
+      {
+        name: 'LaSalle',
+        staId: 41340 ,
+        stpId: {
+          E: 30261,   //change to E (O'Hare bound) and W
+          W: 30262,  
+        } 
+      },
+      {
+        name: 'Clinton',
+        staId: 40430 ,
+        stpId: {
+          E: 30084,
+          W: 30085,  
+        } 
+      },
+
+      // 'O\'Hare',
+      // 'Rosemont',
+      // 'Cumberland',
+      // 'Harlem',
+      // 'Jefferson Park',
+      // 'Montrose',
+      // 'Irving Park',
+      // 'Addison',
+      // 'Belmont',
+      // 'Logan Square',
+      // 'California',
+      // 'Western',
+      // 'Damen',
+      // 'Division',
+      // 'Chicago',
+      // 'Grand',
+      // 'Clark/Lake',
+      // 'Washington',
+      // 'Monroe',
+      // 'Jackson',
+      // 'LaSalle',
+      // 'Clinton',
       'UIC-Halsted',
       'Racine',
       'Illinois Medical District',
@@ -259,17 +497,48 @@ export const trainLines = [
     destination: {
       1: {
         name: 'O\'Hare',
-        direction: 'NW'
+        direction: 'N',
+        direction2: 'E'
       },
       5: {
         name: 'Forest Park',
-        direction: 'W'
+        direction: 'S',
+        direction2: 'W'
       }
     }
   },
   {
     name: 'green',
-    textcolor: 'white'
+    textcolor: 'white',
+    stops: [
+      {
+        name: 'Harlem/Lake',
+        staId: 40020,
+        stpId: {
+          E: 30003,
+          W: 30004,  
+        } 
+      },
+      {
+        name: 'Oak Park',
+        staId: 41350,
+        stpId: {
+          E: 30263,
+          W: 30264,  
+        } 
+      },
+    ],
+    destination: {
+      1: {
+        name: '63rd',
+        direction: 'E'
+      },
+      5: {
+        name: 'Harlem',
+        direction: 'W'
+      }
+    }
+
   },
   {
     name: 'orange',

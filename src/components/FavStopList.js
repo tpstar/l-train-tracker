@@ -19,16 +19,16 @@ class FavStopList extends Component {
   }
   // the header was moved to FavStopList's parent stackNavigator 'DrawerNavigation'
 
-  static navigationOptions = {
-    drawerLabel: 'Favorite Stops',
-    drawerIcon: () => (
-      <MaterialIcons
-        style={{width: 40, height: 40, borderRadius: 15}}
-        name={'place'}
-        size={36}
-      />
-    )
-  }
+  // static navigationOptions = {
+  //   drawerLabel: 'Favorite Stops',
+  //   drawerIcon: () => (
+  //     <MaterialIcons
+  //       style={{width: 40, height: 40, borderRadius: 15}}
+  //       name={'place'}
+  //       size={36}
+  //     />
+  //   )
+  // }
   render() {
     return (
       <View>

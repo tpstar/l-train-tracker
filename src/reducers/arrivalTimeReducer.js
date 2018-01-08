@@ -1,4 +1,4 @@
-import { CREATE_FAV_STOP, FETCH_ARRIVAL_TIME } from '../actions/types';
+import { FETCH_ARRIVAL_TIME } from '../actions/types';
 
 const INITIAL_STATE = {};
 
