@@ -3,16 +3,14 @@ import { StackNavigator, DrawerNavigator } from "react-navigation";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FavStopList from '../components/FavStopList';
 import LineList from '../components/LineList';
-import StopListStack from '../components/StopListStack';
+import StopList from '../components/StopList';
 import DirList from '../components/DirList';
 import ArrivalTimes from '../components/ArrivalTimes';
-import StopListFromDrawer  from '../components/StopListFromDrawer';
 import DrawerContainer from '../components/DrawerContainer';
 import { NavigateTo } from '../components/helper';
 
 const DrawerStack = DrawerNavigator({
   FavStopList: { screen: FavStopList },
-  StopListFromDrawer: { screen: StopListFromDrawer }
 }, {
   contentComponent: DrawerContainer,
   drawerOpenRoute: 'DrawerOpen', //fix react navigation bug
@@ -38,7 +36,7 @@ const DrawerNavigation = StackNavigator({
     }
     return {
       title: "Favorite Stops",
-      headerRight: NavigateTo(navigation, 'search', 'LineList'),
+      headerRight: NavigateTo(navigation, 'search', 'LineList'), //NavigationActions.navigate({ routeName }) with Material icon name
                            // navigation, material icon name, route name
       headerLeft: drawerButton(navigation)
     }
@@ -47,7 +45,7 @@ const DrawerNavigation = StackNavigator({
 
 const NonDrawerNavigation = StackNavigator ({
   LineList: { screen: LineList },
-  StopListStack: { screen: StopListStack },
+  StopList: { screen: StopList },
   DirList: { screen: DirList },
   ArrivalTimes: { screen: ArrivalTimes },
 })

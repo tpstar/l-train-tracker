@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, FlatList } from 'react-native';
-import { NavigationActions } from 'react-navigation';
 import _ from 'lodash';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { trainLines } from '../data';
@@ -8,11 +7,18 @@ import { trainLines } from '../data';
 export default class DrawerContainer extends React.Component {
 
   onButtonPress(trainline) {
-    const navigateAction = NavigationActions.navigate({
-      routeName: 'StopListStack',
-      params: { trainline }
-    })
-    this.props.navigation.dispatch(navigateAction);
+    console.log(this.props.navigation);
+
+    this.props.navigation.dispatch(
+      {
+        type: 'Navigation/NAVIGATE',
+        routeName: 'NonDrawerNavigation',
+        action: {
+          type: 'Navigation/NAVIGATE',
+          routeName: 'StopList',
+          params: trainline
+        }
+      })
   }
 
   render() {
@@ -30,7 +36,7 @@ export default class DrawerContainer extends React.Component {
           data={trainLines}
           renderItem={({item, index}) => (
             <Text
-              onPress={() => navigation.navigate('StopListFromDrawer', {trainline: trainLines[index]})}
+              onPress={() => this.onButtonPress({trainline: trainLines[index]})} //navigation.navigate('StopListFromDrawer', {trainline: trainLines[index]})}
               style={{...styles.drawerItem, color: item.name}}
             >
               <MaterialIcons

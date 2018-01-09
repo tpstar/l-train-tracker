@@ -1,42 +1,51 @@
 import React, { Component } from 'react';
+import { HeaderBackButton } from 'react-navigation';
 import { View, FlatList } from 'react-native';
-import { NavigationActions } from 'react-navigation';
-import { connect } from 'react-redux';
 import _ from 'lodash';
-import { Header } from './common';
+import { Card, Header } from './common';
 import StopListItem from './StopListItem';
-import { createFavStop } from '../actions';
 
 class StopList extends Component {
+
   onButtonPress(trainline, trainstop) {
     let routeTo = 'DirList';
     let destination = '';
     if (trainstop.stpId.L) { //console.log('You are in Loop!')
       // need to skip choosing direction
       routeTo = 'ArrivalTimes';
-      destination = { direction: 'L', name: trainline.destination.oppositeToL.name}
+      destination = { direction: 'L', name: trainline.destination.oppositeToL.name }
       // once you are in the Chicago loop, destination is the one opposite to L (e.g. Midway)
       // this.props.createFavStop({ trainline, trainstop, destination });
 
     } else {
       trainline.destination = _.pick(trainline.destination, [1, 5]); //remove destination.oppositeToL
     }
-    const navigateAction = NavigationActions.navigate({
-      routeName: routeTo,
-      params: { trainline, trainstop, destination }
-    })
-    this.props.navigation.dispatch(navigateAction);
+    this.props.navigation.dispatch(
+      {
+        type: 'Navigation/NAVIGATE',
+        routeName: routeTo,
+        params: { trainline, trainstop, destination }
+      })
   }
 
+  static navigationOptions = ({ navigation }) => {
+    const { trainline } = navigation.state.params;
+    console.log(trainline)
+    const lineName = _.capitalize(trainline.name)
+
+    return {
+      title: `${lineName} Line Stops`,
+      headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />
+    }
+  };
+
+
   render() {
-    // console.log(this.props.trainline);
     const { trainline } = this.props.navigation.state.params;
-    // trainline can come from linelist or from redlist in drawer stack
-    //{name: "red", ...} from params in NavigationActions
     const trainStops = trainline.stops;
 
     return (
-      <View style={{flex: 1}}>
+      <Card>
         <Header headerText={"Choose Stop"} />
         <FlatList
           data={trainStops}
@@ -47,9 +56,9 @@ class StopList extends Component {
                       />}
           keyExtractor={(item)=>item.staId}
         />
-      </View>
+      </Card>
     )
   }
 }
 
-export default connect(null, { createFavStop })(StopList);
+export default StopList;

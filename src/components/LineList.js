@@ -10,7 +10,7 @@ class LineList extends Component {
 
   onButtonPress(trainline) {
     const navigateAction = NavigationActions.navigate({
-      routeName: 'StopListStack',
+      routeName: 'StopList',
       params: { trainline }
     })
     this.props.navigation.dispatch(navigateAction);
