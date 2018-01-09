@@ -33,7 +33,7 @@ class ArrivalTimes extends Component {
   };
 
   render() {
-    const { trainline, trainstop, destination } = this.props.navigation.state.params;
+    const { trainline, trainstop, destination, fav } = this.props.navigation.state.params;
     //from params in NavigationActions either from StopList or DirList
     const { arrivaldata } = this.props;
     const timestampRaw = arrivaldata.tmst;
@@ -41,12 +41,15 @@ class ArrivalTimes extends Component {
     if (timestampRaw) {
       timestamp = moment(timestampRaw).format('h:mm a');
     }
-    // console.log(arrivaldata);
+    // if (fav) {
+      console.log('favorite?:', fav)
+    // }
     const arrivaltimes = arrivaldata.eta;
 
     return (
       <Card>
         <Header headerText={`Arrivals at ${trainstop.name}`} />
+        <Header headerText={`${destination.name} bound`} />
         <CardSection>
           <Button
             // onPress={this.onButtonPress(trainline, trainstop, destination)}

@@ -3,9 +3,10 @@ import { CTA_API_KEY } from '../config';
 
 export const createFavStop = ({ trainline, trainstop, destination }) => {
   console.log(trainline, trainstop, destination)
+  let fav = true;
   return  {
     type: CREATE_FAV_STOP,
-    payload: { trainline, trainstop, destination }
+    payload: { trainline, trainstop, destination, fav }
   }
 }
 

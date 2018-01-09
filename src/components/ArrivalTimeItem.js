@@ -20,7 +20,7 @@ class ArrivalTimeItem extends Component {
            overwriteTextStyle={{color: `${textcolor}`}}
            overwriteButtonStyle={{borderColor: `${name}`, backgroundColor: `${name}`}}
          >
-           {destination.name} bound {waitingMin} min
+           {waitingMin} min
         </Button>
       </CardSection>
     )

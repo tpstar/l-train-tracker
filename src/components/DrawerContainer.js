@@ -1,7 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, FlatList } from 'react-native';
 import _ from 'lodash';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+// import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { List, ListItem } from 'react-native-elements';
 import { trainLines } from '../data';
 
 export default class DrawerContainer extends React.Component {
@@ -26,29 +27,29 @@ export default class DrawerContainer extends React.Component {
     const { navigation } = this.props
     return (
       <View style={styles.container}>
-        <Text
+        {/* <Text
           onPress={() => navigation.navigate('FavStopList')}
           style={styles.drawerItem}>
           Favorite Stop List
-        </Text>
-
-        <FlatList
-          data={trainLines}
-          renderItem={({item, index}) => (
-            <Text
-              onPress={() => this.onButtonPress({trainline: trainLines[index]})} //navigation.navigate('StopListFromDrawer', {trainline: trainLines[index]})}
-              style={{...styles.drawerItem, color: item.name}}
-            >
-              <MaterialIcons
-                style={{width: 38, height: 40, borderRadius: 15, color: item.name}}
-                name={'train'}
-                size={36}
+        </Text> */}
+        <List>
+          <ListItem
+            onPress={() => navigation.navigate('FavStopList')}
+            title={'Favorite Stop List'}
+            leftIcon={{name: 'favorite' }}
+          />
+          {
+            trainLines.map((item, index) => (
+              <ListItem
+                onPress={() => this.onButtonPress({trainline: trainLines[index]})}
+                //navigation.navigate('StopListFromDrawer', {trainline: trainLines[index]})}
+                key={index}
+                title={`${_.capitalize(item.name)} Line`}
+                leftIcon={{name: 'train', color: item.name }} //name from MaterialIcons
               />
-              {_.capitalize(item.name)} Line
-            </Text>
-          )}
-          keyExtractor={(item, index)=>index}
-        />
+            ))
+          }
+        </List>
       </View>
     )
   }
