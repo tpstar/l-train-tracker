@@ -11,12 +11,22 @@ import { NavigateTo } from './helper';
 class ArrivalTimes extends Component {
 
   onButtonPress(trainline, trainstop, destination) {
-    // console.log(trainline, trainstop, destination)
+    const { favstops } = this.props;
+    const selectedStop = { trainline, trainstop, destination }
+    const favAlready = favstops.some((favstop) => (
+      favstop.trainline.name === selectedStop.trainline.name &&
+      favstop.trainstop.name === selectedStop.trainstop.name &&
+      favstop.destination.name === selectedStop.destination.name
+    ))
+    if (favAlready) { //prevent duplicate favstops
+      console.log('Alert!')
+    } else {
+      this.props.createFavStop({ trainline, trainstop, destination });
+    }
     const navigateAction = NavigationActions.navigate({
       routeName: 'DrawerNavigation',
     })
     this.props.navigation.dispatch(navigateAction);
-    this.props.createFavStop({ trainline, trainstop, destination });
   }
 
   componentWillMount() {
@@ -41,9 +51,6 @@ class ArrivalTimes extends Component {
     if (timestampRaw) {
       timestamp = moment(timestampRaw).format('h:mm a');
     }
-    // if (fav) {
-      console.log('favorite?:', fav)
-    // }
     const arrivaltimes = arrivaldata.eta;
 
     return (
@@ -78,8 +85,8 @@ class ArrivalTimes extends Component {
 }
 
 const mapStateToProps = state => {
-  const { arrivaldata } = state; //arrivaldata from reducers/index.js
-  return { arrivaldata };
+  const { arrivaldata, favstops } = state; //arrivaldata from reducers/index.js
+  return { arrivaldata, favstops };
 }
 
 export default connect(mapStateToProps, { arrivalTimeFetch, createFavStop })(ArrivalTimes);

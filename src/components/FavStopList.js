@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 import { FlatList, Text, Button, View } from 'react-native';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { CardSection } from './common';
 import FavStopListItem from './FavStopListItem';
 
@@ -17,6 +16,8 @@ class FavStopList extends Component {
     });
     this.props.navigation.dispatch(navigateAction);
   }
+
+  //header is in navigation/AppNavigator
 
   render() {
     return (

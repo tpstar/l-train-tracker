@@ -2,11 +2,10 @@ import { CREATE_FAV_STOP, FETCH_ARRIVAL_TIME } from './types';
 import { CTA_API_KEY } from '../config';
 
 export const createFavStop = ({ trainline, trainstop, destination }) => {
-  console.log(trainline, trainstop, destination)
-  let fav = true;
+  console.log(trainline, trainstop, destination);
   return  {
     type: CREATE_FAV_STOP,
-    payload: { trainline, trainstop, destination, fav }
+    payload: { trainline, trainstop, destination }
   }
 }
 
