@@ -45,14 +45,21 @@ class TripDestinationStops extends Component {
     const { trainline, trainstop, boundFor } = this.props.navigation.state.params.departure;
     const tripLine = trainLines.filter(
       line => line.name === trainline.name
-    )
-    const tripStops = tripLine[0].stops;
-    const tripStopIndex = tripStops.findIndex((stop) =>
+    )[0] //[0] is to conver array into object element
+    const tripLineStops = tripLine.stops;
+    const tripStopIndex = tripLineStops.findIndex((stop) =>
       stop.staId === trainstop.staId
     )
-    console.log(tripStopIndex, boundFor);
+    console.log(tripLine, boundFor);
     // const trainStops = trainline.stops;
-
+    const tripBoundForKey = Object.keys(tripLine.boundFor).find(key => tripLine.boundFor[key].name === boundFor.name)
+    var tripStops = [];
+    if (tripBoundForKey === '1') {
+      tripStops = tripLineStops.slice(0, tripStopIndex)
+    } else if (tripBoundForKey === '5') {
+      tripStops = tripLineStops.slice(tripStopIndex + 1)
+    }
+    console.log(tripLineStops, tripBoundForKey, tripStops);
     return (
       <Card>
         <Header headerText={"Choose Destination Stop"} />
