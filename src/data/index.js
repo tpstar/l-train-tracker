@@ -667,16 +667,16 @@ export const trainLines = [
     ],
     boundFor: {
       1: {
-        name: 'Loop',
-        direction: 'N'
-      },
-      5: {
         name: 'Midway',
         direction: 'S'
       },
-      oppositeToL: {
+      3: {
         name: 'Midway'
-      }
+      },
+      5: {
+        name: 'Loop',
+        direction: 'N'
+      },
     }
   },
   {

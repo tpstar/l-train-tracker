@@ -14,12 +14,12 @@ class TripDestinationStops extends Component {
     // if (trainstop.stpId.L) { //console.log('You are in Loop!')
     //   // need to skip choosing direction
     //   routeTo = 'ArrivalTimes';
-    //   boundFor = { direction: 'L', name: trainline.boundFor.oppositeToL.name }
+    //   boundFor = { direction: 'L', name: trainline.boundFor[3].name }
     //   // once you are in the Chicago loop, boundFor is the one opposite to L (e.g. Midway)
     //   // this.props.createFavStop({ trainline, trainstop, boundFor });
     //
     // } else {
-    //   trainline.boundFor = _.pick(trainline.boundFor, [1, 5]); //remove boundFor.oppositeToL
+    //   trainline.boundFor = _.pick(trainline.boundFor, [1, 5]); //remove boundFor[3]
     // }
     // this.props.navigation.dispatch(
     //   {
@@ -55,7 +55,7 @@ class TripDestinationStops extends Component {
     const tripBoundForKey = Object.keys(tripLine.boundFor).find(key => tripLine.boundFor[key].name === boundFor.name)
     var tripStops = [];
     if (tripBoundForKey === '1') {
-      tripStops = tripLineStops.slice(0, tripStopIndex)
+      tripStops = tripLineStops.slice(0, tripStopIndex).reverse()
     } else if (tripBoundForKey === '5') {
       tripStops = tripLineStops.slice(tripStopIndex + 1)
     }
