@@ -271,11 +271,13 @@ export const trainLines = [
     boundFor: {
       1: {
         name: 'Howard',
-        direction: 'N'
+        direction: 'N',
+        key: 1
       },
       5: {
         name: '95th/Dan Ryan',
-        direction: 'S'
+        direction: 'S',
+        key: 5
       }
     }
   },
@@ -498,12 +500,14 @@ export const trainLines = [
       1: {
         name: 'O\'Hare',
         direction: 'N',
-        direction2: 'E'
+        direction2: 'E',
+        key: 1
       },
       5: {
         name: 'Forest Park',
         direction: 'S',
-        direction2: 'W'
+        direction2: 'W',
+        key: 5
       }
     }
   },
@@ -531,17 +535,20 @@ export const trainLines = [
     boundFor: {
       1: {
         name: '63rd',
-        direction: 'E'
+        direction: 'E',
+        key: 1
       },
       5: {
         name: 'Harlem',
-        direction: 'W'
+        direction: 'W',
+        key: 5
       }
     }
 
   },
   {
     name: 'orange',
+    rt: 'Org',
     textcolor: 'black',
     stops: [
       {
@@ -668,14 +675,18 @@ export const trainLines = [
     boundFor: {
       1: {
         name: 'Midway',
-        direction: 'S'
+        direction: 'S',
+        key: 1
       },
       3: {
-        name: 'Midway'
+        name: 'Midway',
+        key: 3,
+        loopStartStaArrayIndex: 8, //array index for H.W. Library
       },
       5: {
         name: 'Loop',
-        direction: 'N'
+        direction: 'N',
+        key: 5
       },
     }
   },

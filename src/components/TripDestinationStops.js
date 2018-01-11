@@ -52,11 +52,17 @@ class TripDestinationStops extends Component {
     )
     console.log(tripLine, boundFor);
     // const trainStops = trainline.stops;
-    const tripBoundForKey = Object.keys(tripLine.boundFor).find(key => tripLine.boundFor[key].name === boundFor.name)
+    // const tripBoundForKey = Object.keys(tripLine.boundFor).find(key => tripLine.boundFor[key].name === boundFor.name)
+    const tripBoundForKey = boundFor.key;
+    const lStaArrayIndex = tripLine.boundFor[3].loopStartStaArrayIndex;
+    console.log(lStaArrayIndex)
     var tripStops = [];
-    if (tripBoundForKey === '1') {
+    if (tripBoundForKey === 1) {
       tripStops = tripLineStops.slice(0, tripStopIndex).reverse()
-    } else if (tripBoundForKey === '5') {
+    } else if (tripBoundForKey === 3) { //if the departure is in the loop
+      tripStops = [...tripLineStops.slice(tripStopIndex + 1),
+                   ...tripLineStops.slice(0, lStaArrayIndex).reverse()]
+    } else if (tripBoundForKey === 5) {
       tripStops = tripLineStops.slice(tripStopIndex + 1)
     }
     console.log(tripLineStops, tripBoundForKey, tripStops);
