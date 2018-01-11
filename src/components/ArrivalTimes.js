@@ -49,7 +49,7 @@ class ArrivalTimes extends Component {
 
   componentWillMount() {
     const { trainline, trainstop, boundFor } = this.props.navigation.state.params; //from params in NavigationActions
-    this.props.arrivalTimeFetch({ trainstop, boundFor }); // put trainline, trainstop, boundFor as argument
+    this.props.arrivalTimeFetch({ trainline, trainstop, boundFor }); // put trainline, trainstop, boundFor as argument
   }
 
   static navigationOptions = ({ navigation }) => {

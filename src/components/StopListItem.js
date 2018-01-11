@@ -6,7 +6,11 @@ class StopListItem extends Component {
 
   render() {
     const { trainstop, onButtonPress, trainline } = this.props;
-    const trainLine = { name: trainline.name, textcolor: trainline.textcolor, boundFor: trainline.boundFor }; //remove stops from trainline
+    const trainLine = { name: trainline.name,
+                        textcolor: trainline.textcolor,
+                        boundFor: trainline.boundFor,
+                        rt: trainline.rt 
+                      }; //remove stops from trainline
     return (
       <CardSection>
         <Button
