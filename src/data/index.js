@@ -268,7 +268,7 @@ export const trainLines = [
         } 
       },
     ],
-    destination: {
+    boundFor: {
       1: {
         name: 'Howard',
         direction: 'N'
@@ -494,7 +494,7 @@ export const trainLines = [
       'Harlem',
       'Forest Park'
     ],
-    destination: {
+    boundFor: {
       1: {
         name: 'O\'Hare',
         direction: 'N',
@@ -528,7 +528,7 @@ export const trainLines = [
         } 
       },
     ],
-    destination: {
+    boundFor: {
       1: {
         name: '63rd',
         direction: 'E'
@@ -665,7 +665,7 @@ export const trainLines = [
         } 
       },
     ],
-    destination: {
+    boundFor: {
       1: {
         name: 'Loop',
         direction: 'N'

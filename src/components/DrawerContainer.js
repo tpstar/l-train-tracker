@@ -8,7 +8,6 @@ import { trainLines } from '../data';
 export default class DrawerContainer extends React.Component {
 
   onButtonPress(trainline) {
-
     this.props.navigation.dispatch(
       {
         type: 'Navigation/NAVIGATE',

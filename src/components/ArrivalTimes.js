@@ -3,6 +3,7 @@ import { FlatList } from 'react-native';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import { NavigationActions } from 'react-navigation';
+import _ from 'lodash';
 import { Card, Header, Button, CardSection } from './common';
 import { arrivalTimeFetch, createFavStop } from '../actions';
 import ArrivalTimeItem from './ArrivalTimeItem';
@@ -10,28 +11,45 @@ import { NavigateTo } from './helper';
 
 class ArrivalTimes extends Component {
 
-  onButtonPress(trainline, trainstop, destination) {
+  onButtonPressSave(trainline, trainstop, boundFor) {
     const { favstops } = this.props;
-    const selectedStop = { trainline, trainstop, destination }
-    const favAlready = favstops.some((favstop) => (
-      favstop.trainline.name === selectedStop.trainline.name &&
-      favstop.trainstop.name === selectedStop.trainstop.name &&
-      favstop.destination.name === selectedStop.destination.name
-    ))
-    if (favAlready) { //prevent duplicate favstops
-      console.log('Alert!')
+    console.log(_.isEmpty(favstops));
+    const selectedStop = { trainline, trainstop, boundFor }
+    if (_.isEmpty(favstops)) {
+      this.props.createFavStop({ trainline, trainstop, boundFor });
     } else {
-      this.props.createFavStop({ trainline, trainstop, destination });
+      const favStopExists = _.isEmpty(favstops) || favstops.some((favstop) => (
+        favstop.trainline.name === selectedStop.trainline.name &&
+        favstop.trainstop.name === selectedStop.trainstop.name &&
+        favstop.boundFor.name === selectedStop.boundFor.name
+      ))
+      if (favStopExists) { //prevent saving duplicate favstops
+        console.log('Alert! This stop is already a fav stop!')
+      } else {
+        this.props.createFavStop({ trainline, trainstop, boundFor });
+      }
     }
-    const navigateAction = NavigationActions.navigate({
-      routeName: 'DrawerNavigation',
-    })
-    this.props.navigation.dispatch(navigateAction);
+    this.props.navigation.dispatch(
+      {
+        type: 'Navigation/NAVIGATE',
+        routeName: 'DrawerNavigation',
+      })
+  }
+
+  onButtonPressCreateTrip(trainline, trainstop, boundFor) {
+    const departure = { trainline, trainstop, boundFor };
+    console.log('departure: ', departure);
+    this.props.navigation.dispatch(
+      {
+        type: 'Navigation/NAVIGATE',
+        routeName: 'TripDestinationStops',
+        params: { departure }
+      })
   }
 
   componentWillMount() {
-    const { trainline, trainstop, destination } = this.props.navigation.state.params; //from params in NavigationActions
-    this.props.arrivalTimeFetch({ trainstop, destination }); // put trainline, trainstop, destination as argument
+    const { trainline, trainstop, boundFor } = this.props.navigation.state.params; //from params in NavigationActions
+    this.props.arrivalTimeFetch({ trainstop, boundFor }); // put trainline, trainstop, boundFor as argument
   }
 
   static navigationOptions = ({ navigation }) => {
@@ -43,7 +61,7 @@ class ArrivalTimes extends Component {
   };
 
   render() {
-    const { trainline, trainstop, destination, fav } = this.props.navigation.state.params;
+    const { trainline, trainstop, boundFor, fav } = this.props.navigation.state.params;
     //from params in NavigationActions either from StopList or DirList
     const { arrivaldata } = this.props;
     const timestampRaw = arrivaldata.tmst;
@@ -56,16 +74,23 @@ class ArrivalTimes extends Component {
     return (
       <Card>
         <Header headerText={`Arrivals at ${trainstop.name}`} />
-        <Header headerText={`${destination.name} bound`} />
+        <Header headerText={`${boundFor.name} bound`} />
         <CardSection>
           <Button
-            // onPress={this.onButtonPress(trainline, trainstop, destination)}
+            // onPress={this.onButtonPress(trainline, trainstop, boundFor)}
             //above will run onButtonPress before the button is pressed
-            onPress={()=>this.onButtonPress(trainline, trainstop, destination)}
+            onPress={()=>this.onButtonPressSave(trainline, trainstop, boundFor)}
             // overwriteTextStyle={{color: `${trainline.textcolor}`}}
             // overwriteButtonStyle={{borderColor: `${trainline.name}`, backgroundColor: `${trainline.name}`}}
           >
             Save this Stop
+          </Button>
+          <Button
+            onPress={()=>this.onButtonPressCreateTrip(trainline, trainstop, boundFor)}
+            // overwriteTextStyle={{color: `${trainline.textcolor}`}}
+            // overwriteButtonStyle={{borderColor: `${trainline.name}`, backgroundColor: `${trainline.name}`}}
+          >
+            Create a trip
           </Button>
         </CardSection>
         <Header headerText={`Updated ${timestamp}`} />
@@ -75,7 +100,7 @@ class ArrivalTimes extends Component {
                         arrivaltime={item}
                         // onButtonPress={this.onButtonPress.bind(this)}
                         trainline={trainline}
-                        destination={destination}
+                        boundFor={boundFor}
                       />}
           keyExtractor={(item)=>item.rn}
         />

@@ -9,10 +9,10 @@ import FavStopListItem from './FavStopListItem';
 class FavStopList extends Component {
 
   onButtonPress(favstop) {
-    const { trainline, trainstop, destination } = favstop
+    const { trainline, trainstop, boundFor } = favstop
     const navigateAction = NavigationActions.navigate({
       routeName: 'ArrivalTimes',
-      params: { trainline, trainstop, destination }
+      params: { trainline, trainstop, boundFor }
     });
     this.props.navigation.dispatch(navigateAction);
   }

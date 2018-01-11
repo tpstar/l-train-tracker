@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { HeaderBackButton, NavigationActions } from 'react-navigation';
 import { FlatList } from 'react-native';
 import { Card, CardSection, Button, Header } from './common';
-import { trainLines } from '../data'
+import { trainLines } from '../data';
 import LineListItem from './LineListItem';
 import { NavigateTo } from './helper';
 

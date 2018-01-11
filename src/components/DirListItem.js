@@ -4,15 +4,15 @@ import { CardSection, Button } from './common';
 class DirListItem extends Component {
 
   render() {
-    const { destination, trainline, onButtonPress, trainstop } = this.props;
+    const { boundFor, trainline, onButtonPress, trainstop } = this.props;
     return (
       <CardSection>
         <Button
-          onPress={()=>onButtonPress(destination)}
+          onPress={()=>onButtonPress(boundFor)}
           overwriteTextStyle={{color: `${trainline.textcolor}`}}
           overwriteButtonStyle={{borderColor: `${trainline.name}`, backgroundColor: `${trainline.name}`}}
         >
-          {destination.name}
+          {boundFor.name}
         </Button>
       </CardSection>
     )

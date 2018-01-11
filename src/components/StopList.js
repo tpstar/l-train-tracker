@@ -9,22 +9,22 @@ class StopList extends Component {
 
   onButtonPress(trainline, trainstop) {
     let routeTo = 'DirList';
-    let destination = '';
+    let boundFor = '';
     if (trainstop.stpId.L) { //console.log('You are in Loop!')
       // need to skip choosing direction
       routeTo = 'ArrivalTimes';
-      destination = { direction: 'L', name: trainline.destination.oppositeToL.name }
-      // once you are in the Chicago loop, destination is the one opposite to L (e.g. Midway)
-      // this.props.createFavStop({ trainline, trainstop, destination });
+      boundFor = { direction: 'L', name: trainline.boundFor.oppositeToL.name }
+      // once you are in the Chicago loop, boundFor is the one opposite to L (e.g. Midway)
+      // this.props.createFavStop({ trainline, trainstop, boundFor });
 
     } else {
-      trainline.destination = _.pick(trainline.destination, [1, 5]); //remove destination.oppositeToL
+      trainline.boundFor = _.pick(trainline.boundFor, [1, 5]); //remove boundFor.oppositeToL
     }
     this.props.navigation.dispatch(
       {
         type: 'Navigation/NAVIGATE',
         routeName: routeTo,
-        params: { trainline, trainstop, destination }
+        params: { trainline, trainstop, boundFor }
       })
   }
 

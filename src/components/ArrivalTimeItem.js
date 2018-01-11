@@ -5,7 +5,7 @@ import { CardSection, Button } from './common';
 class ArrivalTimeItem extends Component {
 
   render() {
-    const { trainline, destination, arrivaltime } = this.props;
+    const { trainline, boundFor, arrivaltime } = this.props;
     const { textcolor, name } = trainline;
     const waitingMin =
       Math.round(

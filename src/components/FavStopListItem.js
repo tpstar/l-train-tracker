@@ -13,7 +13,7 @@ class FavStopListItem extends Component {
           overwriteButtonStyle={{borderColor: `${favstop.trainline.name}`,
                                  backgroundColor: `${favstop.trainline.name}`}}
         >
-          {favstop.trainstop.name} ({favstop.destination.name} bound)
+          {favstop.trainstop.name} ({favstop.boundFor.name} bound)
         </Button>
       </CardSection>
     )

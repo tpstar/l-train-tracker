@@ -8,19 +8,19 @@ import DirListItem from './DirListItem';
 
 class DirList extends Component {
 
-  onButtonPress(destination) {
+  onButtonPress(boundFor) {
     // const navigateAction = NavigationActions.navigate({
     //   routeName: 'DrawerNavigation',
     // })
     const { trainline, trainstop } = this.props.navigation.state.params;
     const navigateAction = NavigationActions.navigate({
       routeName: 'ArrivalTimes',
-      params: { trainline, trainstop, destination }
+      params: { trainline, trainstop, boundFor }
     })
     this.props.navigation.dispatch(navigateAction);
 
-    // this.props.createFavStop({ trainline, trainstop, destination });
-    // // console.log(trainline, trainstop, destination);
+    // this.props.createFavStop({ trainline, trainstop, boundFor });
+    // // console.log(trainline, trainstop, boundFor);
   }
 
   static navigationOptions = ({ navigation }) => {
@@ -37,9 +37,9 @@ class DirList extends Component {
       <Card>
         <Header headerText={"Choose Direction"} />
         <FlatList
-          data={Object.values(trainline.destination)}
+          data={Object.values(trainline.boundFor)}
           renderItem={({item}) => <DirListItem
-                        destination={item}
+                        boundFor={item}
                         onButtonPress={this.onButtonPress.bind(this)}
                         trainline={trainline}
                         trainstop={trainstop}
