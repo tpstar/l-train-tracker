@@ -7,6 +7,7 @@ import StopList from '../components/StopList';
 import DirList from '../components/DirList';
 import ArrivalTimes from '../components/ArrivalTimes';
 import TripDestinationStops from '../components/TripDestinationStops';
+import TripEstimates from '../components/TripEstimates';
 import DrawerContainer from '../components/DrawerContainer';
 import { NavigateTo } from '../components/helper';
 
@@ -49,7 +50,8 @@ const NonDrawerNavigation = StackNavigator ({
   StopList: { screen: StopList },
   DirList: { screen: DirList },
   ArrivalTimes: { screen: ArrivalTimes },
-  TripDestinationStops: { screen: TripDestinationStops }
+  TripDestinationStops: { screen: TripDestinationStops },
+  TripEstimates: { screen: TripEstimates }
 })
 
 const AppNavigator = StackNavigator({

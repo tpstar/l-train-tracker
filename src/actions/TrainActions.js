@@ -10,14 +10,16 @@ export const createFavStop = ({ trainline, trainstop, boundFor }) => {
 }
 
 export const arrivalTimeFetch = ({ trainline, trainstop, boundFor }) => {
-  console.log(trainstop.stpId[boundFor.direction]);
+  console.log(trainstop.stpId[boundFor.direction]); //boundFor.direction is from data/index.js "N", "S", "L", ..
   const stopId = trainstop.stpId[boundFor.direction] || trainstop.stpId[boundFor.direction2] //if not "N" and "S" try "E" and "W";
-  const routeName = trainline.rt;
-  console.log(routeName)
+  // console.log(trainline)
+  const routeName = trainline.rt; // route name to filter out other line arrivals
+  // console.log(routeName)
   const url = `http://lapi.transitchicago.com/api/1.0/ttarrivals.aspx?key=${CTA_API_KEY}&stpid=${stopId}&rt=${routeName}&outputType=JSON&max=3`;
   return (dispatch) => {
     fetch(url)
       .then((data)=>data.json())
+      .catch(error => console.error('Error:', error))
       .then((data)=>{
         dispatch(arrivalTimeSuccess(data.ctatt))
       })

@@ -9,6 +9,7 @@ import FavStopListItem from './FavStopListItem';
 class FavStopList extends Component {
 
   onButtonPress(favstop) {
+    // console.log(favstop)
     const { trainline, trainstop, boundFor } = favstop
     const navigateAction = NavigationActions.navigate({
       routeName: 'ArrivalTimes',

@@ -13,12 +13,12 @@ class ArrivalTimes extends Component {
 
   onButtonPressSave(trainline, trainstop, boundFor) {
     const { favstops } = this.props;
-    console.log(_.isEmpty(favstops));
+    // console.log(_.isEmpty(favstops));
     const selectedStop = { trainline, trainstop, boundFor }
     if (_.isEmpty(favstops)) {
       this.props.createFavStop({ trainline, trainstop, boundFor });
     } else {
-      const favStopExists = _.isEmpty(favstops) || favstops.some((favstop) => (
+      const favStopExists = favstops.some((favstop) => (
         favstop.trainline.name === selectedStop.trainline.name &&
         favstop.trainstop.name === selectedStop.trainstop.name &&
         favstop.boundFor.name === selectedStop.boundFor.name
@@ -32,7 +32,7 @@ class ArrivalTimes extends Component {
     this.props.navigation.dispatch(
       {
         type: 'Navigation/NAVIGATE',
-        routeName: 'DrawerNavigation',
+        routeName: 'DrawerNavigation', //To FavStopList
       })
   }
 
@@ -110,7 +110,7 @@ class ArrivalTimes extends Component {
 }
 
 const mapStateToProps = state => {
-  const { arrivaldata, favstops } = state; //arrivaldata from reducers/index.js
+  const { arrivaldata, favstops } = state; //arrivaldata from reducers/index.js and from action creator arrivalTimeFetch in this same file
   return { arrivaldata, favstops };
 }
 

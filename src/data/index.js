@@ -2,6 +2,7 @@ export const trainLines = [
   {
     name: 'red',
     textcolor: 'white',
+    rt: 'Red', //rt is to specify route name when fetching arrival data, see TrainAction.js creator
     stops: [
       {
         name: 'Howard',
@@ -283,6 +284,7 @@ export const trainLines = [
   },
   {
     name: 'blue',
+    rt: 'Blue',
     textcolor: 'white',
     stops: [
       {
@@ -513,6 +515,7 @@ export const trainLines = [
   },
   {
     name: 'green',
+    rt: 'G',
     textcolor: 'white',
     stops: [
       {
@@ -531,18 +534,90 @@ export const trainLines = [
           W: 30264,  
         } 
       },
+      {
+        name: 'Ridgeland',
+        staId: 40610,
+        stpId: {
+          E: 30119,
+          W: 30120,  
+        } 
+      },
+      {
+        name: 'Austin',
+        staId: 40010,
+        stpId: {
+          E: 30001,
+          W: 30002,  
+        } 
+      },
+      {
+        name: 'Central',
+        staId: 40280,
+        stpId: {
+          E: 30054,
+          W: 30055,  
+        } 
+      },
+      {
+        name: 'Laramie',
+        staId: 40700,
+        stpId: {
+          E: 30135,
+          W: 30136,  
+        } 
+      },
+      {
+        name: 'Cicero',
+        staId: 40480,
+        stpId: {
+          E: 30094,
+          W: 30009,  
+        } 
+      },
+      {
+        name: 'Pulaski',
+        staId: 40030,
+        stpId: {
+          E: 30005,
+          W: 30006,  
+        } 
+      },
+
+      // Conservatory-Central Park Drive,
+      // Kedzie,
+      // California,
+      // Ashland,
+      // Morgan,
+      // Clinton,
+      // Clark/Lake,
+      // State/Lake,
+      // Washington/Wabash,
+      // Adams/Wabash,
+      // Roosevelt,
+      // Cermak-McCormick Place,
+      // 35th-Bronzeville-IIT,
+      // Indiana,
+      // 43rd,
+      // 47th,
+      // 51st,
+      // Garfield,
+      // Kind Drive (Harlem-bound boarding only) Cottage Grove branch,
+      // Cottage Grove,
+      // Halsted (Ashland branch),
+      // Ashland/63rd
     ],
     boundFor: {
       1: {
-        name: '63rd',
-        direction: 'E',
+        name: 'Harlem',
+        direction: 'W',
         key: 1
       },
       5: {
-        name: 'Harlem',
-        direction: 'W',
+        name: '63rd',
+        direction: 'E',
         key: 5
-      }
+      },
+
     }
 
   },
@@ -680,7 +755,7 @@ export const trainLines = [
       },
       3: {
         name: 'Midway',
-        key: 3,
+        key: 3, //
         loopStartStaArrayIndex: 8, //array index for H.W. Library
       },
       5: {
@@ -692,18 +767,109 @@ export const trainLines = [
   },
   {
     name: 'brown',
-    textcolor: 'white'
+    rt: 'Brn',
+    textcolor: 'white',
+    stops: [
+      // Kimball,
+      // Kedzie,
+      // Francisco,
+      // Rockwell,
+      // Western,
+      // Damen,
+      // Montrose,
+      // Irving Park,
+      // Addison,
+      // Paulina,
+      // Southport,
+      // Belmont,
+      // Wellington,
+      // Diversey,
+      // Fullerton,
+      // Armitage,
+      // Sedgwick,
+      // Chicago,
+      // Merchandise Mart,
+      // Washington/Wells,
+      // Quincy,
+      // LaSalle/Van Buren,
+      // Harold Washington Library-State/Van Buren
+      // Adams/Wabash,
+      // Washington/Wabash,
+      // State/Lake,
+      // Clark/Lake,
+    ]
   },
   {
     name: 'purple',
-    textcolor: 'white'
+    rt: 'P',
+    textcolor: 'white',
+    stops: [
+      // Linden,
+      // Central,
+      // Noyes,
+      // Foster,
+      // Davis,
+      // Dempster,
+      // Main,
+      // South Blvd,
+      // Howard,
+      // //starts express
+      // Wilson,
+      // Belmont,
+      // Wellington,
+      // Diversey,
+      // Fullerton,
+      // Armitage,
+      // Sedgwick,
+      // Chicago,
+      // Merchandise Mart,
+      // Clark/Lake,
+      // State/Lake,
+      // Washington/Wabash,
+      // Adams/Wabash,
+      // Harold Washington Library-State/Van Buren,
+      // LaSalle/Van Buren,
+      // Quincy,
+      // Washington/Wells,
+    ]
   },
   {
     name: 'yellow',
-    textcolor: 'black'
+    rt: 'Y',
+    textcolor: 'black',
+    stops: [
+      // Demster-Skokie,
+      // Oakton-Skokie,
+      // Howard
+    ]
   },
   {
     name: 'pink',
-    textcolor: 'black'
+    rt: 'Pink',
+    textcolor: 'black',
+    stops: [
+      // 54th/Cermak,
+      // Cicero,
+      // Kostner,
+      // Pulaski,
+      // Central Park,
+      // Kedzie,
+      // California,
+      // Western,
+      // Damen,
+      // 18th,
+      // Polk,
+      // Ashland,
+      // Morgan,
+      // Clinton,
+      // Clark/Lake,
+      // State/Lake,
+      // Washington/Wabsh,
+      // Adams/Wabash,
+      // Harold Washington Library-State/Van Buren,
+      // LaSalle/Van Buren,
+      // Quincy,
+      // Washington/Wells,
+    ]
   }
 ]
