@@ -6,7 +6,7 @@ import { HeaderBackButton } from 'react-navigation';
 import _ from 'lodash';
 import { Card, Header, Button, CardSection } from './common';
 import { arrivalTimeFetch, createFavStop } from '../actions';
-import ArrivalTimeItem from './ArrivalTimeItem';
+import TripEstimateItem from './TripEstimateItem';
 import { NavigateTo } from './helper';
 
 class TripEstimates extends Component {
@@ -62,15 +62,15 @@ class TripEstimates extends Component {
   render() {
     const { trainline, departureStop, boundFor, arrivalStop } = this.props.navigation.state.params;
     //from params in NavigationActions from TripDestinationStops
-    console.log( trainline, departureStop, boundFor, arrivalStop )
+    // console.log( trainline, departureStop, boundFor, arrivalStop )
     const { arrivaldata } = this.props;
-    console.log(arrivaldata)
-    // const timestampRaw = arrivaldata.tmst;
-    // let timestamp = '';
-    // if (timestampRaw) {
-    //   timestamp = moment(timestampRaw).format('h:mm a');
-    // }
-    // const arrivaltimes = arrivaldata.eta;
+    const timestampRaw = arrivaldata.tmst;
+    let timestamp = '';
+    if (timestampRaw) {
+      timestamp = moment(timestampRaw).format('h:mm a');
+    }
+    const arrivaltimes = arrivaldata.eta;
+    console.log(arrivaltimes)
 
     return (
       <Card>
@@ -93,18 +93,18 @@ class TripEstimates extends Component {
           >
             Create a trip
           </Button>
-        </CardSection>
+        </CardSection> */}
         <Header headerText={`Updated ${timestamp}`} />
         <FlatList
           data={arrivaltimes}
-          renderItem={({ item }) => <ArrivalTimeItem
+          renderItem={({ item }) => <TripEstimateItem
                         arrivaltime={item}
                         // onButtonPress={this.onButtonPress.bind(this)}
                         trainline={trainline}
-                        boundFor={boundFor}
+                        arrivalStop={arrivalStop}
                       />}
           keyExtractor={(item)=>item.rn}
-        /> */}
+        />
       </Card>
     )
   }

@@ -36,14 +36,17 @@ class ArrivalTimes extends Component {
       })
   }
 
-  onButtonPressCreateTrip(trainline, trainstop, boundFor) {
-    const departure = { trainline, trainstop, boundFor };
-    console.log('departure: ', departure);
+  onButtonPressCreateTrip( arrivaltime ) {
+    console.log(arrivaltime)
+    // // console.log('departure: ', departure);
+    const { trainline, trainstop, boundFor } = this.props.navigation.state.params;
+    const departure = { trainline, trainstop, boundFor, arrivaltime };
     this.props.navigation.dispatch(
       {
         type: 'Navigation/NAVIGATE',
         routeName: 'TripDestinationStops',
         params: { departure }
+        // params: { arrivaltime }
       })
   }
 
@@ -61,7 +64,7 @@ class ArrivalTimes extends Component {
   };
 
   render() {
-    const { trainline, trainstop, boundFor, fav } = this.props.navigation.state.params;
+    const { trainline, trainstop, boundFor } = this.props.navigation.state.params;
     //from params in NavigationActions either from StopList or DirList
     const { arrivaldata } = this.props;
     const timestampRaw = arrivaldata.tmst;
@@ -77,28 +80,26 @@ class ArrivalTimes extends Component {
         <Header headerText={`${boundFor.name} bound`} />
         <CardSection>
           <Button
-            // onPress={this.onButtonPress(trainline, trainstop, boundFor)}
-            //above will run onButtonPress before the button is pressed
             onPress={()=>this.onButtonPressSave(trainline, trainstop, boundFor)}
             // overwriteTextStyle={{color: `${trainline.textcolor}`}}
             // overwriteButtonStyle={{borderColor: `${trainline.name}`, backgroundColor: `${trainline.name}`}}
           >
             Save this Stop
           </Button>
-          <Button
+          {/* <Button
             onPress={()=>this.onButtonPressCreateTrip(trainline, trainstop, boundFor)}
             // overwriteTextStyle={{color: `${trainline.textcolor}`}}
             // overwriteButtonStyle={{borderColor: `${trainline.name}`, backgroundColor: `${trainline.name}`}}
           >
             Create a trip
-          </Button>
+          </Button> */}
         </CardSection>
         <Header headerText={`Updated ${timestamp}`} />
         <FlatList
           data={arrivaltimes}
           renderItem={({ item }) => <ArrivalTimeItem
                         arrivaltime={item}
-                        // onButtonPress={this.onButtonPress.bind(this)}
+                        onButtonPress={this.onButtonPressCreateTrip.bind(this)}
                         trainline={trainline}
                         boundFor={boundFor}
                       />}

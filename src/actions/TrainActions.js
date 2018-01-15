@@ -1,4 +1,4 @@
-import { CREATE_FAV_STOP, FETCH_ARRIVAL_TIME } from './types';
+import { CREATE_FAV_STOP, FETCH_ARRIVAL_TIME, FOLLOW_TRAIN_SUCCESS } from './types';
 import { CTA_API_KEY } from '../config';
 
 export const createFavStop = ({ trainline, trainstop, boundFor }) => {
@@ -10,7 +10,7 @@ export const createFavStop = ({ trainline, trainstop, boundFor }) => {
 }
 
 export const arrivalTimeFetch = ({ trainline, trainstop, boundFor }) => {
-  console.log(trainstop.stpId[boundFor.direction]); //boundFor.direction is from data/index.js "N", "S", "L", ..
+  // console.log('stop platform id: ', trainstop.stpId[boundFor.direction]); //boundFor.direction is from data/index.js "N", "S", "L", ..
   const stopId = trainstop.stpId[boundFor.direction] || trainstop.stpId[boundFor.direction2] //if not "N" and "S" try "E" and "W";
   // console.log(trainline)
   const routeName = trainline.rt; // route name to filter out other line arrivals
@@ -29,6 +29,28 @@ export const arrivalTimeFetch = ({ trainline, trainstop, boundFor }) => {
 export const arrivalTimeSuccess = (data) => {
   return {
     type: FETCH_ARRIVAL_TIME,
+    payload: data
+  }
+}
+
+export const followThisTrain = ({ runnumber, arrivalStop }) => {
+  console.log(runnumber, arrivalStop.stpId);
+  const url = `http://lapi.transitchicago.com/api/1.0/ttfollow.aspx?key=${CTA_API_KEY}&runnumber=${runnumber}&outputType=JSON`;
+  console.log(url)
+  return (dispatch) => {
+    fetch(url)
+      .then((data)=>data.json())
+      .catch(error => console.error('Error:', error))
+      .then((data)=>{
+        // console.log(data);
+        dispatch(followThisTrainSuccess(data.ctatt));
+      })
+  }
+}
+
+export const followThisTrainSuccess = (data) => {
+  return {
+    type: FOLLOW_TRAIN_SUCCESS,
     payload: data
   }
 }

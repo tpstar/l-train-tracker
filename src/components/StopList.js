@@ -31,7 +31,7 @@ class StopList extends Component {
 
   static navigationOptions = ({ navigation }) => {
     const { trainline } = navigation.state.params;
-    console.log(trainline)
+    // console.log(trainline)
     const lineName = _.capitalize(trainline.name)
 
     return {

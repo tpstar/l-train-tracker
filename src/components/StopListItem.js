@@ -6,15 +6,15 @@ class StopListItem extends Component {
 
   render() {
     const { trainstop, onButtonPress, trainline } = this.props;
-    const trainLine = { name: trainline.name,
-                        textcolor: trainline.textcolor,
-                        boundFor: trainline.boundFor,
-                        rt: trainline.rt 
-                      }; //remove stops from trainline
+    // const trainLine = { name: trainline.name,
+    //                     textcolor: trainline.textcolor,
+    //                     boundFor: trainline.boundFor,
+    //                     rt: trainline.rt
+    //                   }; //remove stops from trainline
     return (
       <CardSection>
         <Button
-           onPress={()=>onButtonPress(trainLine, trainstop)}
+           onPress={()=>onButtonPress(trainline, trainstop)}
            overwriteTextStyle={{color: `${trainline.textcolor}`}}
            overwriteButtonStyle={{borderColor: `${trainline.name}`, backgroundColor: `${trainline.name}`}}
          >

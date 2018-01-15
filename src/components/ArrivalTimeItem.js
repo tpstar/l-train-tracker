@@ -5,7 +5,8 @@ import { CardSection, Button } from './common';
 class ArrivalTimeItem extends Component {
 
   render() {
-    const { trainline, boundFor, arrivaltime } = this.props;
+    const { trainline, boundFor, arrivaltime, onButtonPress } = this.props;
+    // console.log('arrivaltime: ',arrivaltime);
     const { textcolor, name } = trainline;
     const waitingMin =
       Math.round(
@@ -16,7 +17,7 @@ class ArrivalTimeItem extends Component {
     return (
       <CardSection>
         <Button
-           // onPress={()=>onButtonPress()}
+           onPress={()=>onButtonPress(arrivaltime)}
            overwriteTextStyle={{color: `${textcolor}`}}
            overwriteButtonStyle={{borderColor: `${name}`, backgroundColor: `${name}`}}
          >

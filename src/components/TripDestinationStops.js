@@ -10,10 +10,10 @@ import TripEstimates from './TripEstimates';
 class TripDestinationStops extends Component {
 
   onButtonPress(trainline, arrivalStop){
-    const departureStop = this.props.navigation.state.params.departure.trainstop;
-    const { boundFor } = this.props.navigation.state.params.departure;
-    console.log(trainline, departureStop, boundFor, arrivalStop)
-  //need to create action, check arrivalTimes.js and in there check createFavStop
+    const { trainstop, boundFor, arrivaltime } = this.props.navigation.state.params.departure;
+    const departureStop = trainstop;
+    console.log(arrivaltime, departureStop, arrivalStop)
+    //dispatch action arrivalTimeFetch from here!
     this.props.navigation.dispatch(
       {
         type: 'Navigation/NAVIGATE',
@@ -23,25 +23,20 @@ class TripDestinationStops extends Component {
   }
 
   createPossibleDestinationStopList = ({ trainline, trainstop, boundFor }) => { //create possible destination stop list
-    const tripLine = trainLines.filter( //find the right route
-      line => line.name === trainline.name
-    )[0] //[0] is to conver array into object element
-    const tripLineStops = tripLine.stops;
+    const tripLineStops = trainline.stops;
     const tripStopIndex = tripLineStops.findIndex((stop) =>
       stop.staId === trainstop.staId
     )
     // console.log(tripLine, boundFor);
     const tripBoundForKey = boundFor.key;
-
-    let lStaArrayIndex = -1;
-    if (tripLine.boundFor[3]) { //if the departure is one of the stops in the loop line
-      lStaArrayIndex = tripLine.boundFor[3].loopStartStaArrayIndex;
-    }
-    console.log(lStaArrayIndex)
     var tripStops = [];
     if (tripBoundForKey === 1) {
       tripStops = tripLineStops.slice(0, tripStopIndex).reverse()
     } else if (tripBoundForKey === 3) { //if the departure is in the loop
+      // let lStaArrayIndex = -1;
+      // if (tripLine.boundFor[3]) { //if the departure is one of the stops in the loop line
+      let lStaArrayIndex = trainline.boundFor[3].loopStartStaArrayIndex;
+      // }
       tripStops = [...tripLineStops.slice(tripStopIndex + 1),
                    ...tripLineStops.slice(0, lStaArrayIndex).reverse()]
     } else if (tripBoundForKey === 5) {
@@ -66,7 +61,6 @@ class TripDestinationStops extends Component {
   render() {
     const { trainline, trainstop, boundFor } = this.props.navigation.state.params.departure;
     const tripStops = this.createPossibleDestinationStopList({ trainline, trainstop, boundFor });
-    // console.log(tripLineStops, tripBoundForKey, tripStops);
     return (
       <Card>
         <Header headerText={"Choose Destination Stop"} />
