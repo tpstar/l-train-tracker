@@ -11,6 +11,9 @@ import { NavigateTo } from './helper';
 
 class TripEstimates extends Component {
 
+  // remove arrivaldata from state to props and get data from arrivaltime from TripDesinationStops
+  // remove TripEstimateItem, show only one run data on TripEstimate
+
   // onButtonPressSave(trainline, trainstop, boundFor) {
   //   const { favstops } = this.props;
   //   // console.log(_.isEmpty(favstops));
@@ -47,10 +50,10 @@ class TripEstimates extends Component {
   //     })
   // }
 
-  componentWillMount() {
-    const { trainline, departureStop, boundFor } = this.props.navigation.state.params; //from params in navigation.dispatch
-    this.props.arrivalTimeFetch({ trainline, trainstop: departureStop, boundFor }); // put trainline, trainstop, boundFor as argument
-  }
+  // componentWillMount() {
+  //   const { trainline, departureStop, boundFor } = this.props.navigation.state.params; //from params in navigation.dispatch
+  //   this.props.arrivalTimeFetch({ trainline, trainstop: departureStop, boundFor }); // put trainline, trainstop, boundFor as argument
+  // }
 
   static navigationOptions = ({ navigation }) => {
     return {
@@ -63,14 +66,24 @@ class TripEstimates extends Component {
     const { trainline, departureStop, boundFor, arrivalStop } = this.props.navigation.state.params;
     //from params in NavigationActions from TripDestinationStops
     // console.log( trainline, departureStop, boundFor, arrivalStop )
-    const { arrivaldata } = this.props;
-    const timestampRaw = arrivaldata.tmst;
-    let timestamp = '';
-    if (timestampRaw) {
-      timestamp = moment(timestampRaw).format('h:mm a');
+    const { followtraindata } = this.props;
+    // console.log( "is state to props called twice in render?", followtraindata ) // once with empty object and once with object with data
+    if (followtraindata.eta) {
+      console.log(followtraindata.eta, departureStop.staId, arrivalStop.staId);
+      const stationForDeparture = followtraindata.eta.find((stop) => stop.staId == departureStop.staId); // one is number and the other is string
+      const stationForArrival = followtraindata.eta.find((stop) => stop.staId == arrivalStop.staId);
+      console.log(stationForDeparture.arrT, stationForArrival.arrT)
     }
-    const arrivaltimes = arrivaldata.eta;
-    console.log(arrivaltimes)
+    // const arrivalTimeForDeparture = followtraindata.eta.find((stop) => stop.staId == departureStop.staId);
+    // const arrivalTimeForArrival = followtraindata.eta.find((stop) => stop.staId == arrivalStop.staId);
+    // console.log(arrivalTimeForDeparture, arrivalTimeForArrival)
+    // const timestampRaw = arrivaldata.tmst;
+    // let timestamp = '';
+    // if (timestampRaw) {
+    //   timestamp = moment(timestampRaw).format('h:mm a');
+    // }
+    // const arrivaltimes = arrivaldata.eta;
+    // console.log(arrivaltimes)
 
     return (
       <Card>
@@ -94,8 +107,9 @@ class TripEstimates extends Component {
             Create a trip
           </Button>
         </CardSection> */}
-        <Header headerText={`Updated ${timestamp}`} />
-        <FlatList
+        {/* <Header headerText={`Updated ${timestamp}`} /> */}
+        <Header headerText={`Departing from ${departureStop.name}`} in/>
+        {/* <FlatList
           data={arrivaltimes}
           renderItem={({ item }) => <TripEstimateItem
                         arrivaltime={item}
@@ -104,15 +118,15 @@ class TripEstimates extends Component {
                         arrivalStop={arrivalStop}
                       />}
           keyExtractor={(item)=>item.rn}
-        />
+        /> */}
       </Card>
     )
   }
 }
 
 const mapStateToProps = state => {
-  const { arrivaldata, favstops } = state; //arrivaldata from reducers/index.js
-  return { arrivaldata, favstops };
+  const { followtraindata } = state; //arrivaldata from reducers/index.js
+  return { followtraindata };
 }
 
 export default connect(mapStateToProps, { arrivalTimeFetch, createFavStop })(TripEstimates);

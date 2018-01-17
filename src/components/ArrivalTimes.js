@@ -46,7 +46,6 @@ class ArrivalTimes extends Component {
         type: 'Navigation/NAVIGATE',
         routeName: 'TripDestinationStops',
         params: { departure }
-        // params: { arrivaltime }
       })
   }
 
@@ -67,6 +66,7 @@ class ArrivalTimes extends Component {
     const { trainline, trainstop, boundFor } = this.props.navigation.state.params;
     //from params in NavigationActions either from StopList or DirList
     const { arrivaldata } = this.props;
+    // console.log("is state to props called twice in render?", arrivaldata)
     const timestampRaw = arrivaldata.tmst;
     let timestamp = '';
     if (timestampRaw) {

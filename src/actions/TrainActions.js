@@ -33,10 +33,8 @@ export const arrivalTimeSuccess = (data) => {
   }
 }
 
-export const followThisTrain = ({ runnumber, arrivalStop }) => {
-  console.log(runnumber, arrivalStop.stpId);
+export const followThisTrain = ({ runnumber }) => {
   const url = `http://lapi.transitchicago.com/api/1.0/ttfollow.aspx?key=${CTA_API_KEY}&runnumber=${runnumber}&outputType=JSON`;
-  console.log(url)
   return (dispatch) => {
     fetch(url)
       .then((data)=>data.json())

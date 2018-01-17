@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import { HeaderBackButton } from 'react-navigation';
 import { View, FlatList } from 'react-native';
 import _ from 'lodash';
-import { trainLines } from '../data';
+import { connect } from 'react-redux';
+// import { trainLines } from '../data';
 import { Card, Header } from './common';
 import StopListItem from './StopListItem';
 import TripEstimates from './TripEstimates';
+import { followThisTrain } from '../actions';
 
 class TripDestinationStops extends Component {
 
@@ -13,13 +15,18 @@ class TripDestinationStops extends Component {
     const { trainstop, boundFor, arrivaltime } = this.props.navigation.state.params.departure;
     const departureStop = trainstop;
     console.log(arrivaltime, departureStop, arrivalStop)
-    //dispatch action arrivalTimeFetch from here!
+    const runnumber = arrivaltime.rn;
+    console.log(arrivaltime.rn)
+
+
     this.props.navigation.dispatch(
       {
         type: 'Navigation/NAVIGATE',
         routeName: 'TripEstimates', //analoguous to arrivalTimes, use AppNavigator.js to route to TripEstimates
         params: { trainline, departureStop, boundFor, arrivalStop }
       })
+    this.props.followThisTrain({ runnumber });
+
   }
 
   createPossibleDestinationStopList = ({ trainline, trainstop, boundFor }) => { //create possible destination stop list
@@ -78,4 +85,4 @@ class TripDestinationStops extends Component {
   }
 }
 
-export default TripDestinationStops;
+export default connect(null, { followThisTrain })(TripDestinationStops);

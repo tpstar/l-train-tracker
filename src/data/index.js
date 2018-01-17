@@ -755,6 +755,7 @@ export const trainLines = [
       },
       3: {
         name: 'Midway',
+        direction: 'S',
         key: 3, //
         loopStartStaArrayIndex: 8, //array index for H.W. Library
       },
