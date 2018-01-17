@@ -8,6 +8,7 @@ import { Card, Header, Button, CardSection } from './common';
 import { arrivalTimeFetch, createFavStop } from '../actions';
 import TripEstimateItem from './TripEstimateItem';
 import { NavigateTo } from './helper';
+import { waitingMin } from './helper';
 
 class TripEstimates extends Component {
 
@@ -67,28 +68,22 @@ class TripEstimates extends Component {
     //from params in NavigationActions from TripDestinationStops
     // console.log( trainline, departureStop, boundFor, arrivalStop )
     const { followtraindata } = this.props;
-    // console.log( "is state to props called twice in render?", followtraindata ) // once with empty object and once with object with data
+    console.log( "is state to props called twice in render?", followtraindata ) // once with empty object and once with object with data
+    let departureStopData = {};
+    let arrivalStopData = {};
     if (followtraindata.eta) {
       console.log(followtraindata.eta, departureStop.staId, arrivalStop.staId);
-      const stationForDeparture = followtraindata.eta.find((stop) => stop.staId == departureStop.staId); // one is number and the other is string
-      const stationForArrival = followtraindata.eta.find((stop) => stop.staId == arrivalStop.staId);
-      console.log(stationForDeparture.arrT, stationForArrival.arrT)
+      departureStopData = followtraindata.eta.find((stop) => stop.staId == departureStop.staId); // one is number and the other is string
+      arrivalStopData = followtraindata.eta.find((stop) => stop.staId == arrivalStop.staId);
+      console.log(waitingMin(departureStopData), waitingMin(arrivalStopData), moment(departureStopData.arrT).format('h:mm a'), moment(arrivalStopData.arrT).format('h:mm a'))
     }
-    // const arrivalTimeForDeparture = followtraindata.eta.find((stop) => stop.staId == departureStop.staId);
-    // const arrivalTimeForArrival = followtraindata.eta.find((stop) => stop.staId == arrivalStop.staId);
-    // console.log(arrivalTimeForDeparture, arrivalTimeForArrival)
-    // const timestampRaw = arrivaldata.tmst;
-    // let timestamp = '';
-    // if (timestampRaw) {
-    //   timestamp = moment(timestampRaw).format('h:mm a');
-    // }
-    // const arrivaltimes = arrivaldata.eta;
-    // console.log(arrivaltimes)
 
     return (
       <Card>
         <Header headerText={`Departure: ${departureStop.name}`} />
+        <Header headerText={`in ${waitingMin(departureStopData)} min at ${moment(departureStopData.arrT).format('h:mm a')}`} />
         <Header headerText={`Arrival: ${arrivalStop.name}`} />
+        <Header headerText={`arriving at ${moment(arrivalStopData.arrT).format('h:mm a')}`} />
         {/* <CardSection>
           <Button
             // onPress={this.onButtonPress(trainline, trainstop, boundFor)}
@@ -108,7 +103,6 @@ class TripEstimates extends Component {
           </Button>
         </CardSection> */}
         {/* <Header headerText={`Updated ${timestamp}`} /> */}
-        <Header headerText={`Departing from ${departureStop.name}`} in/>
         {/* <FlatList
           data={arrivaltimes}
           renderItem={({ item }) => <TripEstimateItem

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import { CardSection, Button } from './common';
+import { waitingMin } from './helper';
 
 class ArrivalTimeItem extends Component {
 
@@ -8,12 +9,7 @@ class ArrivalTimeItem extends Component {
     const { trainline, boundFor, arrivaltime, onButtonPress } = this.props;
     // console.log('arrivaltime: ',arrivaltime);
     const { textcolor, name } = trainline;
-    const waitingMin =
-      Math.round(
-        parseFloat(
-          moment(arrivaltime.arrT).diff(moment(arrivaltime.prdt))
-        )/60/1000 //milliseconds to minutes
-      )
+
     return (
       <CardSection>
         <Button
@@ -21,7 +17,7 @@ class ArrivalTimeItem extends Component {
            overwriteTextStyle={{color: `${textcolor}`}}
            overwriteButtonStyle={{borderColor: `${name}`, backgroundColor: `${name}`}}
          >
-           {waitingMin} min
+           {waitingMin(arrivaltime)} min
         </Button>
       </CardSection>
     )
