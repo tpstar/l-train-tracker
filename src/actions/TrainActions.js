@@ -50,7 +50,7 @@ export const followThisTrain = ({ runnumber, departureStop, arrivalStop, departu
 
 
         console.log(arrivalStopData, !!departureStopData, !!arrivalStopData);
-        if (!!departureStopData) {
+        if (!departureStopData) {
           departureStopData = departureStopArrivaltime;
         }
         console.log(departureStopData)

@@ -32,10 +32,10 @@ class TripEstimates extends Component {
     let departureStopData = {};
     let arrivalStopData = {};
     if (followtraindata.eta) {
-      console.log(followtraindata.eta, departureStop.staId, arrivalStop.staId);
+      // console.log(followtraindata.eta, departureStop.staId, arrivalStop.staId);
       departureStopData = followtraindata.eta.find((stop) => stop.staId == departureStop.staId); // one is number and the other is string
       arrivalStopData = followtraindata.eta.find((stop) => stop.staId == arrivalStop.staId);
-      console.log(waitingMin(departureStopData), waitingMin(arrivalStopData), moment(departureStopData.arrT).format('h:mm a'), moment(arrivalStopData.arrT).format('h:mm a'))
+      // console.log(waitingMin(departureStopData), waitingMin(arrivalStopData), moment(departureStopData.arrT).format('h:mm a'), moment(arrivalStopData.arrT).format('h:mm a'))
     }
 
     return (
