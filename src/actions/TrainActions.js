@@ -33,14 +33,16 @@ export const arrivalTimeSuccess = (data) => {
   }
 }
 
-export const followThisTrain = ({ runnumber }) => {
+export const followThisTrain = ({ runnumber, departureStop, arrivalStop }) => {
   const url = `http://lapi.transitchicago.com/api/1.0/ttfollow.aspx?key=${CTA_API_KEY}&runnumber=${runnumber}&outputType=JSON`;
   return (dispatch) => {
     fetch(url)
       .then((data)=>data.json())
       .catch(error => console.error('Error:', error))
       .then((data)=>{
-        // console.log(data);
+        console.log(data.ctatt.eta, data.ctatt.eta.find((stop)=>stop.staId==arrivalStop.staId), arrivalStop.staId);
+        const isDestinationStopInCTAFollowThisTrainAPI = data.ctatt.eta.some((stop)=>stop.staId==arrivalStop.staId);
+        console.log(isDestinationStopInCTAFollowThisTrainAPI);
         dispatch(followThisTrainSuccess(data.ctatt));
       })
   }
@@ -51,4 +53,8 @@ export const followThisTrainSuccess = (data) => {
     type: FOLLOW_TRAIN_SUCCESS,
     payload: data
   }
+}
+
+export const googleArrivalTime = ({ arrivalStop }) => {
+
 }
