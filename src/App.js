@@ -20,7 +20,7 @@ class App extends Component {
       store,
       {
         storage: AsyncStorage,
-        blacklist: ['nav']
+        blacklist: ['nav', 'followtraindata', 'arrivaldata']
       },
       () => {
         this.setState({ isReady: true })

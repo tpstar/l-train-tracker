@@ -37,7 +37,7 @@ class ArrivalTimes extends Component {
   }
 
   onButtonPressCreateTrip( arrivaltime ) {
-    console.log(arrivaltime)
+    // console.log(arrivaltime)
     // // console.log('departure: ', departure);
     const { trainline, trainstop, boundFor } = this.props.navigation.state.params;
     const departure = { trainline, trainstop, boundFor, arrivaltime };
