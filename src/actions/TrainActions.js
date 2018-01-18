@@ -1,5 +1,7 @@
+import moment from 'moment';
 import { CREATE_FAV_STOP, FETCH_ARRIVAL_TIME, FOLLOW_TRAIN_SUCCESS } from './types';
 import { CTA_API_KEY, Google_Maps_API_KEY } from '../config';
+
 
 export const createFavStop = ({ trainline, trainstop, boundFor }) => {
   console.log(trainline, trainstop, boundFor);
@@ -33,9 +35,9 @@ export const arrivalTimeSuccess = (data) => {
   }
 }
 
-export const followThisTrain = ({ departureStop, arrivalStop, departureStopArrivaltime }) => {
+export const followThisTrain = ({ departureStop, arrivalStop, departureStopArrivaltime, routeName }) => {
   const runnumber = departureStopArrivaltime.rn;
-  // console.log(runnumber)
+  console.log(departureStop, arrivalStop, departureStopArrivaltime, routeName)
   const url = `http://lapi.transitchicago.com/api/1.0/ttfollow.aspx?key=${CTA_API_KEY}&runnumber=${runnumber}&outputType=JSON`;
   return (dispatch) => {
     fetch(url)
@@ -52,29 +54,30 @@ export const followThisTrain = ({ departureStop, arrivalStop, departureStopArriv
         //if follow this train API does not include the departure stop data because the train already departed the stop
           departureStopData = departureStopArrivaltime;
         }
-        // console.log(departureStopData)
+        const tripDepartureTime = { routeName, stop: departureStopData.staNm, arrT: moment(departureStopData.arrT).format('h:mm a')};
         if (!arrivalStopData) {
           const lastStopDataCtaApiCanGive = data.ctatt.eta[data.ctatt.eta.length - 1];
           const lastStopName = lastStopDataCtaApiCanGive.staNm;
           const arrivalStopName = arrivalStop.name;
-          const googleMapsUrl = `https://maps.googleapis.com/maps/api/directions/json?origin=cta+red+${lastStopName}&destination=cta+red+${arrivalStopName}&key=${Google_Maps_API_KEY}&mode=transit`;
+          const googleMapsUrl = `https://maps.googleapis.com/maps/api/directions/json?origin=cta+${routeName}+${lastStopName}&destination=cta+${routeName}+${arrivalStopName}&key=${Google_Maps_API_KEY}&mode=transit`;
           fetch(googleMapsUrl)
             .then((data)=>data.json())
             .catch(error => console.error('Error:', error))
             .then((data)=>{
               const tripDurationInSec = data.routes[0].legs[0].duration.value;
-              console.log(tripDurationInSec)
+              console.log(tripDurationInSec, 'sec')
             })
           }
-        dispatch(followThisTrainSuccess(data.ctatt));
+        const tripArrivalTime = { routeName, stop: arrivalStopData.staNm, arrT: moment(arrivalStopData.arrT).format('h:mm a')};
+        dispatch(followThisTrainSuccess({ tripDepartureTime, tripArrivalTime }));
       })
   }
 }
 
-export const followThisTrainSuccess = (data) => {
+export const followThisTrainSuccess = ({ tripDepartureTime, tripArrivalTime }) => {
   return {
     type: FOLLOW_TRAIN_SUCCESS,
-    payload: data
+    payload: { tripDepartureTime, tripArrivalTime }
   }
 }
 

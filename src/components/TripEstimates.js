@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { FlatList } from 'react-native';
 import { connect } from 'react-redux';
-import moment from 'moment';
+
 import { HeaderBackButton } from 'react-navigation';
 import _ from 'lodash';
 import { Card, Header, Button, CardSection } from './common';
@@ -27,60 +27,41 @@ class TripEstimates extends Component {
     const { trainline, departureStop, boundFor, arrivalStop } = this.props.navigation.state.params;
     //from params in NavigationActions from TripDestinationStops
     // console.log( trainline, departureStop, boundFor, arrivalStop )
-    const { followtraindata } = this.props;
-    console.log( "is state to props called twice in render?", followtraindata ) // once with empty object and once with object with data
-    let departureStopData = {};
-    let arrivalStopData = {};
-    if (followtraindata.eta) {
-      // console.log(followtraindata.eta, departureStop.staId, arrivalStop.staId);
-      departureStopData = followtraindata.eta.find((stop) => stop.staId == departureStop.staId); // one is number and the other is string
-      arrivalStopData = followtraindata.eta.find((stop) => stop.staId == arrivalStop.staId);
-      // console.log(waitingMin(departureStopData), waitingMin(arrivalStopData), moment(departureStopData.arrT).format('h:mm a'), moment(arrivalStopData.arrT).format('h:mm a'))
+    const { tripdata } = this.props;
+    console.log( "is state to props called twice in render?", tripdata ) // once with empty object and once with object with data
+    let departureData = {};
+    let arrivalData = {};
+    if (tripdata.tripDepartureTime && tripdata.tripArrivalTime) { //when state to props is called with empty data tripdata.tripDepartureTime is false
+      departureData = tripdata.tripDepartureTime;
+      arrivalData = tripdata.tripArrivalTime;
     }
 
     return (
       <Card>
-        <Header headerText={`Departure: ${departureStop.name}`} />
-        <Header headerText={`in ${waitingMin(departureStopData)} min at ${moment(departureStopData.arrT).format('h:mm a')}`} />
-        <Header headerText={`Arrival: ${arrivalStop.name}`} />
-        <Header headerText={`arriving at ${moment(arrivalStopData.arrT).format('h:mm a')}`} />
-        {/* <CardSection>
+        <Header headerText={`Departure: ${departureData.stop}`} />
+        <Header headerText={`at ${departureData.arrT}`} />
+        <Header headerText={`Arrival: ${arrivalData.stop}`} />
+        <Header headerText={`at ${arrivalData.arrT}`} />
+        <CardSection>
           <Button
             // onPress={this.onButtonPress(trainline, trainstop, boundFor)}
             //above will run onButtonPress before the button is pressed
-            onPress={()=>this.onButtonPressSave(trainline, trainstop, boundFor)}
+            // onPress={()=>this.onButtonPressSave(trainline, trainstop, boundFor)}
             // overwriteTextStyle={{color: `${trainline.textcolor}`}}
             // overwriteButtonStyle={{borderColor: `${trainline.name}`, backgroundColor: `${trainline.name}`}}
           >
-            Save this Stop
+            Save this Trip
           </Button>
-          <Button
-            onPress={()=>this.onButtonPressCreateTrip(trainline, trainstop, boundFor)}
-            // overwriteTextStyle={{color: `${trainline.textcolor}`}}
-            // overwriteButtonStyle={{borderColor: `${trainline.name}`, backgroundColor: `${trainline.name}`}}
-          >
-            Create a trip
-          </Button>
-        </CardSection> */}
-        {/* <Header headerText={`Updated ${timestamp}`} /> */}
-        {/* <FlatList
-          data={arrivaltimes}
-          renderItem={({ item }) => <TripEstimateItem
-                        arrivaltime={item}
-                        // onButtonPress={this.onButtonPress.bind(this)}
-                        trainline={trainline}
-                        arrivalStop={arrivalStop}
-                      />}
-          keyExtractor={(item)=>item.rn}
-        /> */}
+        </CardSection>
+
       </Card>
     )
   }
 }
 
 const mapStateToProps = state => {
-  const { followtraindata } = state; //arrivaldata from reducers/index.js
-  return { followtraindata };
+  const { tripdata } = state; //arrivaldata from reducers/index.js
+  return { tripdata };
 }
 
 export default connect(mapStateToProps, { arrivalTimeFetch, createFavStop })(TripEstimates);
