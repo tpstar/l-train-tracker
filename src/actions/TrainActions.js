@@ -1,5 +1,5 @@
 import { CREATE_FAV_STOP, FETCH_ARRIVAL_TIME, FOLLOW_TRAIN_SUCCESS } from './types';
-import { CTA_API_KEY } from '../config';
+import { CTA_API_KEY, Google_Maps_API_KEY } from '../config';
 
 export const createFavStop = ({ trainline, trainstop, boundFor }) => {
   console.log(trainline, trainstop, boundFor);
@@ -33,27 +33,39 @@ export const arrivalTimeSuccess = (data) => {
   }
 }
 
-export const followThisTrain = ({ runnumber, departureStop, arrivalStop, departureStopArrivaltime }) => {
+export const followThisTrain = ({ departureStop, arrivalStop, departureStopArrivaltime }) => {
+  const runnumber = departureStopArrivaltime.rn;
+  // console.log(runnumber)
   const url = `http://lapi.transitchicago.com/api/1.0/ttfollow.aspx?key=${CTA_API_KEY}&runnumber=${runnumber}&outputType=JSON`;
   return (dispatch) => {
     fetch(url)
       .then((data)=>data.json())
       .catch(error => console.error('Error:', error))
       .then((data)=>{
-        console.log(data.ctatt.eta, data.ctatt.eta.find((stop)=>stop.staId==arrivalStop.staId), arrivalStop.staId);
-        // let departureStopData = {};
-        // let arrivalStopData = {};
-
-
-        let departureStopData = data.ctatt.eta.find((stop) => stop.staId == departureStop.staId); // one is number and the other is string
+        console.log(data.ctatt);
+        let departureStopData = data.ctatt.eta.find((stop) => stop.staId == departureStop.staId);
+        // used == instead of ===, because one is number and the other is string
         let arrivalStopData = data.ctatt.eta.find((stop) => stop.staId == arrivalStop.staId);
 
-
-        console.log(arrivalStopData, !!departureStopData, !!arrivalStopData);
+        console.log(!!departureStopData, !!arrivalStopData);
         if (!departureStopData) {
+        //if follow this train API does not include the departure stop data because the train already departed the stop
           departureStopData = departureStopArrivaltime;
         }
-        console.log(departureStopData)
+        // console.log(departureStopData)
+        if (!arrivalStopData) {
+          const lastStopDataCtaApiCanGive = data.ctatt.eta[data.ctatt.eta.length - 1];
+          const lastStopName = lastStopDataCtaApiCanGive.staNm;
+          const arrivalStopName = arrivalStop.name;
+          const googleMapsUrl = `https://maps.googleapis.com/maps/api/directions/json?origin=cta+red+${lastStopName}&destination=cta+red+${arrivalStopName}&key=${Google_Maps_API_KEY}&mode=transit`;
+          fetch(googleMapsUrl)
+            .then((data)=>data.json())
+            .catch(error => console.error('Error:', error))
+            .then((data)=>{
+              const tripDurationInSec = data.routes[0].legs[0].duration.value;
+              console.log(tripDurationInSec)
+            })
+          }
         dispatch(followThisTrainSuccess(data.ctatt));
       })
   }

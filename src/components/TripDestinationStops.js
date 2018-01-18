@@ -15,8 +15,7 @@ class TripDestinationStops extends Component {
     const { trainstop, boundFor, arrivaltime } = this.props.navigation.state.params.departure;
     const departureStop = trainstop;
     // console.log(arrivaltime, departureStop, arrivalStop)
-    const runnumber = arrivaltime.rn;
-    // console.log(arrivaltime.rn)
+
 
 
     this.props.navigation.dispatch(
@@ -25,7 +24,7 @@ class TripDestinationStops extends Component {
         routeName: 'TripEstimates', //analoguous to arrivalTimes, use AppNavigator.js to route to TripEstimates
         params: { trainline, departureStop, boundFor, arrivalStop }
       })
-    this.props.followThisTrain({ runnumber, departureStop, arrivalStop, departureStopArrivaltime: arrivaltime});
+    this.props.followThisTrain({ departureStop, arrivalStop, departureStopArrivaltime: arrivaltime});
 
   }
 
