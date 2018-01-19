@@ -9,6 +9,7 @@ import { arrivalTimeFetch, createFavStop } from '../actions';
 import ArrivalTimeItem from './ArrivalTimeItem';
 import { NavigateTo } from './helper';
 
+
 class ArrivalTimes extends Component {
 
   onButtonPressSave(trainline, trainstop, boundFor) {
