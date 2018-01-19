@@ -1,20 +1,14 @@
 import React, { Component } from 'react';
 import { FlatList } from 'react-native';
 import { connect } from 'react-redux';
-
+import moment from 'moment';
 import { HeaderBackButton } from 'react-navigation';
 import _ from 'lodash';
 import { Card, Header, Button, CardSection } from './common';
-import { arrivalTimeFetch, createFavStop } from '../actions';
 
 import { NavigateTo } from './helper';
-import { waitingMin } from './helper';
 
 class TripEstimates extends Component {
-
-  // remove arrivaldata from state to props and get data from arrivaltime from TripDesinationStops
-  // remove TripEstimateItem, show only one run data on TripEstimate
-
 
   static navigationOptions = ({ navigation }) => {
     return {
@@ -24,9 +18,6 @@ class TripEstimates extends Component {
   };
 
   render() {
-    const { trainline, departureStop, boundFor, arrivalStop } = this.props.navigation.state.params;
-    //from params in NavigationActions from TripDestinationStops
-    // console.log( trainline, departureStop, boundFor, arrivalStop )
     const { tripdata } = this.props;
     console.log( "is state to props called twice in render?", tripdata ) // once with empty object and once with object with data
     let departureData = {};
@@ -39,9 +30,9 @@ class TripEstimates extends Component {
     return (
       <Card>
         <Header headerText={`Departure: ${departureData.stop}`} />
-        <Header headerText={`at ${departureData.arrT}`} />
+        <Header headerText={`at ${moment(departureData.arrT).format('h:mm a')}`} />
         <Header headerText={`Arrival: ${arrivalData.stop}`} />
-        <Header headerText={`at ${arrivalData.arrT}`} />
+        <Header headerText={`at ${moment(arrivalData.arrT).format('h:mm a')}`} />
         <CardSection>
           <Button
             // onPress={this.onButtonPress(trainline, trainstop, boundFor)}
@@ -64,4 +55,4 @@ const mapStateToProps = state => {
   return { tripdata };
 }
 
-export default connect(mapStateToProps, { arrivalTimeFetch, createFavStop })(TripEstimates);
+export default connect(mapStateToProps, { })(TripEstimates);

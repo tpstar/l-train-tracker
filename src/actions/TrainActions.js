@@ -51,11 +51,14 @@ export const followThisTrain = ({ departureStop, arrivalStop, departureStopArriv
 
         console.log(!!departureStopData, !!arrivalStopData);
         if (!departureStopData) {
-        //if follow this train API does not include the departure stop data because the train already departed the stop
+        //if CTA follow this train API does not include the departure stop data because the train already departed the stop
           departureStopData = departureStopArrivaltime;
         }
-        const tripDepartureTime = { routeName, stop: departureStopData.staNm, arrT: moment(departureStopData.arrT).format('h:mm a')};
+        const tripDepartureTime = { routeName, stop: departureStopData.staNm, arrT: departureStopData.arrT };
         if (!arrivalStopData) {
+        //if CTA follow this train API does not include arrival stop data because it only contains data for 9~10 stops in the api.
+        //if that's the case, use google Maps API to estimate time it takes from the last CTA stop data available and add duration time
+        //from the last stop to destination stop
           const lastStopDataCtaApiCanGive = data.ctatt.eta[data.ctatt.eta.length - 1];
           const lastStopName = lastStopDataCtaApiCanGive.staNm;
           const arrivalStopName = arrivalStop.name;
@@ -65,11 +68,17 @@ export const followThisTrain = ({ departureStop, arrivalStop, departureStopArriv
             .catch(error => console.error('Error:', error))
             .then((data)=>{
               const tripDurationInSec = data.routes[0].legs[0].duration.value;
-              console.log(tripDurationInSec, 'sec')
+              console.log(tripDurationInSec, 'sec');
+              arrivalStopData = {staNm: arrivalStopName, arrT: moment(lastStopDataCtaApiCanGive.arrT).add(tripDurationInSec, 'seconds').format('YYYY-MM-DDTHH:mm:ss')}
+              console.log(lastStopName, arrivalStopData);
+              const tripArrivalTimeFromCTAandGoogle = { routeName, stop: arrivalStopData.staNm, arrT: arrivalStopData.arrT };
+              dispatch(followThisTrainSuccess({ tripDepartureTime, tripArrivalTime: tripArrivalTimeFromCTAandGoogle  }));
             })
+
+          } else {
+            const tripArrivalTimeFromCTAOnly = { routeName, stop: arrivalStopData.staNm, arrT: arrivalStopData.arrT };
+            dispatch(followThisTrainSuccess({ tripDepartureTime, tripArrivalTime: tripArrivalTimeFromCTAOnly }));
           }
-        const tripArrivalTime = { routeName, stop: arrivalStopData.staNm, arrT: moment(arrivalStopData.arrT).format('h:mm a')};
-        dispatch(followThisTrainSuccess({ tripDepartureTime, tripArrivalTime }));
       })
   }
 }
