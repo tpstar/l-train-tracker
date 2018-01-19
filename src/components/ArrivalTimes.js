@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { FlatList } from 'react-native';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import { NavigationActions } from 'react-navigation';
 import _ from 'lodash';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { Card, Header, Button, CardSection } from './common';
@@ -35,7 +34,8 @@ class ArrivalTimes extends Component {
       {
         type: 'Navigation/NAVIGATE',
         routeName: 'FavStopList', //To FavStopList
-      })
+      }
+    )
   }
 
   onButtonPressCreateTrip( arrivaltime ) {

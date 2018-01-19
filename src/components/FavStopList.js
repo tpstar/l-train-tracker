@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 import { FlatList, Text, Button, View } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -12,15 +11,16 @@ class FavStopList extends Component {
 
   onButtonPress(favstop) {
     // console.log(favstop)
-    const { trainline, trainstop, boundFor } = favstop
-    const navigateAction = NavigationActions.navigate({
-      routeName: 'ArrivalTimes',
-      params: { trainline, trainstop, boundFor }
-    });
-    this.props.navigation.dispatch(navigateAction);
-  }
+    const { trainline, trainstop, boundFor } = favstop;
 
-  //header is in navigation/AppNavigator
+    this.props.navigation.dispatch(
+      {
+        type: 'Navigation/NAVIGATE',
+        routeName: 'ArrivalTimes', //To FavStopList
+        params: { trainline, trainstop, boundFor }
+      }
+    )
+  }
 
 
   static navigationOptions = ({ navigation }) => {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { HeaderBackButton, NavigationActions } from 'react-navigation';
+import { HeaderBackButton } from 'react-navigation';
 import { FlatList } from 'react-native';
 import { Card, CardSection, Button, Header } from './common';
 import { trainLines } from '../data';
@@ -9,11 +9,13 @@ import { NavigateTo } from './helper';
 class LineList extends Component {
 
   onButtonPress(trainline) {
-    const navigateAction = NavigationActions.navigate({
-      routeName: 'StopList',
-      params: { trainline }
-    })
-    this.props.navigation.dispatch(navigateAction);
+    this.props.navigation.dispatch(
+      {
+        type: 'Navigation/NAVIGATE',
+        routeName: 'StopList',
+        params: { trainline }
+      }
+    )
   }
 
   static navigationOptions = ({ navigation }) => {
