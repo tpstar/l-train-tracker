@@ -32,6 +32,7 @@ class TripEstimates extends Component {
 
   render() {
     const { tripdata } = this.props;
+    const { departureStop, arrivalStop } = this.props.navigation.state.params;
     console.log( "is state to props called twice in render?", tripdata ) // once with empty object and once with object with data
     let departureData = {};
     let arrivalData = {};
@@ -42,9 +43,9 @@ class TripEstimates extends Component {
 
     return (
       <Card>
-        <Header headerText={`Departure: ${departureData.stop}`} />
+        <Header headerText={`Departure: ${departureStop.name}`} />
         <Header headerText={`at ${moment(departureData.arrT).format('h:mm a')}`} />
-        <Header headerText={`Arrival: ${arrivalData.stop}`} />
+        <Header headerText={`Arrival: ${arrivalStop.name}`} />
         <Header headerText={`at ${moment(arrivalData.arrT).format('h:mm a')}`} />
         <CardSection>
           <Button
