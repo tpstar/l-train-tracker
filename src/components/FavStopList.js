@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 import { FlatList, Text, Button, View } from 'react-native';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { CardSection } from './common';
 import FavStopListItem from './FavStopListItem';
+import { NavigateTo } from './helper';
 
 
 class FavStopList extends Component {
@@ -19,6 +21,26 @@ class FavStopList extends Component {
   }
 
   //header is in navigation/AppNavigator
+
+
+  static navigationOptions = ({ navigation }) => {
+    const drawerButton = (navigation) => {
+      return (
+        <MaterialIcons
+          style={{padding: 5, color: '#3F51B5'}}
+          name="menu"
+          size={36}
+          onPress={() => { navigation.navigate('DrawerToggle')}}
+        />
+      )
+    }
+    return {
+      title: "Favorite Stops",
+      headerRight: NavigateTo(navigation, 'search', 'LineList'), //NavigationActions.navigate({ routeName }) with Material icon name
+                           // navigation, material icon name, route name
+      headerLeft: drawerButton(navigation)
+    }
+  }
 
   render() {
     return (

@@ -11,12 +11,8 @@ export default class DrawerContainer extends React.Component {
     this.props.navigation.dispatch(
       {
         type: 'Navigation/NAVIGATE',
-        routeName: 'NonDrawerNavigation',
-        action: {
-          type: 'Navigation/NAVIGATE',
-          routeName: 'StopList',
-          params: trainline
-        }
+        routeName: 'StopList',
+        params: trainline
       })
   }
 
@@ -27,7 +23,7 @@ export default class DrawerContainer extends React.Component {
         <List>
           <ListItem
             onPress={() => navigation.navigate('FavStopList')}
-            title={'Favorite Stop List'}
+            title={'Stop List'}
             leftIcon={{name: 'favorite' }}
           />
           {

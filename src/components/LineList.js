@@ -19,8 +19,8 @@ class LineList extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: "CTA Train Lines",
-      // headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />
-      headerLeft: NavigateTo(navigation, 'navigate-before', 'DrawerNavigation')
+      headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />
+      // headerLeft: NavigateTo(navigation, 'navigate-before', 'FavStopList')
                            // navigation, material icon name, route name
     }
   };

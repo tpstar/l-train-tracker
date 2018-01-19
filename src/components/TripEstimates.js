@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import { HeaderBackButton } from 'react-navigation';
 import _ from 'lodash';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { Card, Header, Button, CardSection } from './common';
 
 import { NavigateTo } from './helper';
@@ -11,11 +12,23 @@ import { NavigateTo } from './helper';
 class TripEstimates extends Component {
 
   static navigationOptions = ({ navigation }) => {
+    const drawerButton = (navigation) => {
+      return (
+        <MaterialIcons
+          style={{padding: 5, color: '#3F51B5'}}
+          name="menu"
+          size={36}
+          onPress={() => { navigation.navigate('DrawerToggle')}}
+        />
+      )
+    }
     return {
       title: "Trip Estimates",
-      headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />
+      headerRight: NavigateTo(navigation, 'search', 'LineList'), //NavigationActions.navigate({ routeName }) with Material icon name
+                           // navigation, material icon name, route name
+      headerLeft: drawerButton(navigation)
     }
-  };
+  }
 
   render() {
     const { tripdata } = this.props;

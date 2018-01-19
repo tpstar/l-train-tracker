@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import { NavigationActions } from 'react-navigation';
 import _ from 'lodash';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { Card, Header, Button, CardSection } from './common';
 import { arrivalTimeFetch, createFavStop } from '../actions';
 import ArrivalTimeItem from './ArrivalTimeItem';
@@ -33,7 +34,7 @@ class ArrivalTimes extends Component {
     this.props.navigation.dispatch(
       {
         type: 'Navigation/NAVIGATE',
-        routeName: 'DrawerNavigation', //To FavStopList
+        routeName: 'FavStopList', //To FavStopList
       })
   }
 
@@ -56,12 +57,23 @@ class ArrivalTimes extends Component {
   }
 
   static navigationOptions = ({ navigation }) => {
+    const drawerButton = (navigation) => {
+      return (
+        <MaterialIcons
+          style={{padding: 5, color: '#3F51B5'}}
+          name="menu"
+          size={36}
+          onPress={() => { navigation.navigate('DrawerToggle')}}
+        />
+      )
+    }
     return {
       title: "Arrival Times",
-      headerLeft: NavigateTo(navigation, 'navigate-before', 'DrawerNavigation')
+      headerRight: NavigateTo(navigation, 'search', 'LineList'), //NavigationActions.navigate({ routeName }) with Material icon name
                            // navigation, material icon name, route name
+      headerLeft: drawerButton(navigation)
     }
-  };
+  }
 
   render() {
     const { trainline, trainstop, boundFor } = this.props.navigation.state.params;
