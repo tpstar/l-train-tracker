@@ -1,7 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, FlatList } from 'react-native';
 import _ from 'lodash';
-// import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { List, ListItem } from 'react-native-elements';
 import { trainLines } from '../data';
 
@@ -19,11 +17,11 @@ export default class DrawerContainer extends React.Component {
   render() {
     const { navigation } = this.props
     return (
-
-        <List>
+        <List containerStyle={{marginTop: 1, backgroundColor: '#37464f', flex: 1}}>
           <ListItem
             onPress={() => navigation.navigate('FavStopList')}
             title={'Stop List'}
+            titleStyle={{color:'white'}}
             leftIcon={{name: 'favorite' }}
           />
           {
@@ -33,12 +31,12 @@ export default class DrawerContainer extends React.Component {
                 //navigation.navigate('StopListFromDrawer', {trainline: trainLines[index]})}
                 key={index}
                 title={`${_.capitalize(item.name)} Line`}
+                titleStyle={{color:'white'}}
                 leftIcon={{name: 'train', color: item.name }} //name from MaterialIcons
               />
             ))
           }
         </List>
-
     )
   }
 }

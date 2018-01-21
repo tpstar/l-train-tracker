@@ -13,23 +13,7 @@ import { NavigateTo } from './helper';
 class ArrivalTimes extends Component {
 
   onButtonPressSave(trainline, trainstop, boundFor) {
-    const { favstops } = this.props;
-    // console.log(_.isEmpty(favstops));
-    const selectedStop = { trainline, trainstop, boundFor }
-    if (_.isEmpty(favstops)) {
-      this.props.createFavStop({ trainline, trainstop, boundFor });
-    } else {
-      const favStopExists = favstops.some((favstop) => (
-        favstop.trainline.name === selectedStop.trainline.name &&
-        favstop.trainstop.name === selectedStop.trainstop.name &&
-        favstop.boundFor.name === selectedStop.boundFor.name
-      ))
-      if (favStopExists) { //prevent saving duplicate favstops
-        console.log('Alert! This stop is already a fav stop!')
-      } else {
-        this.props.createFavStop({ trainline, trainstop, boundFor });
-      }
-    }
+    this.props.createFavStop({ trainline, trainstop, boundFor });
     this.props.navigation.dispatch(
       {
         type: 'Navigation/NAVIGATE',
@@ -40,7 +24,6 @@ class ArrivalTimes extends Component {
 
   onButtonPressCreateTrip( arrivaltime ) {
     // console.log(arrivaltime)
-    // // console.log('departure: ', departure);
     const { trainline, trainstop, boundFor } = this.props.navigation.state.params;
     const departure = { trainline, trainstop, boundFor, arrivaltime };
     this.props.navigation.dispatch(
@@ -75,6 +58,35 @@ class ArrivalTimes extends Component {
     }
   }
 
+  renderSaveButton(trainline, trainstop, boundFor) {
+    console.log(_.isEmpty(favstops))
+    const { favstops } = this.props;
+    const renderButton = () => {
+      return (
+      <Button
+        onPress={()=>this.onButtonPressSave(trainline, trainstop, boundFor)}
+        // overwriteTextStyle={{color: `${trainline.textcolor}`}}
+        // overwriteButtonStyle={{borderColor: `${trainline.name}`, backgroundColor: `${trainline.name}`}}
+      >
+        Save this Stop
+      </Button>
+    )}
+    if (_.isEmpty(favstops)) {
+      return renderButton();
+    } else {
+      const selectedStop = { trainline, trainstop, boundFor };
+      // check if the stop is already in the list
+      const favStopExists = favstops.some((favstop) => (
+        favstop.trainline.name === selectedStop.trainline.name &&
+        favstop.trainstop.name === selectedStop.trainstop.name &&
+        favstop.boundFor.name === selectedStop.boundFor.name
+      ))
+      if (!favStopExists) { //if the selected stop does not exist in the fav stop list
+        return renderButton()
+      }
+    }
+  }
+
   render() {
     const { trainline, trainstop, boundFor } = this.props.navigation.state.params;
     //from params in NavigationActions either from StopList or DirList
@@ -92,20 +104,7 @@ class ArrivalTimes extends Component {
         <Header headerText={`Arrivals at ${trainstop.name}`} />
         <Header headerText={`${boundFor.name} bound`} />
         <CardSection>
-          <Button
-            onPress={()=>this.onButtonPressSave(trainline, trainstop, boundFor)}
-            // overwriteTextStyle={{color: `${trainline.textcolor}`}}
-            // overwriteButtonStyle={{borderColor: `${trainline.name}`, backgroundColor: `${trainline.name}`}}
-          >
-            Save this Stop
-          </Button>
-          {/* <Button
-            onPress={()=>this.onButtonPressCreateTrip(trainline, trainstop, boundFor)}
-            // overwriteTextStyle={{color: `${trainline.textcolor}`}}
-            // overwriteButtonStyle={{borderColor: `${trainline.name}`, backgroundColor: `${trainline.name}`}}
-          >
-            Create a trip
-          </Button> */}
+          {this.renderSaveButton(trainline, trainstop, boundFor)}
         </CardSection>
         <Header headerText={`Updated ${timestamp}`} />
         <FlatList

@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { FlatList, Text, Button, View } from 'react-native';
+import { FlatList, Button, View } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { CardSection } from './common';
 import FavStopListItem from './FavStopListItem';
+import { deleteFavStop } from '../actions';
 import { NavigateTo } from './helper';
-
 
 class FavStopList extends Component {
 
@@ -22,6 +22,9 @@ class FavStopList extends Component {
     )
   }
 
+  onSlidePress(favstop) {
+    this.props.deleteFavStop(favstop);
+  }
 
   static navigationOptions = ({ navigation }) => {
     const drawerButton = (navigation) => {
@@ -45,17 +48,15 @@ class FavStopList extends Component {
   render() {
     return (
       <View>
-      <Text style={styles.titleStyle}>
-        Hello
-      </Text>
-      <FlatList
-        data={this.props.favstops}
-        renderItem={({ item })=><FavStopListItem
-          favstop={item}
-          onButtonPress={this.onButtonPress.bind(this)}
-        />}
-        keyExtractor={(item, index)=>index}
-      />
+        <FlatList
+          data={this.props.favstops}
+          renderItem={({ item })=><FavStopListItem
+            favstop={item}
+            onButtonPress={this.onButtonPress.bind(this)}
+            onSlidePress={this.onSlidePress.bind(this)}
+          />}
+          keyExtractor={(item, index)=>index}
+        />
       </View>
     )
   }
@@ -73,4 +74,4 @@ const mapStateToProps = state => {
   return { favstops };
 }
 
-export default connect(mapStateToProps, {})(FavStopList);
+export default connect(mapStateToProps, { deleteFavStop })(FavStopList);

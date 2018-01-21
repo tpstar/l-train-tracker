@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { CREATE_FAV_STOP, FETCH_ARRIVAL_TIME, FOLLOW_TRAIN_SUCCESS } from './types';
+import { CREATE_FAV_STOP, FETCH_ARRIVAL_TIME, FOLLOW_TRAIN_SUCCESS, DELETE_FAV_STOP } from './types';
 import { CTA_API_KEY, Google_Maps_API_KEY } from '../config';
 
 
@@ -90,6 +90,9 @@ export const followThisTrainSuccess = ({ tripDepartureTime, tripArrivalTime }) =
   }
 }
 
-export const googleArrivalTime = ({ arrivalStop }) => {
-
+export const deleteFavStop = (favstop) => {
+  return {
+    type: DELETE_FAV_STOP,
+    payload: favstop
+  }
 }
