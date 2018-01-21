@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { CREATE_FAV_STOP, FETCH_ARRIVAL_TIME, FOLLOW_TRAIN_SUCCESS, DELETE_FAV_STOP } from './types';
+import { CREATE_FAV_STOP, FETCH_ARRIVAL_TIME, FOLLOW_TRAIN_SUCCESS, FOLLOW_TRAIN_FAIL, DELETE_FAV_STOP } from './types';
 import { CTA_API_KEY, Google_Maps_API_KEY } from '../config';
 
 
@@ -39,46 +39,51 @@ export const followThisTrain = ({ departureStop, arrivalStop, departureStopArriv
   const runnumber = departureStopArrivaltime.rn;
   console.log(departureStop, arrivalStop, departureStopArrivaltime, routeName)
   const url = `http://lapi.transitchicago.com/api/1.0/ttfollow.aspx?key=${CTA_API_KEY}&runnumber=${runnumber}&outputType=JSON`;
+  // console.log(url);
   return (dispatch) => {
     fetch(url)
       .then((data)=>data.json())
       .catch(error => console.error('Error:', error))
       .then((data)=>{
         console.log(data.ctatt);
-        let departureStopData = data.ctatt.eta.find((stop) => stop.staId == departureStop.staId);
-        // used == instead of ===, because one is number and the other is string
-        let arrivalStopData = data.ctatt.eta.find((stop) => stop.staId == arrivalStop.staId);
+        if (data.ctatt.errCd === "0") {
+          let departureStopData = data.ctatt.eta.find((stop) => stop.staId == departureStop.staId);
+          // used == instead of ===, because one is number and the other is string
+          let arrivalStopData = data.ctatt.eta.find((stop) => stop.staId == arrivalStop.staId);
 
-        console.log(!!departureStopData, !!arrivalStopData);
-        if (!departureStopData) {
-        //if CTA follow this train API does not include the departure stop data because the train already departed the stop
-          departureStopData = departureStopArrivaltime;
-        }
-        const tripDepartureTime = { routeName, stop: departureStopData.staNm, arrT: departureStopData.arrT };
-        if (!arrivalStopData) {
-        //if CTA follow this train API does not include arrival stop data because it only contains data for 9~10 stops in the api.
-        //if that's the case, use google Maps API to estimate time it takes from the last CTA stop data available and add duration time
-        //from the last stop to destination stop
-          const lastStopDataCtaApiCanGive = data.ctatt.eta[data.ctatt.eta.length - 1];
-          const lastStopName = lastStopDataCtaApiCanGive.staNm;
-          const arrivalStopName = arrivalStop.name;
-          const googleMapsUrl = `https://maps.googleapis.com/maps/api/directions/json?origin=cta+${routeName}+${lastStopName}&destination=cta+${routeName}+${arrivalStopName}&key=${Google_Maps_API_KEY}&mode=transit`;
-          fetch(googleMapsUrl)
-            .then((data)=>data.json())
-            .catch(error => console.error('Error:', error))
-            .then((data)=>{
-              const tripDurationInSec = data.routes[0].legs[0].duration.value;
-              console.log(tripDurationInSec, 'sec');
-              arrivalStopData = {staNm: arrivalStopName, arrT: moment(lastStopDataCtaApiCanGive.arrT).add(tripDurationInSec, 'seconds').format('YYYY-MM-DDTHH:mm:ss')}
-              console.log(lastStopName, arrivalStopData);
-              const tripArrivalTimeFromCTAandGoogle = { routeName, stop: arrivalStopData.staNm, arrT: arrivalStopData.arrT };
-              dispatch(followThisTrainSuccess({ tripDepartureTime, tripArrivalTime: tripArrivalTimeFromCTAandGoogle  }));
-            })
+          console.log(!!departureStopData, !!arrivalStopData);
+          if (!departureStopData) {
+          //if CTA follow this train API does not include the departure stop data because the train already departed the stop
+            departureStopData = departureStopArrivaltime;
+          }
+          const tripDepartureTime = { routeName, stop: departureStopData.staNm, arrT: departureStopData.arrT };
+          if (!arrivalStopData) {
+          //if CTA follow this train API does not include arrival stop data because it only contains data for 9~10 stops in the api.
+          //if that's the case, use google Maps API to estimate time it takes from the last CTA stop data available and add duration time
+          //from the last stop to destination stop
+            const lastStopDataCtaApiCanGive = data.ctatt.eta[data.ctatt.eta.length - 1];
+            const lastStopName = lastStopDataCtaApiCanGive.staNm;
+            const arrivalStopName = arrivalStop.name;
+            const googleMapsUrl = `https://maps.googleapis.com/maps/api/directions/json?origin=cta+${routeName}+${lastStopName}&destination=cta+${routeName}+${arrivalStopName}&key=${Google_Maps_API_KEY}&mode=transit`;
+            fetch(googleMapsUrl)
+              .then((data)=>data.json())
+              .catch(error => console.error('Error:', error))
+              .then((data)=>{
+                const tripDurationInSec = data.routes[0].legs[0].duration.value;
+                console.log(tripDurationInSec, 'sec');
+                arrivalStopData = {staNm: arrivalStopName, arrT: moment(lastStopDataCtaApiCanGive.arrT).add(tripDurationInSec, 'seconds').format('YYYY-MM-DDTHH:mm:ss')}
+                console.log(lastStopName, arrivalStopData);
+                const tripArrivalTimeFromCTAandGoogle = { routeName, stop: arrivalStopData.staNm, arrT: arrivalStopData.arrT };
+                dispatch(followThisTrainSuccess({ tripDepartureTime, tripArrivalTime: tripArrivalTimeFromCTAandGoogle  }));
+              })
 
           } else {
             const tripArrivalTimeFromCTAOnly = { routeName, stop: arrivalStopData.staNm, arrT: arrivalStopData.arrT };
             dispatch(followThisTrainSuccess({ tripDepartureTime, tripArrivalTime: tripArrivalTimeFromCTAOnly }));
           }
+        } else if (data.ctatt.errCd === "502") {
+          dispatch(followThisTrainFail())
+        }
       })
   }
 }
@@ -87,6 +92,12 @@ export const followThisTrainSuccess = ({ tripDepartureTime, tripArrivalTime }) =
   return {
     type: FOLLOW_TRAIN_SUCCESS,
     payload: { tripDepartureTime, tripArrivalTime }
+  }
+}
+
+export const followThisTrainFail = () => {
+  return {
+    type: FOLLOW_TRAIN_FAIL
   }
 }
 

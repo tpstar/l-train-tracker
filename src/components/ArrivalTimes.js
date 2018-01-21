@@ -59,7 +59,6 @@ class ArrivalTimes extends Component {
   }
 
   renderSaveButton(trainline, trainstop, boundFor) {
-    console.log(_.isEmpty(favstops))
     const { favstops } = this.props;
     const renderButton = () => {
       return (
