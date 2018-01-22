@@ -11,6 +11,30 @@ import { NavigateTo } from './helper';
 
 class TripEstimates extends Component {
 
+  renderError(tripdata) {
+    if (tripdata.error) {
+      return (
+        <Header headerText={tripdata.error} overwriteTextStyle={{color: 'red'}}/>
+      )
+    }
+  }
+
+  renderDepartureTime(tripdata) {
+    if (!tripdata.error && tripdata.tripDepartureTime) {
+      return (
+        <Header headerText={`at ${moment(tripdata.tripDepartureTime.arrT).format('h:mm a')}`} />
+      )
+    }
+  }
+
+  renderArrivalTime(tripdata) {
+    if (!tripdata.error && tripdata.tripArrivalTime) {
+      return (
+        <Header headerText={`at ${moment(tripdata.tripArrivalTime.arrT).format('h:mm a')}`} />
+      )
+    }
+  }
+
   static navigationOptions = ({ navigation }) => {
     const drawerButton = (navigation) => {
       return (
@@ -34,19 +58,20 @@ class TripEstimates extends Component {
     const { tripdata } = this.props;
     const { departureStop, arrivalStop } = this.props.navigation.state.params;
     console.log( "is state to props called twice in render?", tripdata ) // once with empty object and once with object with data
-    let departureData = {};
-    let arrivalData = {};
-    if (tripdata.tripDepartureTime && tripdata.tripArrivalTime) { //when state to props is called with empty data tripdata.tripDepartureTime is false
-      departureData = tripdata.tripDepartureTime;
-      arrivalData = tripdata.tripArrivalTime;
-    }
+    // let departureData = {};
+    // let arrivalData = {};
+    // if (tripdata.tripDepartureTime && tripdata.tripArrivalTime) { //when state to props is called with empty data tripdata.tripDepartureTime is false
+    //   departureData = tripdata.tripDepartureTime;
+    //   arrivalData = tripdata.tripArrivalTime;
+    // }
 
     return (
       <Card>
         <Header headerText={`Departure: ${departureStop.name}`} />
-        <Header headerText={`at ${moment(departureData.arrT).format('h:mm a')}`} />
+        {this.renderDepartureTime(tripdata)}
         <Header headerText={`Arrival: ${arrivalStop.name}`} />
-        <Header headerText={`at ${moment(arrivalData.arrT).format('h:mm a')}`} />
+        {this.renderError(tripdata)}
+        {this.renderArrivalTime(tripdata)}
         <CardSection>
           <Button
             // onPress={this.onButtonPress(trainline, trainstop, boundFor)}
