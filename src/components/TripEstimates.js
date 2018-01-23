@@ -6,6 +6,7 @@ import { HeaderBackButton } from 'react-navigation';
 import _ from 'lodash';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { Card, Header, Button, CardSection } from './common';
+import { createFavTrip } from '../actions';
 
 import { NavigateTo } from './helper';
 
@@ -54,9 +55,48 @@ class TripEstimates extends Component {
     }
   }
 
+  onButtonPressSave(departureStop, arrivalStop, routeName) {
+    console.log('I am onButtonPressSave');
+    this.props.createFavTrip({ departureStop, arrivalStop, routeName });
+    // this.props.navigation.dispatch(
+    //   {
+    //     type: 'Navigation/NAVIGATE',
+    //     routeName: 'FavTripList',
+    //   }
+    // )
+  }
+
+  renderSaveButton(departureStop, arrivalStop, routeName) {
+    // const renderButton = () => {
+      console.log(departureStop, arrivalStop, routeName)
+      return (
+      <Button
+        onPress={()=>this.onButtonPressSave(departureStop, arrivalStop, routeName)}
+        // overwriteTextStyle={{color: `${trainline.textcolor}`}}
+        // overwriteButtonStyle={{borderColor: `${trainline.name}`, backgroundColor: `${trainline.name}`}}
+      >
+        Save this Trip
+      </Button>
+    ) //}
+    // if (_.isEmpty(favstops)) {
+    //   return renderButton();
+    // } else {
+    //   const selectedStop = { trainline, trainstop, boundFor };
+    //   // check if the stop is already in the list
+    //   const favStopExists = favstops.some((favstop) => (
+    //     favstop.trainline.name === selectedStop.trainline.name &&
+    //     favstop.trainstop.name === selectedStop.trainstop.name &&
+    //     favstop.boundFor.name === selectedStop.boundFor.name
+    //   ))
+    //   if (!favStopExists) { //if the selected stop does not exist in the fav stop list
+    //     return renderButton()
+    //   }
+    // }
+  }
+
   render() {
     const { tripdata } = this.props;
-    const { departureStop, arrivalStop } = this.props.navigation.state.params;
+    const { departureStop, arrivalStop, routeName } = this.props.navigation.state.params;
     console.log( "is state to props called twice in render?", tripdata ) // once with empty object and once with object with data
     // let departureData = {};
     // let arrivalData = {};
@@ -64,6 +104,7 @@ class TripEstimates extends Component {
     //   departureData = tripdata.tripDepartureTime;
     //   arrivalData = tripdata.tripArrivalTime;
     // }
+
 
     return (
       <Card>
@@ -73,15 +114,7 @@ class TripEstimates extends Component {
         {this.renderError(tripdata)}
         {this.renderArrivalTime(tripdata)}
         <CardSection>
-          <Button
-            // onPress={this.onButtonPress(trainline, trainstop, boundFor)}
-            //above will run onButtonPress before the button is pressed
-            // onPress={()=>this.onButtonPressSave(trainline, trainstop, boundFor)}
-            // overwriteTextStyle={{color: `${trainline.textcolor}`}}
-            // overwriteButtonStyle={{borderColor: `${trainline.name}`, backgroundColor: `${trainline.name}`}}
-          >
-            Save this Trip
-          </Button>
+          {this.renderSaveButton(departureStop, arrivalStop, routeName)}
         </CardSection>
 
       </Card>
@@ -94,4 +127,4 @@ const mapStateToProps = state => {
   return { tripdata };
 }
 
-export default connect(mapStateToProps, { })(TripEstimates);
+export default connect(mapStateToProps, { createFavTrip })(TripEstimates);

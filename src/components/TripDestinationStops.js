@@ -14,12 +14,13 @@ class TripDestinationStops extends Component {
   onButtonPress(trainline, arrivalStop){
     const { trainstop, boundFor, arrivaltime } = this.props.navigation.state.params.departure;
     const departureStop = trainstop;
+    const routeName = trainline.name;
 
     this.props.navigation.dispatch(
       {
         type: 'Navigation/NAVIGATE',
         routeName: 'TripEstimates',
-        params: { departureStop, arrivalStop }
+        params: { departureStop, arrivalStop, routeName }
       })
     this.props.followThisTrain({ departureStop, arrivalStop, departureStopArrivaltime: arrivaltime, routeName: trainline.name});
 

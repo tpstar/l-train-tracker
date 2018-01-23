@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { CREATE_FAV_STOP, FETCH_ARRIVAL_TIME, FOLLOW_TRAIN_SUCCESS, FOLLOW_TRAIN_FAIL, DELETE_FAV_STOP } from './types';
+import { CREATE_FAV_STOP, CREATE_FAV_TRIP, FETCH_ARRIVAL_TIME, FOLLOW_TRAIN_SUCCESS, FOLLOW_TRAIN_FAIL, DELETE_FAV_STOP } from './types';
 import { CTA_API_KEY, Google_Maps_API_KEY } from '../config';
 
 
@@ -8,6 +8,14 @@ export const createFavStop = ({ trainline, trainstop, boundFor }) => {
   return  {
     type: CREATE_FAV_STOP,
     payload: { trainline, trainstop, boundFor }
+  }
+}
+
+export const createFavTrip = ({ departureStop, arrivalStop, routeName }) => {
+  console.log(departureStop, arrivalStop, routeName);
+  return  {
+    type: CREATE_FAV_TRIP,
+    payload: { departureStop, arrivalStop, routeName }
   }
 }
 

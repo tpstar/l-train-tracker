@@ -319,14 +319,6 @@ export const trainLines = [
           S: 30146,  
         } 
       },
-      // {
-      //   name: 'Harlem',
-      //   staId: 40980, //line between Harlem and O'Hare?
-      //   stpId: {
-      //     E: 30189, //O'Hare bound
-      //     W: 30190
-      //   }
-      // },
       {
         name: 'Jefferson Park',
         staId: 41280,
@@ -449,7 +441,7 @@ export const trainLines = [
       },
       {
         name: 'LaSalle',
-        staId: 41340 ,
+        staId: 41340,
         stpId: {
           E: 30261,   //change to E (O'Hare bound) and W
           W: 30262,  
@@ -457,46 +449,110 @@ export const trainLines = [
       },
       {
         name: 'Clinton',
-        staId: 40430 ,
+        staId: 40430,
         stpId: {
           E: 30084,
           W: 30085,  
         } 
       },
-
-      // 'O\'Hare',
-      // 'Rosemont',
-      // 'Cumberland',
-      // 'Harlem',
-      // 'Jefferson Park',
-      // 'Montrose',
-      // 'Irving Park',
-      // 'Addison',
-      // 'Belmont',
-      // 'Logan Square',
-      // 'California',
+      {
+        name: 'UIC-Halsted',
+        staId: 40350,
+        stpId: {
+          E: 30068,
+          W: 30069,  
+        } 
+      },
+      {
+        name: 'Racine',
+        staId: 40470,
+        stpId: {
+          E: 30092,
+          W: 30093,  
+        } 
+      },
+      {
+        name: 'Illinois Medical District',
+        staId: 40810,
+        stpId: {
+          E: 30157,
+          W: 30158,  
+        } 
+      },
+      {
+        name: 'Western', // two Western's in blue line
+        staId: 40220,
+        stpId: {
+          E: 30042,
+          W: 30043,  
+        } 
+      },
+      {
+        name: 'Kedzie-Homan',
+        staId: 40250,
+        stpId: {
+          E: 30048,
+          W: 30049,  
+        } 
+      },
+      {
+        name: 'Pulaski',
+        staId: 40920,
+        stpId: {
+          E: 30179,
+          W: 30180,  
+        } 
+      },
+      {
+        name: 'Cicero',
+        staId: 40970,
+        stpId: {
+          E: 30187,
+          W: 30188,  
+        } 
+      },
+      {
+        name: 'Austin',
+        staId: 40010,
+        stpId: {
+          E: 30001,
+          W: 30002,  
+        } 
+      },
+      {
+        name: 'Oak Park',
+        staId: 40180 ,
+        stpId: {
+          E: 30034,
+          W: 30035,  
+        } 
+      },
+      {
+        name: 'Harlem', //two Harlem's in blue line
+        staId: 40980,
+        stpId: {
+          E: 30189,
+          W: 30190,  
+        } 
+      },
+      {
+        name: 'Forest Park',
+        staId: 40390,
+        stpId: {
+          E: 30076,
+          W: 30077,  
+        } 
+      },
+      // 'Racine',
+      // 'Illinois Medical District',
       // 'Western',
-      // 'Damen',
-      // 'Division',
-      // 'Chicago',
-      // 'Grand',
-      // 'Clark/Lake',
-      // 'Washington',
-      // 'Monroe',
-      // 'Jackson',
-      // 'LaSalle',
-      // 'Clinton',
-      'UIC-Halsted',
-      'Racine',
-      'Illinois Medical District',
-      'Western',
-      'Kedzie-Homan',
-      'Pulaski',
-      'Cicero',
-      'Austin',
-      'Oak Park',
-      'Harlem',
-      'Forest Park'
+      // 'Kedzie-Homan',
+      // 'Pulaski',
+      // 'Cicero',
+      // 'Austin',
+      // 'Oak Park',
+      // 'Harlem',
+      // 'Forest Park'
     ],
     boundFor: {
       1: {
@@ -582,29 +638,183 @@ export const trainLines = [
           W: 30006,  
         } 
       },
+      {
+        name: 'Conservatory',
+        staId: 41670 ,
+        stpId: {
+          E: 30291,
+          W: 30292,  
+        } 
+      },
+      {
+        name: 'Kedzie',
+        staId: 41070,
+        stpId: {
+          E: 30207,
+          W: 30208,  
+        } 
+      },
+      {
+        name: 'California',
+        staId: 41360,
+        stpId: {
+          E: 30265,
+          W: 30266,  
+        } 
+      },
+      {
+        name: 'Ashland',
+        staId: 40170,
+        stpId: {
+          E: 30033,
+          W: 30032,  
+        } 
+      },
+      {
+        name: 'Morgan',
+        staId: 41510,
+        stpId: {
+          E: 30295,
+          W: 30296,  
+        }  
+      },
+      {
+        name: 'Clinton',
+        staId: 41160 ,
+        stpId: {
+          E: 30221,
+          W: 30222,  
+        } 
+      },
+      {
+        name: 'Clark/Lake',
+        staId: 40380 ,
+        stpId: {
+          E: 30074, //Inner Loop
+          W: 30075,  //Outer Loop 
+        } 
+      },
+      {
+        name: 'State/Lake',
+        staId: 40260,
+        stpId: {
+          E: 30050,
+          W: 30051,  
+        } 
+      },
+      {
+        name: 'Washington/Wabash',
+        staId: 41700,
+        stpId: {
+          N: 30383, //Outer
+          S: 30384, //Inner  
+        } 
+      },
+      {
+        name: 'Adams/Wabash',
+        staId: 40680,
+        stpId: {
+          N: 30131,
+          S: 30132,  
+        } 
+      },
+      {
+        name: 'Roosevelt',
+        staId: 41400,
+        stpId: {
+          N: 30080,
+          S: 30081,  
+        } 
+      },
+      {
+        name: 'Cermak-McCormick Place',
+        staId: 41690,
+        stpId: {
+          N: 30381,
+          S: 30382,  
+        } 
+      },
+      // {
+      //   name: '35th-Bronzeville-IIT',
+      //   staId: 4,
+      //   stpId: {
+      //     E: 3,
+      //     W: 3,  
+      //   } 
+      // },
+      // {
+      //   name: 'Indiana',
+      //   staId: 4,
+      //   stpId: {
+      //     E: 3,
+      //     W: 3,  
+      //   } 
+      // },
+      // {
+      //   name: '43rd',
+      //   staId: 4,
+      //   stpId: {
+      //     E: 3,
+      //     W: 3,  
+      //   } 
+      // },
+      // {
+      //   name: '47th',
+      //   staId: 4,
+      //   stpId: {
+      //     E: 3,
+      //     W: 3,  
+      //   } 
+      // },
+      // {
+      //   name: '51st',
+      //   staId: 4,
+      //   stpId: {
+      //     E: 3,
+      //     W: 3,  
+      //   } 
+      // },
+      // {
+      //   name: 'Garfield',
+      //   staId: 4,
+      //   stpId: {
+      //     E: 3,
+      //     W: 3,  
+      //   } 
+      // },
+      // {
+      //   name: 'Kind Drive',       // Kind Drive (Harlem-bound boarding only) Cottage Grove branch,
+      //   staId: 4,
+      //   stpId: {
+      //     E: 3,
+      //     W: 3,  
+      //   } 
+      // },
+      // {
+      //   name: 'Cottage Grove',
+      //   staId: 4,
+      //   stpId: {
+      //     E: 3,
+      //     W: 3,  
+      //   } 
+      // },
+      // {
+      //   name: 'Halsted',       // Halsted (Ashland branch),
+      //   staId: 4,
+      //   stpId: {
+      //     E: 3,
+      //     W: 3,  
+      //   } 
+      // },
+      // {
+      //   name: 'Ashland/63rd',
+      //   staId: 4,
+      //   stpId: {
+      //     E: 3,
+      //     W: 3,  
+      //   } 
+      // },
 
-      // Conservatory-Central Park Drive,
-      // Kedzie,
-      // California,
-      // Ashland,
-      // Morgan,
-      // Clinton,
-      // Clark/Lake,
-      // State/Lake,
-      // Washington/Wabash,
-      // Adams/Wabash,
-      // Roosevelt,
-      // Cermak-McCormick Place,
-      // 35th-Bronzeville-IIT,
-      // Indiana,
-      // 43rd,
-      // 47th,
-      // 51st,
-      // Garfield,
-      // Kind Drive (Harlem-bound boarding only) Cottage Grove branch,
-      // Cottage Grove,
-      // Halsted (Ashland branch),
-      // Ashland/63rd
     ],
     boundFor: {
       1: {
@@ -771,6 +981,14 @@ export const trainLines = [
     rt: 'Brn',
     textcolor: 'white',
     stops: [
+      {
+        name: 'Kimball',
+        staId: 41290 ,
+        stpId: {
+          N: 30249,
+          S: 30250
+        } 
+      },
       // Kimball,
       // Kedzie,
       // Francisco,
