@@ -56,19 +56,17 @@ class TripEstimates extends Component {
   }
 
   onButtonPressSave(departureStop, arrivalStop, routeName) {
-    console.log('I am onButtonPressSave');
     this.props.createFavTrip({ departureStop, arrivalStop, routeName });
-    // this.props.navigation.dispatch(
-    //   {
-    //     type: 'Navigation/NAVIGATE',
-    //     routeName: 'FavTripList',
-    //   }
-    // )
+    this.props.navigation.dispatch(
+      {
+        type: 'Navigation/NAVIGATE',
+        routeName: 'FavTripList',
+      }
+    )
   }
 
   renderSaveButton(departureStop, arrivalStop, routeName) {
     // const renderButton = () => {
-      console.log(departureStop, arrivalStop, routeName)
       return (
       <Button
         onPress={()=>this.onButtonPressSave(departureStop, arrivalStop, routeName)}

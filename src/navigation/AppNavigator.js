@@ -2,6 +2,7 @@ import React from 'react';
 import { StackNavigator, DrawerNavigator } from "react-navigation";
 
 import FavStopList from '../components/FavStopList';
+import FavTripList from '../components/FavTripList';
 import LineList from '../components/LineList';
 import StopList from '../components/StopList';
 import DirList from '../components/DirList';
@@ -12,6 +13,7 @@ import DrawerContainer from '../components/DrawerContainer';
 
 const StackNavigation = StackNavigator ({
   FavStopList: { screen: FavStopList },
+  FavTripList: { screen: FavTripList },
   LineList: { screen: LineList },
   StopList: { screen: StopList },
   DirList: { screen: DirList },
