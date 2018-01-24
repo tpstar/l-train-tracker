@@ -24,6 +24,12 @@ export default class DrawerContainer extends React.Component {
             titleStyle={{color:'white'}}
             leftIcon={{name: 'favorite' }}
           />
+          <ListItem
+            onPress={() => navigation.navigate('FavTripList')}
+            title={'Trip List'}
+            titleStyle={{color:'white'}}
+            leftIcon={{name: 'favorite' }}
+          />
           {
             trainLines.map((item, index) => (
               <ListItem
