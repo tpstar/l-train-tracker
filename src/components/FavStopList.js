@@ -62,13 +62,6 @@ class FavStopList extends Component {
   }
 }
 
-const styles = {
-  titleStyle: {
-    fontSize: 18,
-    paddingLeft: 15
-  }
-}
-
 const mapStateToProps = state => {
   const { favstops } = state; //favtrainsstops from reducers/index.js
   return { favstops };

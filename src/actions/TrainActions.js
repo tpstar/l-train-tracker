@@ -11,11 +11,11 @@ export const createFavStop = ({ trainline, trainstop, boundFor }) => {
   }
 }
 
-export const createFavTrip = ({ departureStop, arrivalStop, routeName }) => {
-  console.log(departureStop, arrivalStop, routeName);
+export const createFavTrip = ({ departureStop, arrivalStop, route }) => {
+  console.log(departureStop, arrivalStop, route);
   return  {
     type: CREATE_FAV_TRIP,
-    payload: { departureStop, arrivalStop, routeName }
+    payload: { departureStop, arrivalStop, route }
   }
 }
 

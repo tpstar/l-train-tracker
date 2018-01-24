@@ -3,13 +3,13 @@ import { connect } from 'react-redux';
 import { FlatList, Button, View, Text } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { CardSection } from './common';
-// import FavStopListItem from './FavStopListItem';
+import FavTripListItem from './FavTripListItem';
 // import { deleteFavStop } from '../actions';
 // import { NavigateTo } from './helper';
 
 class FavTipList extends Component {
 
-  // onButtonPress(favstop) {
+  onButtonPress(favtrip) {
   //   // console.log(favstop)
   //   const { trainline, trainstop, boundFor } = favstop;
   //
@@ -20,11 +20,11 @@ class FavTipList extends Component {
   //       params: { trainline, trainstop, boundFor }
   //     }
   //   )
-  // }
+  }
 
-  // onSlidePress(favstop) {
+  onSlidePress(favtrip) {
   //   this.props.deleteFavStop(favstop);
-  // }
+  }
 
   static navigationOptions = ({ navigation }) => {
     const drawerButton = (navigation) => {
@@ -46,28 +46,20 @@ class FavTipList extends Component {
   }
 
   render() {
-    console.log(this.props.favtrips);
+    const { favtrips } = this.props;
     return (
       <View>
-        <Text> Hello You are in Fav Trip List </Text>
-      {/* //   <FlatList
-      //     data={this.props.favstops}
-      //     renderItem={({ item })=><FavStopListItem
-      //       favstop={item}
-      //       onButtonPress={this.onButtonPress.bind(this)}
-      //       onSlidePress={this.onSlidePress.bind(this)}
-      //     />}
-      //     keyExtractor={(item, index)=>index}
-      //   /> */}
+         <FlatList
+           data={this.props.favtrips}
+           renderItem={({ item })=><FavTripListItem
+             favtrip={item}
+             onButtonPress={this.onButtonPress.bind(this)}
+             onSlidePress={this.onSlidePress.bind(this)}
+           />}
+           keyExtractor={(item, index)=>index}
+         />
       </View>
     )
-  }
-}
-
-const styles = {
-  titleStyle: {
-    fontSize: 18,
-    paddingLeft: 15
   }
 }
 

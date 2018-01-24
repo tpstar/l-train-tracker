@@ -55,8 +55,9 @@ class TripEstimates extends Component {
     }
   }
 
-  onButtonPressSave(departureStop, arrivalStop, routeName) {
-    this.props.createFavTrip({ departureStop, arrivalStop, routeName });
+  onButtonPressSave(departureStop, arrivalStop, route) {
+    console.log('route: ', route)
+    this.props.createFavTrip({ departureStop, arrivalStop, route });
     this.props.navigation.dispatch(
       {
         type: 'Navigation/NAVIGATE',
@@ -65,11 +66,11 @@ class TripEstimates extends Component {
     )
   }
 
-  renderSaveButton(departureStop, arrivalStop, routeName) {
+  renderSaveButton(departureStop, arrivalStop, route) {
     // const renderButton = () => {
       return (
       <Button
-        onPress={()=>this.onButtonPressSave(departureStop, arrivalStop, routeName)}
+        onPress={()=>this.onButtonPressSave(departureStop, arrivalStop, route)}
         // overwriteTextStyle={{color: `${trainline.textcolor}`}}
         // overwriteButtonStyle={{borderColor: `${trainline.name}`, backgroundColor: `${trainline.name}`}}
       >
@@ -94,7 +95,7 @@ class TripEstimates extends Component {
 
   render() {
     const { tripdata } = this.props;
-    const { departureStop, arrivalStop, routeName } = this.props.navigation.state.params;
+    const { departureStop, arrivalStop, route } = this.props.navigation.state.params;
     console.log( "is state to props called twice in render?", tripdata ) // once with empty object and once with object with data
     // let departureData = {};
     // let arrivalData = {};
@@ -112,7 +113,7 @@ class TripEstimates extends Component {
         {this.renderError(tripdata)}
         {this.renderArrivalTime(tripdata)}
         <CardSection>
-          {this.renderSaveButton(departureStop, arrivalStop, routeName)}
+          {this.renderSaveButton(departureStop, arrivalStop, route)}
         </CardSection>
 
       </Card>
