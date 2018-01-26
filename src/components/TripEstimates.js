@@ -67,7 +67,8 @@ class TripEstimates extends Component {
   }
 
   renderSaveButton(departureStop, arrivalStop, route) {
-    // const renderButton = () => {
+    const { favtrips } = this.props;
+    const renderButton = () => {
       return (
       <Button
         onPress={()=>this.onButtonPressSave(departureStop, arrivalStop, route)}
@@ -76,21 +77,22 @@ class TripEstimates extends Component {
       >
         Save this Trip
       </Button>
-    ) //}
-    // if (_.isEmpty(favstops)) {
-    //   return renderButton();
-    // } else {
-    //   const selectedStop = { trainline, trainstop, boundFor };
-    //   // check if the stop is already in the list
-    //   const favStopExists = favstops.some((favstop) => (
-    //     favstop.trainline.name === selectedStop.trainline.name &&
-    //     favstop.trainstop.name === selectedStop.trainstop.name &&
-    //     favstop.boundFor.name === selectedStop.boundFor.name
-    //   ))
-    //   if (!favStopExists) { //if the selected stop does not exist in the fav stop list
-    //     return renderButton()
-    //   }
-    // }
+    )}
+    if (_.isEmpty(favtrips)) {
+      return renderButton();
+    } else {
+      const selectedTrip = { departureStop, arrivalStop, route };
+      // check if the stop is already in the list
+      console.log("selectedTrip: ", selectedTrip, "favtrips: ", favtrips);
+      const favTripExists = favtrips.some((favtrip) => (
+        favtrip.route.name === selectedTrip.route.name &&
+        favtrip.departureStop.name === selectedTrip.departureStop.name &&
+        favtrip.arrivalStop.name === selectedTrip.arrivalStop.name
+      ))
+      if (!favTripExists) { //if the selected stop does not exist in the fav stop list
+        return renderButton()
+      }
+    }
   }
 
   render() {
@@ -122,8 +124,8 @@ class TripEstimates extends Component {
 }
 
 const mapStateToProps = state => {
-  const { tripdata } = state; //arrivaldata from reducers/index.js
-  return { tripdata };
+  const { tripdata, favtrips } = state; //arrivaldata from reducers/index.js
+  return { tripdata, favtrips };
 }
 
 export default connect(mapStateToProps, { createFavTrip })(TripEstimates);

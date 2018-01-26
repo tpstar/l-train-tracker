@@ -10,16 +10,17 @@ import FavTripListItem from './FavTripListItem';
 class FavTipList extends Component {
 
   onButtonPress(favtrip) {
-  //   // console.log(favstop)
-  //   const { trainline, trainstop, boundFor } = favstop;
-  //
-  //   this.props.navigation.dispatch(
-  //     {
-  //       type: 'Navigation/NAVIGATE',
-  //       routeName: 'ArrivalTimes', //To FavStopList
-  //       params: { trainline, trainstop, boundFor }
-  //     }
-  //   )
+    // console.log(favtrip)
+    const { departureStop, arrivalStop, route } = favtrip;
+
+    this.props.navigation.dispatch(
+      {
+        type: 'Navigation/NAVIGATE',
+        routeName: 'TripEstimates',
+        params: { departureStop, arrivalStop, route }
+      }
+    )
+    // this.props.followThisTrain({ departureStop, arrivalStop, departureStopArrivaltime: arrivaltime, routeName: trainline.name})
   }
 
   onSlidePress(favtrip) {
