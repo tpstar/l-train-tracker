@@ -20,7 +20,7 @@ class FavTipList extends Component {
         params: { departureStop, arrivalStop, route }
       }
     )
-    // this.props.followThisTrain({ departureStop, arrivalStop, departureStopArrivaltime: arrivaltime, routeName: trainline.name})
+    // this.props.fetchFollowTrainAPIData({ departureStop, arrivalStop, departureStopArrivaltime: arrivaltime, routeName: trainline.name})
   }
 
   onSlidePress(favtrip) {

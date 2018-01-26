@@ -3,4 +3,5 @@ export const CREATE_FAV_TRIP = 'create_fav_trip';
 export const FETCH_ARRIVAL_TIME = 'fetch_arrival_time';
 export const FOLLOW_TRAIN_SUCCESS = 'follow_train_success';
 export const DELETE_FAV_STOP = 'delete_fav_stop';
-export const FOLLOW_TRAIN_FAIL = 'FOLLOW_TRAIN_FAIL';
+export const FOLLOW_TRAIN_FAIL = 'follow_train_fail';
+export const FOLLOW_TRAIN = 'follow_train';

@@ -1,10 +1,17 @@
 import moment from 'moment';
-import { CREATE_FAV_STOP, CREATE_FAV_TRIP, FETCH_ARRIVAL_TIME, FOLLOW_TRAIN_SUCCESS, FOLLOW_TRAIN_FAIL, DELETE_FAV_STOP } from './types';
+import {
+  CREATE_FAV_STOP,
+  CREATE_FAV_TRIP,
+  FETCH_ARRIVAL_TIME,
+  FOLLOW_TRAIN,
+  FOLLOW_TRAIN_SUCCESS,
+  FOLLOW_TRAIN_FAIL,
+  DELETE_FAV_STOP } from './types';
 import { CTA_API_KEY, Google_Maps_API_KEY } from '../config';
 
 
 export const createFavStop = ({ trainline, trainstop, boundFor }) => {
-  console.log(trainline, trainstop, boundFor);
+  // console.log(trainline, trainstop, boundFor);
   return  {
     type: CREATE_FAV_STOP,
     payload: { trainline, trainstop, boundFor }
@@ -43,12 +50,14 @@ export const arrivalTimeSuccess = (data) => {
   }
 }
 
-export const followThisTrain = ({ departureStop, arrivalStop, departureStopArrivaltime, routeName }) => {
-  const runnumber = departureStopArrivaltime.rn;
-  console.log(departureStop, arrivalStop, departureStopArrivaltime, routeName)
-  const url = `http://lapi.transitchicago.com/api/1.0/ttfollow.aspx?key=${CTA_API_KEY}&runnumber=${runnumber}&outputType=JSON`;
-  // console.log(url);
+export const fetchFollowTrainAPIData = ({ departureStop, arrivalStop, departureStopArrivaltime, routeName }) => {
   return (dispatch) => {
+    dispatch({ type: FOLLOW_TRAIN });
+
+    const runnumber = departureStopArrivaltime.rn;
+    // console.log(departureStop, arrivalStop, departureStopArrivaltime, routeName)
+    const url = `http://lapi.transitchicago.com/api/1.0/ttfollow.aspx?key=${CTA_API_KEY}&runnumber=${runnumber}&outputType=JSON`;
+    // console.log(url);
     fetch(url)
       .then((data)=>data.json())
       .catch(error => console.error('Error:', error))
@@ -66,6 +75,7 @@ export const followThisTrain = ({ departureStop, arrivalStop, departureStopArriv
           }
           const tripDepartureTime = { routeName, stop: departureStopData.staNm, arrT: departureStopData.arrT };
           if (!arrivalStopData) {
+            console.log('hello');
           //if CTA follow this train API does not include arrival stop data because it only contains data for 9~10 stops in the api.
           //if that's the case, use google Maps API to estimate time it takes from the last CTA stop data available and add duration time
           //from the last stop to destination stop

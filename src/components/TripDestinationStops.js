@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { Card, Header } from './common';
 import StopListItem from './StopListItem';
 import TripEstimates from './TripEstimates';
-import { followThisTrain } from '../actions';
+import { fetchFollowTrainAPIData } from '../actions';
 
 class TripDestinationStops extends Component {
 
@@ -22,7 +22,7 @@ class TripDestinationStops extends Component {
         routeName: 'TripEstimates',
         params: { departureStop, arrivalStop, route }
       })
-    this.props.followThisTrain({ departureStop, arrivalStop, departureStopArrivaltime: arrivaltime, routeName: trainline.name});
+    this.props.fetchFollowTrainAPIData({ departureStop, arrivalStop, departureStopArrivaltime: arrivaltime, routeName: trainline.name});
 
   }
 
@@ -82,4 +82,4 @@ class TripDestinationStops extends Component {
   }
 }
 
-export default connect(null, { followThisTrain })(TripDestinationStops);
+export default connect(null, { fetchFollowTrainAPIData })(TripDestinationStops);

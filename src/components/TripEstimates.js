@@ -5,7 +5,7 @@ import moment from 'moment';
 import { HeaderBackButton } from 'react-navigation';
 import _ from 'lodash';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { Card, Header, Button, CardSection } from './common';
+import { Card, Header, Button, CardSection, Spinner } from './common';
 import { createFavTrip } from '../actions';
 
 import { NavigateTo } from './helper';
@@ -56,7 +56,6 @@ class TripEstimates extends Component {
   }
 
   onButtonPressSave(departureStop, arrivalStop, route) {
-    console.log('route: ', route)
     this.props.createFavTrip({ departureStop, arrivalStop, route });
     this.props.navigation.dispatch(
       {
@@ -67,7 +66,7 @@ class TripEstimates extends Component {
   }
 
   renderSaveButton(departureStop, arrivalStop, route) {
-    const { favtrips } = this.props;
+    const { favtrips, tripdata } = this.props;
     const renderButton = () => {
       return (
       <Button
@@ -78,12 +77,16 @@ class TripEstimates extends Component {
         Save this Trip
       </Button>
     )}
+
+    if (tripdata.loading) {
+      return <Spinner size="large" />
+    }
     if (_.isEmpty(favtrips)) {
       return renderButton();
     } else {
       const selectedTrip = { departureStop, arrivalStop, route };
       // check if the stop is already in the list
-      console.log("selectedTrip: ", selectedTrip, "favtrips: ", favtrips);
+      // console.log("selectedTrip: ", selectedTrip, "favtrips: ", favtrips);
       const favTripExists = favtrips.some((favtrip) => (
         favtrip.route.name === selectedTrip.route.name &&
         favtrip.departureStop.name === selectedTrip.departureStop.name &&
