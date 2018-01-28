@@ -4,7 +4,7 @@ import { FlatList, Button, View, Text } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { CardSection } from './common';
 import FavTripListItem from './FavTripListItem';
-// import { deleteFavStop } from '../actions';
+import { fetchTrip } from '../actions';
 // import { NavigateTo } from './helper';
 
 class FavTipList extends Component {
@@ -20,7 +20,9 @@ class FavTipList extends Component {
         params: { departureStop, arrivalStop, route }
       }
     )
-    // this.props.fetchFollowTrainAPIData({ departureStop, arrivalStop, departureStopArrivaltime: arrivaltime, routeName: trainline.name})
+    // console.log(departureStop, arrivalStop)
+    // this.props.fetchTrip({ departureStop, arrivalStop, departureStopArrivaltime: arrivaltime, routeName: trainline.name})
+    this.props.fetchTrip({ departureStop, arrivalStop, route })
   }
 
   onSlidePress(favtrip) {
@@ -69,4 +71,4 @@ const mapStateToProps = state => {
   return { favtrips };
 }
 
-export default connect(mapStateToProps, {  })(FavTipList);
+export default connect(mapStateToProps, { fetchTrip })(FavTipList);

@@ -101,7 +101,7 @@ class TripEstimates extends Component {
   render() {
     const { tripdata } = this.props;
     const { departureStop, arrivalStop, route } = this.props.navigation.state.params;
-    console.log( "is state to props called twice in render?", tripdata ) // once with empty object and once with object with data
+    // console.log( "is state to props called twice in render?", tripdata ) // once with empty object and once with object with data
     // let departureData = {};
     // let arrivalData = {};
     // if (tripdata.tripDepartureTime && tripdata.tripArrivalTime) { //when state to props is called with empty data tripdata.tripDepartureTime is false

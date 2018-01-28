@@ -10,6 +10,18 @@ import {
 import { CTA_API_KEY, Google_Maps_API_KEY } from '../config';
 
 
+const fetchCTAArrivalAPIData = (stopId, routeName) => {
+  console.log("fetchCTA: ", stopId, routeName)
+  const url = `http://lapi.transitchicago.com/api/1.0/ttarrivals.aspx?key=${CTA_API_KEY}&stpid=${stopId}&rt=${routeName}&outputType=JSON&max=3`;
+  const CTAArrivalDataPromise = fetch(url)
+        .then((data)=>data.json())
+        .catch(error => console.error('Error:', error))
+        // .then((data)=>data.ctatt)
+  return CTAArrivalDataPromise;
+}
+
+
+
 export const createFavStop = ({ trainline, trainstop, boundFor }) => {
   // console.log(trainline, trainstop, boundFor);
   return  {
@@ -19,7 +31,7 @@ export const createFavStop = ({ trainline, trainstop, boundFor }) => {
 }
 
 export const createFavTrip = ({ departureStop, arrivalStop, route }) => {
-  console.log(departureStop, arrivalStop, route);
+  // console.log(departureStop, arrivalStop, route);
   return  {
     type: CREATE_FAV_TRIP,
     payload: { departureStop, arrivalStop, route }
@@ -33,11 +45,12 @@ export const arrivalTimeFetch = ({ trainline, trainstop, boundFor }) => {
   const routeName = trainline.rt; // route name to filter out other line arrivals
   // console.log(routeName)
   const url = `http://lapi.transitchicago.com/api/1.0/ttarrivals.aspx?key=${CTA_API_KEY}&stpid=${stopId}&rt=${routeName}&outputType=JSON&max=3`;
+
   return (dispatch) => {
     fetch(url)
       .then((data)=>data.json())
       .catch(error => console.error('Error:', error))
-      .then((data)=>{
+      .then((data)=> {
         dispatch(arrivalTimeSuccess(data.ctatt))
       })
   }
@@ -55,27 +68,26 @@ export const fetchFollowTrainAPIData = ({ departureStop, arrivalStop, departureS
     dispatch({ type: FOLLOW_TRAIN });
 
     const runnumber = departureStopArrivaltime.rn;
-    // console.log(departureStop, arrivalStop, departureStopArrivaltime, routeName)
+    console.log("runnumber: ", runnumber)
     const url = `http://lapi.transitchicago.com/api/1.0/ttfollow.aspx?key=${CTA_API_KEY}&runnumber=${runnumber}&outputType=JSON`;
     // console.log(url);
     fetch(url)
       .then((data)=>data.json())
       .catch(error => console.error('Error:', error))
       .then((data)=>{
-        console.log(data.ctatt);
+        // console.log(data.ctatt);
         if (data.ctatt.errCd === "0") {
           let departureStopData = data.ctatt.eta.find((stop) => stop.staId == departureStop.staId);
           // used == instead of ===, because one is number and the other is string
           let arrivalStopData = data.ctatt.eta.find((stop) => stop.staId == arrivalStop.staId);
 
-          console.log(!!departureStopData, !!arrivalStopData);
+          // console.log(!!departureStopData, !!arrivalStopData);
           if (!departureStopData) {
           //if CTA follow this train API does not include the departure stop data because the train already departed the stop
             departureStopData = departureStopArrivaltime;
           }
           const tripDepartureTime = { routeName, stop: departureStopData.staNm, arrT: departureStopData.arrT };
           if (!arrivalStopData) {
-            console.log('hello');
           //if CTA follow this train API does not include arrival stop data because it only contains data for 9~10 stops in the api.
           //if that's the case, use google Maps API to estimate time it takes from the last CTA stop data available and add duration time
           //from the last stop to destination stop
@@ -90,7 +102,7 @@ export const fetchFollowTrainAPIData = ({ departureStop, arrivalStop, departureS
                 const tripDurationInSec = data.routes[0].legs[0].duration.value;
                 console.log(tripDurationInSec, 'sec');
                 arrivalStopData = {staNm: arrivalStopName, arrT: moment(lastStopDataCtaApiCanGive.arrT).add(tripDurationInSec, 'seconds').format('YYYY-MM-DDTHH:mm:ss')}
-                console.log(lastStopName, arrivalStopData);
+                // console.log(lastStopName, arrivalStopData);
                 const tripArrivalTimeFromCTAandGoogle = { routeName, stop: arrivalStopData.staNm, arrT: arrivalStopData.arrT };
                 dispatch(followThisTrainSuccess({ tripDepartureTime, tripArrivalTime: tripArrivalTimeFromCTAandGoogle  }));
               })
@@ -100,6 +112,7 @@ export const fetchFollowTrainAPIData = ({ departureStop, arrivalStop, departureS
             dispatch(followThisTrainSuccess({ tripDepartureTime, tripArrivalTime: tripArrivalTimeFromCTAOnly }));
           }
         } else if (data.ctatt.errCd === "502") {
+          console.log("error code 502!")
           dispatch(followThisTrainFail())
         }
       })
@@ -123,5 +136,22 @@ export const deleteFavStop = (favstop) => {
   return {
     type: DELETE_FAV_STOP,
     payload: favstop
+  }
+}
+
+export const fetchTrip = ({ departureStop, arrivalStop, route }) => {
+  // console.log('stop platform id: ', departureStop.stpId[departureStop.boundFor.direction]); //departureStop.boundFor.direction is from data/index.js "N", "S", "L", ..
+  console.log(route)
+  const stopId = departureStop.stpId[departureStop.boundFor.direction] || departureStop.stpId[departureStop.boundFor.direction2] //if not "N" and "S" try "E" and "W";
+  const routeName = route.rt; //needs to be trailine.rt
+  const url = `http://lapi.transitchicago.com/api/1.0/ttarrivals.aspx?key=${CTA_API_KEY}&stpid=${stopId}&rt=${routeName}&outputType=JSON&max=3`;
+  return (dispatch) => {
+    fetch(url)
+      .then((data)=>data.json())
+      .catch(error => console.error('Error:', error))
+      .then((data)=> {
+        console.log(data.ctatt.eta)
+        dispatch(fetchFollowTrainAPIData({ departureStop, arrivalStop, departureStopArrivaltime: data.ctatt.eta[0], routeName }))
+      })
   }
 }

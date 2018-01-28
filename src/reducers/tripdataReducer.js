@@ -8,14 +8,14 @@ const INITIAL_STATE = {
 };
 
 export default (state = INITIAL_STATE, action) => {
-  // console.log(state);
+  // console.log('state: ', state, 'action: ', action);
   switch (action.type) {
     case FOLLOW_TRAIN_SUCCESS:
       return { ...INITIAL_STATE, ...action.payload };
     case FOLLOW_TRAIN_FAIL: //catch 502 error from CTA
       return { ...state, loading: false, error: 'Train tracking data are not available at this time, please try again later!' }
     case FOLLOW_TRAIN:
-      return { ...state, loading: true };
+      return { ...INITIAL_STATE, loading: true };
     default:
       return state;
   }
