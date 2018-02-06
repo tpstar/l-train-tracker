@@ -8,7 +8,6 @@ import StopListItem from './StopListItem';
 class StopList extends Component {
 
   onButtonPress(trainline, trainstop) {
-    console.log(trainline.boundFor[3])
     let routeTo = 'DirList';
     let boundFor = '';
     if (trainstop.stpId.L) { //console.log('You are in Loop!')

@@ -578,128 +578,128 @@ export const trainLines = [
         name: 'Harlem/Lake',
         staId: 40020,
         stpId: {
-          E: 30003,
-          W: 30004,  
+          S: 30003,
+          N: 30004,  
         } 
       },
       {
         name: 'Oak Park',
         staId: 41350,
         stpId: {
-          E: 30263,
-          W: 30264,  
+          S: 30263,
+          N: 30264,  
         } 
       },
       {
         name: 'Ridgeland',
         staId: 40610,
         stpId: {
-          E: 30119,
-          W: 30120,  
+          S: 30119,
+          N: 30120,  
         } 
       },
       {
         name: 'Austin',
         staId: 40010,
         stpId: {
-          E: 30001,
-          W: 30002,  
+          S: 30001,
+          N: 30002,  
         } 
       },
       {
         name: 'Central',
         staId: 40280,
         stpId: {
-          E: 30054,
-          W: 30055,  
+          S: 30054,
+          N: 30055,  
         } 
       },
       {
         name: 'Laramie',
         staId: 40700,
         stpId: {
-          E: 30135,
-          W: 30136,  
+          S: 30135,
+          N: 30136,  
         } 
       },
       {
         name: 'Cicero',
         staId: 40480,
         stpId: {
-          E: 30094,
-          W: 30009,  
+          S: 30094,
+          N: 30009,  
         } 
       },
       {
         name: 'Pulaski',
         staId: 40030,
         stpId: {
-          E: 30005,
-          W: 30006,  
+          S: 30005,
+          N: 30006,  
         } 
       },
       {
         name: 'Conservatory',
         staId: 41670 ,
         stpId: {
-          E: 30291,
-          W: 30292,  
+          S: 30291,
+          N: 30292,  
         } 
       },
       {
         name: 'Kedzie',
         staId: 41070,
         stpId: {
-          E: 30207,
-          W: 30208,  
+          S: 30207,
+          N: 30208,  
         } 
       },
       {
         name: 'California',
         staId: 41360,
         stpId: {
-          E: 30265,
-          W: 30266,  
+          S: 30265,
+          N: 30266,  
         } 
       },
       {
         name: 'Ashland',
         staId: 40170,
         stpId: {
-          E: 30033,
-          W: 30032,  
+          S: 30033,
+          N: 30032,  
         } 
       },
       {
         name: 'Morgan',
         staId: 41510,
         stpId: {
-          E: 30295,
-          W: 30296,  
+          S: 30295,
+          N: 30296,  
         }  
       },
       {
         name: 'Clinton',
         staId: 41160 ,
         stpId: {
-          E: 30221,
-          W: 30222,  
+          S: 30221,
+          N: 30222,  
         } 
       },
       {
         name: 'Clark/Lake',
         staId: 40380 ,
         stpId: {
-          E: 30074, //Inner Loop
-          W: 30075,  //Outer Loop 
+          S: 30074, //Inner Loop
+          N: 30075,  //Outer Loop 
         } 
       },
       {
         name: 'State/Lake',
         staId: 40260,
         stpId: {
-          E: 30050,
-          W: 30051,  
+          S: 30050, //Inner
+          N: 30051,  //Outer 
         } 
       },
       {
@@ -734,97 +734,99 @@ export const trainLines = [
           S: 30382,  
         } 
       },
-      // {
-      //   name: '35th-Bronzeville-IIT',
-      //   staId: 4,
-      //   stpId: {
-      //     E: 3,
-      //     W: 3,  
-      //   } 
-      // },
-      // {
-      //   name: 'Indiana',
-      //   staId: 4,
-      //   stpId: {
-      //     E: 3,
-      //     W: 3,  
-      //   } 
-      // },
-      // {
-      //   name: '43rd',
-      //   staId: 4,
-      //   stpId: {
-      //     E: 3,
-      //     W: 3,  
-      //   } 
-      // },
-      // {
-      //   name: '47th',
-      //   staId: 4,
-      //   stpId: {
-      //     E: 3,
-      //     W: 3,  
-      //   } 
-      // },
-      // {
-      //   name: '51st',
-      //   staId: 4,
-      //   stpId: {
-      //     E: 3,
-      //     W: 3,  
-      //   } 
-      // },
-      // {
-      //   name: 'Garfield',
-      //   staId: 4,
-      //   stpId: {
-      //     E: 3,
-      //     W: 3,  
-      //   } 
-      // },
-      // {
-      //   name: 'Kind Drive',       // Kind Drive (Harlem-bound boarding only) Cottage Grove branch,
-      //   staId: 4,
-      //   stpId: {
-      //     E: 3,
-      //     W: 3,  
-      //   } 
-      // },
-      // {
-      //   name: 'Cottage Grove',
-      //   staId: 4,
-      //   stpId: {
-      //     E: 3,
-      //     W: 3,  
-      //   } 
-      // },
-      // {
-      //   name: 'Halsted',       // Halsted (Ashland branch),
-      //   staId: 4,
-      //   stpId: {
-      //     E: 3,
-      //     W: 3,  
-      //   } 
-      // },
-      // {
-      //   name: 'Ashland/63rd',
-      //   staId: 4,
-      //   stpId: {
-      //     E: 3,
-      //     W: 3,  
-      //   } 
-      // },
+      {
+        name: '35th-Bronzeville-IIT',
+        staId: 41120 ,
+        stpId: {
+          N: 30213,
+          S: 30214,  
+        } 
+      },
+      {
+        name: 'Indiana',
+        staId: 40300,
+        stpId: {
+          N: 30058,
+          S: 30059,  
+        } 
+      },
+      {
+        name: '43rd',
+        staId: 41270,
+        stpId: {
+          N: 30245,
+          S: 30246,   
+        } 
+      },
+      {
+        name: '47th',
+        staId: 41080,
+        stpId: {
+          N: 30209,
+          S: 30210,   
+        } 
+      },
+      {
+        name: '51st',
+        staId: 40130 ,
+        stpId: {
+          N: 30024,
+          S: 30025, 
+        } 
+      },
+      {
+        name: 'Garfield',
+        staId: 40510 ,
+        stpId: {
+          N: 30099,
+          S: 30100,  
+        } 
+      },
+      {
+        name: 'King Drive',       // King Drive (Harlem-bound boarding only) Cottage Grove branch,
+        staId: 41140,
+        stpId: {
+          E: 30217,
+          W: 30218,  
+        } 
+      },
+      {
+        name: 'Cottage Grove',
+        staId: 40720,
+        stpId: {
+          E: 30139,
+          W: 30140, 
+        } 
+      },
+      {
+        name: 'Halsted',       // Halsted (Ashland branch),
+        staId: 40940,
+        stpId: {
+          N: 30183,
+          S: 30184, 
+        } 
+      },
+      {
+        name: 'Ashland/63rd',
+        staId: 40290,
+        stpId: {
+          N: 30056,
+          S: 30057, 
+        } 
+      },
 
     ],
     boundFor: {
       1: {
         name: 'Harlem',
         direction: 'W',
+        direction2: 'N',
         key: 1
       },
       5: {
         name: '63rd',
         direction: 'E',
+        direction2: 'S',
         key: 5
       },
 

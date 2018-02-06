@@ -15,7 +15,7 @@ class FavStopListItem extends Component {
         onPress: () => onSlidePress(favtrip)
       }
     ];
-    console.log(favtrip)
+    // console.log(favtrip)
 
     return (
       <Swipeout right={swipeBtns}
