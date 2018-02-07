@@ -21,7 +21,6 @@ class TripEstimates extends Component {
   }
 
   renderTime(time, error) {
-    console.log(time, error)
     if (!error && time) {
       let arrTime = moment(time.arrT);
       let seconds = arrTime.second()

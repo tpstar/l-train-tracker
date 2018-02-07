@@ -12,7 +12,6 @@ class ArrivalTimeItem extends Component {
     const { name, textcolor, sectextcolor } = trainline;
 
     let arrTime = moment(arrivaltime.arrT);
-    console.log(arrTime)
     let seconds = arrTime.second()
     if (Math.round(seconds/60) === 1) { //round up to minutes
       arrTime = moment(arrTime).add(1, 'minutes')
@@ -22,7 +21,7 @@ class ArrivalTimeItem extends Component {
       <CardSection>
         <Button
            onPress={()=>onButtonPress(arrivaltime)}
-           overwriteTextStyle={{color: textcolor, fontSize: 20}}
+           overwriteTextStyle={{color: textcolor, fontSize: 18}}
            overwriteButtonStyle={{borderColor: name, backgroundColor: name}}
          >
            {waitingMin(arrivaltime)} min {'     '}
