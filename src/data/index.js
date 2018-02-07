@@ -903,7 +903,7 @@ export const trainLines = [
         } 
       },
       {
-        name: 'H.W. Library',
+        name: 'Harold Washington Library',
         staId: 40850,
         stpId: {
           L: 30166,
@@ -917,7 +917,7 @@ export const trainLines = [
         } 
       },
       {
-        name: 'Quincy/Wells',
+        name: 'Quincy',
         staId: 40040,
         stpId: {
           L: 30007,

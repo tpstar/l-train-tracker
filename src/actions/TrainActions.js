@@ -97,12 +97,11 @@ export const fetchFollowTrainAPIData = ({ departureStop, arrivalStop, departureS
           const lastStopName = lastStopDataCtaApiCanGive.staNm;
           const arrivalStopName = arrivalStop.name;
 
-          // console.log(departureStop.boundFor.direction)
+          console.log(departureStop.boundFor.direction)
           const timeTable = timeTables[routeName]["weekdays"][departureStop.boundFor.direction];
-          // console.log(timeTable);
+          console.log(timeTable);
           const lastStopArrTime = lastStopDataCtaApiCanGive.arrT;
-          // console.log('last stop name: ', lastStopName, 'arrival stop name: ', arrivalStopName, 'time table: ', timeTable,  'last stop arrival time: ', lastStopArrTime);
-          // console.log(moment("10:31 AM", 'HH:mm A').diff(moment(lastStopArrTime)))
+          console.log('last stop name: ', lastStopName, 'arrival stop name: ', arrivalStopName, 'time table: ', timeTable,  'last stop arrival time: ', lastStopArrTime);
 
           const indexOfClosestFutureService = timeTable[lastStopName].findIndex((element)=>(moment(element, 'HH:mm A').diff(moment(lastStopArrTime)) > 0));
           // console.log(indexOfClosestFutureService)
@@ -156,7 +155,7 @@ export const fetchFollowTrainAPIData = ({ departureStop, arrivalStop, departureS
           }
         } else if (data.ctatt.errCd === "502") {
           // const tripArrivalTimeFromCTAandTimeTable = { routeName, stop: arrivalStop.name, arrT  };
-          console.log("error code 502!", TimeTable.red.weekdays.S.Jackson[3]);
+          console.log("error code 502!");
           dispatch(followThisTrainFail())
         }
       })

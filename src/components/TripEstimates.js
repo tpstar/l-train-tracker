@@ -12,26 +12,24 @@ import { NavigateTo } from './helper';
 
 class TripEstimates extends Component {
 
-  renderError(tripdata) {
-    if (tripdata.error) {
+  renderError(error) {
+    if (error) {
       return (
-        <Header headerText={tripdata.error} overwriteTextStyle={{color: 'red'}}/>
+        <Header headerText={error} overwriteTextStyle={{color: 'red'}}/>
       )
     }
   }
 
-  renderDepartureTime(tripdata) {
-    if (!tripdata.error && tripdata.tripDepartureTime) {
+  renderTime(time, error) {
+    console.log(time, error)
+    if (!error && time) {
+      let arrTime = moment(time.arrT);
+      let seconds = arrTime.second()
+      if (Math.round(seconds/60) === 1) { //round up to minutes
+        arrTime = moment(arrTime).add(1, 'minutes')
+      }
       return (
-        <Header headerText={`at ${moment(tripdata.tripDepartureTime.arrT).format('h:mm a')}`} />
-      )
-    }
-  }
-
-  renderArrivalTime(tripdata) {
-    if (!tripdata.error && tripdata.tripArrivalTime) {
-      return (
-        <Header headerText={`at ${moment(tripdata.tripArrivalTime.arrT).format('h:mm a')}`} />
+        <Header headerText={`at ${arrTime.format('h:mm a')}`} />
       )
     }
   }
@@ -99,24 +97,17 @@ class TripEstimates extends Component {
   }
 
   render() {
-    const { tripdata } = this.props;
+    const { tripDepartureTime, tripArrivalTime, error } = this.props.tripdata;
     const { departureStop, arrivalStop, route } = this.props.navigation.state.params;
     // console.log( "is state to props called twice in render?", tripdata ) // once with empty object and once with object with data
-    // let departureData = {};
-    // let arrivalData = {};
-    // if (tripdata.tripDepartureTime && tripdata.tripArrivalTime) { //when state to props is called with empty data tripdata.tripDepartureTime is false
-    //   departureData = tripdata.tripDepartureTime;
-    //   arrivalData = tripdata.tripArrivalTime;
-    // }
-
 
     return (
       <Card>
         <Header headerText={`Departure: ${departureStop.name}`} />
-        {this.renderDepartureTime(tripdata)}
+        {this.renderTime(tripDepartureTime, error)}
         <Header headerText={`Arrival: ${arrivalStop.name}`} />
-        {this.renderError(tripdata)}
-        {this.renderArrivalTime(tripdata)}
+        {this.renderError(error)}
+        {this.renderTime(tripArrivalTime, error)}
         <CardSection>
           {this.renderSaveButton(departureStop, arrivalStop, route)}
         </CardSection>
