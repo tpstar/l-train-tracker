@@ -24,9 +24,9 @@ class FavStopListItem extends Component {
         <CardSection>
           <Button
             onPress={()=>onButtonPress(favstop)}
-            overwriteTextStyle={{color: `${favstop.trainline.textcolor}`}}
-            overwriteButtonStyle={{borderColor: `${favstop.trainline.name}`,
-                                   backgroundColor: `${favstop.trainline.name}`}}
+            overwriteTextStyle={{color: favstop.trainline.textcolor}}
+            overwriteButtonStyle={{borderColor: favstop.trainline.name,
+                                   backgroundColor: favstop.trainline.name}}
           >
             {favstop.trainstop.name} ({favstop.boundFor.name} bound)
           </Button>

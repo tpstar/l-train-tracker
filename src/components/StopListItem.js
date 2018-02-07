@@ -10,8 +10,8 @@ class StopListItem extends Component {
       <CardSection>
         <Button
            onPress={()=>onButtonPress(trainline, trainstop)}
-           overwriteTextStyle={{color: `${trainline.textcolor}`}}
-           overwriteButtonStyle={{borderColor: `${trainline.name}`, backgroundColor: `${trainline.name}`}}
+           overwriteTextStyle={{color: trainline.textcolor}}
+           overwriteButtonStyle={{borderColor: trainline.name, backgroundColor: trainline.name}}
          >
            {trainstop.name}
         </Button>

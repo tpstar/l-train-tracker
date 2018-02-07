@@ -2,6 +2,7 @@ export const trainLines = [
   {
     name: 'red',
     textcolor: 'white',
+    sectextcolor: '#ffcdd2',
     rt: 'Red', //rt is to specify route name when fetching arrival data, see TrainAction.js creator
     stops: [
       {
@@ -286,6 +287,7 @@ export const trainLines = [
     name: 'blue',
     rt: 'Blue',
     textcolor: 'white',
+    sectextcolor: '#bbdefb',
     stops: [
       {
         name: 'O\'Hare',
@@ -573,6 +575,7 @@ export const trainLines = [
     name: 'green',
     rt: 'G',
     textcolor: 'white',
+    sectextcolor: '#c8e6c9',
     stops: [
       {
         name: 'Harlem/Lake',
@@ -837,6 +840,7 @@ export const trainLines = [
     name: 'orange',
     rt: 'Org',
     textcolor: 'black',
+    sectextcolor: '#bf360c',
     stops: [
       {
         name: 'Midway',
@@ -982,6 +986,7 @@ export const trainLines = [
     name: 'brown',
     rt: 'Brn',
     textcolor: 'white',
+    sectextcolor: '#d7ccc8',
     stops: [
       {
         name: 'Kimball',
@@ -1024,6 +1029,7 @@ export const trainLines = [
     name: 'purple',
     rt: 'P',
     textcolor: 'white',
+    sectextcolor: '#e1bee7',
     stops: [
       // Linden,
       // Central,
@@ -1058,6 +1064,7 @@ export const trainLines = [
     name: 'yellow',
     rt: 'Y',
     textcolor: 'black',
+    sectextcolor: '#f57f17',
     stops: [
       // Demster-Skokie,
       // Oakton-Skokie,
@@ -1068,6 +1075,7 @@ export const trainLines = [
     name: 'pink',
     rt: 'Pink',
     textcolor: 'black',
+    sectextcolor: '#880e4f',
     stops: [
       // 54th/Cermak,
       // Cicero,

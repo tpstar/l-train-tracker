@@ -9,18 +9,25 @@ class ArrivalTimeItem extends Component {
   render() {
     const { trainline, boundFor, arrivaltime, onButtonPress } = this.props;
     // console.log('arrivaltime: ',arrivaltime);
-    const { textcolor, name } = trainline;
+    const { name, textcolor, sectextcolor } = trainline;
+
+    let arrTime = moment(arrivaltime.arrT);
+    console.log(arrTime)
+    let seconds = arrTime.second()
+    if (Math.round(seconds/60) === 1) { //round up to minutes
+      arrTime = moment(arrTime).add(1, 'minutes')
+    }
 
     return (
       <CardSection>
         <Button
            onPress={()=>onButtonPress(arrivaltime)}
-           overwriteTextStyle={{color: `${textcolor}`}}
-           overwriteButtonStyle={{borderColor: `${name}`, backgroundColor: `${name}`}}
+           overwriteTextStyle={{color: textcolor, fontSize: 20}}
+           overwriteButtonStyle={{borderColor: name, backgroundColor: name}}
          >
-           {waitingMin(arrivaltime)} min {'   '}
-           <Text style={{color: '#37474f'}}>
-             {moment(arrivaltime.arrT).format('h:mm a')}
+           {waitingMin(arrivaltime)} min {'     '}
+           <Text style={{color: sectextcolor}}>
+             {arrTime.format('h:mm a')}
            </Text>
         </Button>
       </CardSection>

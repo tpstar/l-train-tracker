@@ -10,8 +10,8 @@ class LineListItem extends Component {
       <CardSection>
         <Button
           onPress={()=>onButtonPress(trainline)}
-          overwriteTextStyle={{color: `${trainline.textcolor}`}}
-          overwriteButtonStyle={{borderColor: `${trainline.name}`, backgroundColor: `${trainline.name}`}}
+          overwriteTextStyle={{color: trainline.textcolor}}
+          overwriteButtonStyle={{borderColor: trainline.name, backgroundColor: trainline.name}}
         >
           {_.capitalize(trainline.name)}
         </Button>

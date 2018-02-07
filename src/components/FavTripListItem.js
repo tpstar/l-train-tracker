@@ -25,9 +25,9 @@ class FavStopListItem extends Component {
         <CardSection>
           <Button
             onPress={()=>onButtonPress(favtrip)}
-            overwriteTextStyle={{color: `${favtrip.route.textcolor}`}}
-            overwriteButtonStyle={{borderColor: `${favtrip.route.name}`,
-                                   backgroundColor: `${favtrip.route.name}`}}
+            overwriteTextStyle={{color: favtrip.route.textcolor}}
+            overwriteButtonStyle={{borderColor: favtrip.route.name,
+                                   backgroundColor: favtrip.route.name}}
           >
             From {favtrip.departureStop.name} To {favtrip.arrivalStop.name}
           </Button>
