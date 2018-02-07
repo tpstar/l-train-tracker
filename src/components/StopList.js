@@ -13,10 +13,11 @@ class StopList extends Component {
     if (trainstop.stpId.L) { //console.log('You are in Loop!')
       // need to skip choosing direction
       routeTo = 'ArrivalTimes';
-      boundFor = { name: trainline.boundFor[3].name, direction: 'L', key: 3}
+      boundFor = { name: trainline.boundFor[3].name, direction: 'L', key: 3, direction2: trainline.boundFor[3].direction }
       // once you are in the Chicago loop, boundFor is the one opposite to L (e.g. Midway)
       // and key was set to "3"
-      // this.props.createFavStop({ trainline, trainstop, boundFor });
+      // direction2 is direction after the loop (e.g. orange line heads south after the loop)
+      // this is for find stpId for arrival stop in the action fetchFollowTrainAPIData
 
     } else {
       trainline.boundFor = _.pick(trainline.boundFor, [1, 5]); //remove boundFor[3]

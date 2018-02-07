@@ -97,9 +97,10 @@ export const fetchFollowTrainAPIData = ({ departureStop, arrivalStop, departureS
             const lastStopName = lastStopDataCtaApiCanGive.staNm;
             const lastStopStpId = lastStopDataCtaApiCanGive.stpId;
             const arrivalStopName = arrivalStop.name;
-            const arrivalStopStpId = arrivalStop.stpId[departureStop.boundFor.direction];
+            const arrivalStopStpId = arrivalStop.stpId[departureStop.boundFor.direction] || arrivalStop.stpId[departureStop.boundFor.direction2];
+            //if departureStop.boundFor.direction is L and the arrival stop is not in the loop it needs to be N or S, direction2 is direction after the loop (from StopList.js)
 
-            console.log(departureStop.boundFor.direction)
+            console.log(departureStop, arrivalStop);
             const timeTable = timeTables[routeName]["weekdays"][departureStop.boundFor.direction];
             console.log(timeTable);
             const lastStopArrTime = lastStopDataCtaApiCanGive.arrT;

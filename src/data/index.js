@@ -972,7 +972,7 @@ export const trainLines = [
       3: {
         name: 'Midway',
         direction: 'S',
-        key: 3, //
+        key: 3, //key for stops in the loop
         loopStartStaArrayIndex: 8, //array index for H.W. Library
       },
       5: {
@@ -1029,7 +1029,7 @@ export const trainLines = [
     name: 'purple',
     rt: 'P',
     textcolor: 'white',
-    sectextcolor: '#e1bee7',
+    sectextcolor: '#d7ccc8',
     stops: [
       // Linden,
       // Central,
@@ -1064,7 +1064,6 @@ export const trainLines = [
     name: 'yellow',
     rt: 'Y',
     textcolor: 'black',
-    sectextcolor: '#f57f17',
     stops: [
       // Demster-Skokie,
       // Oakton-Skokie,
@@ -1075,7 +1074,6 @@ export const trainLines = [
     name: 'pink',
     rt: 'Pink',
     textcolor: 'black',
-    sectextcolor: '#880e4f',
     stops: [
       // 54th/Cermak,
       // Cicero,
