@@ -21,8 +21,6 @@ class StopList extends Component {
       // direction2 is direction after the loop (e.g. orange line heads south after the loop)
       // this is for find stpId for arrival stop in the action fetchFollowTrainAPIData
 
-    } else {
-      trainline.boundFor = _.pick(trainline.boundFor, [1, 5]); //remove boundFor[3]
     }
     this.props.navigation.dispatch(
       {
