@@ -978,6 +978,7 @@ export const trainLines = [
       5: {
         name: 'Loop',
         direction: 'N',
+        direction2: 'L', //this is for a trip departing from South arriving to Loop (so arriving stop stpId can be found)
         key: 5
       },
     }

@@ -21,6 +21,38 @@ const fetchCTAArrivalAPIData = (stopId, routeName) => {
   return CTAArrivalDataPromise;
 }
 
+const estimateTravelTimeUsingScheduleTable = (stopA, stopB, routeName) => {
+  console.log(stopA, stopB, routeName);
+
+  const timeTable = timeTables[routeName]["weekdays"][stopA.boundFor.direction];
+  const indexOfClosestFutureService = timeTable[stopA.stpId].findIndex((element)=>(moment(element, 'HH:mm A').diff(moment(stopA.arrT)) > 0));
+  // console.log(indexOfClosestFutureService, timeTable[stopA.stpId][indexOfClosestFutureService], timeTable[stopA.stpId][indexOfClosestFutureService - 1])
+  const diffFutureAndNow = moment(timeTable[stopA.stpId][indexOfClosestFutureService], 'HH:mm A').diff(stopA.arrT);
+  const diffPastAndNow = -moment(timeTable[stopA.stpId][indexOfClosestFutureService - 1], 'HH:mm A').diff(stopA.arrT);
+
+  let indexOfClosestService=indexOfClosestFutureService;
+
+  if (diffFutureAndNow > diffPastAndNow && indexOfClosestFutureService != 0) {
+    indexOfClosestService = indexOfClosestService - 1;
+  }
+
+  const stopB_stpId = stopB.stpId[stopA.boundFor.direction] || stopB.stpId[stopA.boundFor.direction2];
+
+  const scheduledDepartureTime = timeTable[stopA.stpId][indexOfClosestService];
+  const scheduledArrivalTime = timeTable[stopB_stpId][indexOfClosestService];
+  // console.log(indexOfClosestService, scheduledDepartureTime, scheduledArrivalTime);
+
+  const tripDurationInMilliSec = moment(scheduledArrivalTime, 'HH:mm A').diff(moment(scheduledDepartureTime, 'HH:mm A'))
+
+  let tripDurationInMin = tripDurationInMilliSec/60000;
+
+  if (tripDurationInMin < -1300) { //if destination arrival time is next day
+    tripDurationInMin += 1440
+  }
+
+  return tripDurationInMin;
+}
+
 
 
 export const createFavStop = ({ trainline, trainstop, boundFor }) => {
@@ -65,7 +97,7 @@ export const arrivalTimeSuccess = (data) => {
 }
 
 export const fetchFollowTrainAPIData = ({ departureStop, arrivalStop, departureStopArrivaltime, routeName }) => {
-  // console.log(departureStop, arrivalStop, departureStopArrivaltime, routeName)
+  console.log(departureStop, arrivalStop, departureStopArrivaltime, routeName)
   return (dispatch) => {
     dispatch({ type: FOLLOW_TRAIN });
 
@@ -88,53 +120,39 @@ export const fetchFollowTrainAPIData = ({ departureStop, arrivalStop, departureS
             departureStopData = departureStopArrivaltime;
           }
           const tripDepartureTime = { routeName, stop: departureStopData.staNm, arrT: departureStopData.arrT };
+
+
           if (!arrivalStopData) {
             //if CTA follow this train API does not include arrival stop data because it only contains data for 9~10 stops in the api.
-            //if that's the case, use google Maps API to estimate time it takes from the last CTA stop data available and add duration time
+            //if that's the case, use CTA schedule table (google Maps API) to estimate time it takes from the last CTA stop data available and add duration time
             //from the last stop to destination stop
+
             const lastStopDataCtaApiCanGive = data.ctatt.eta[data.ctatt.eta.length - 1];
-            console.log(lastStopDataCtaApiCanGive);
-            const lastStopName = lastStopDataCtaApiCanGive.staNm;
-            const lastStopStpId = lastStopDataCtaApiCanGive.stpId;
-            const arrivalStopName = arrivalStop.name;
+            // console.log(lastStopDataCtaApiCanGive);
+            const lastStop = {
+              name: lastStopDataCtaApiCanGive.staNm,
+              stpId: lastStopDataCtaApiCanGive.stpId,
+              arrT: lastStopDataCtaApiCanGive.arrT,
+              boundFor: departureStop.boundFor
+            }
             const arrivalStopStpId = arrivalStop.stpId[departureStop.boundFor.direction] || arrivalStop.stpId[departureStop.boundFor.direction2];
             //if departureStop.boundFor.direction is L and the arrival stop is not in the loop it needs to be N or S, direction2 is direction after the loop (from StopList.js)
+            //also in case of Orange line, leaving from South to Loop needs to change direction from N to L
 
-            console.log(departureStop, arrivalStop);
-            const timeTable = timeTables[routeName]["weekdays"][departureStop.boundFor.direction];
-            console.log(timeTable);
-            const lastStopArrTime = lastStopDataCtaApiCanGive.arrT;
-            console.log('last stop stpId: ', lastStopStpId, 'arrival stop stpId: ', arrivalStopStpId, 'time table: ', timeTable,  'last stop arrival time: ', lastStopArrTime);
-
-            const indexOfClosestFutureService = timeTable[lastStopStpId].findIndex((element)=>(moment(element, 'HH:mm A').diff(moment(lastStopArrTime)) > 0));
-            console.log(indexOfClosestFutureService)
-            const diffFutureAndNow = moment(timeTable[lastStopStpId][indexOfClosestFutureService], 'HH:mm A').diff(lastStopArrTime);
-            const diffPastAndNow = -moment(timeTable[lastStopStpId][indexOfClosestFutureService - 1], 'HH:mm A').diff(lastStopArrTime);
-
-            let indexOfClosestService=indexOfClosestFutureService;
-
-            if (diffFutureAndNow > diffPastAndNow && indexOfClosestFutureService != 0) {
-              indexOfClosestService = indexOfClosestService - 1;
-            }
-
-            const scheduledDepartureTime = timeTable[lastStopStpId][indexOfClosestService];
-            const scheduledArrivalTime = timeTable[arrivalStopStpId][indexOfClosestService];
-            console.log(indexOfClosestService, scheduledDepartureTime, scheduledArrivalTime);
-
-            const tripDurationInMilliSec = moment(scheduledArrivalTime, 'HH:mm A').diff(moment(scheduledDepartureTime, 'HH:mm A'))
-
-            let tripDurationInMin = tripDurationInMilliSec/60000;
-
-            if (tripDurationInMin < -1300) { //if destination arrival time is next day
-              tripDurationInMin += 1440
-            }
+            const tripDurationInMin = estimateTravelTimeUsingScheduleTable(lastStop, arrivalStop, routeName);
 
             console.log('trip duration', tripDurationInMin, 'min');
-            arrivalStopData = {staNm: arrivalStopName, arrT: moment(lastStopDataCtaApiCanGive.arrT).add(tripDurationInMin, 'minutes').format('YYYY-MM-DDTHH:mm:ss')}
-            console.log(arrivalStopData);
-            const tripArrivalTimeFromCTAandTimeTable = { routeName, stop: arrivalStopData.staNm, arrT: arrivalStopData.arrT };
+
+            const arrivalStopArrTime = moment(lastStopDataCtaApiCanGive.arrT).add(tripDurationInMin, 'minutes').format('YYYY-MM-DDTHH:mm:ss')
+            console.log(arrivalStopArrTime);
+
+            const tripArrivalTimeFromCTAandTimeTable = { routeName, stop: arrivalStop.name, arrT: arrivalStopArrTime };
             dispatch(followThisTrainSuccess({ tripDepartureTime, tripArrivalTime: tripArrivalTimeFromCTAandTimeTable }));
 
+
+            /// calculating googleapis data for comparison
+            const lastStopName = lastStopDataCtaApiCanGive.staNm;
+            const arrivalStopName = arrivalStop.name;
             const googleMapsUrl = `https://maps.googleapis.com/maps/api/directions/json?origin=cta+${routeName}+${lastStopName}&destination=cta+${routeName}+${arrivalStopName}&key=${Google_Maps_API_KEY}&mode=transit`;
             fetch(googleMapsUrl)
               .then((data)=>data.json())
@@ -142,7 +160,7 @@ export const fetchFollowTrainAPIData = ({ departureStop, arrivalStop, departureS
               .then((data)=>{
                 const tripDurationInSec = data.routes[0].legs[0].duration.value;
                 console.log(tripDurationInSec, 'sec');
-                arrivalStopData = {staNm: arrivalStopName, arrT: moment(lastStopDataCtaApiCanGive.arrT).add(tripDurationInSec, 'seconds').format('YYYY-MM-DDTHH:mm:ss')}
+                arrivalStopData = {staNm: arrivalStop.name, arrT: moment(lastStopDataCtaApiCanGive.arrT).add(tripDurationInSec, 'seconds').format('YYYY-MM-DDTHH:mm:ss')}
                 console.log(arrivalStopData);
                 // const tripArrivalTimeFromCTAandGoogle = { routeName, stop: arrivalStopData.staNm, arrT: arrivalStopData.arrT };
                 // dispatch(followThisTrainSuccess({ tripDepartureTime, tripArrivalTime: tripArrivalTimeFromCTAandGoogle  }));
@@ -154,8 +172,14 @@ export const fetchFollowTrainAPIData = ({ departureStop, arrivalStop, departureS
           }
         } else if (data.ctatt.errCd === "502") {
 
-          console.log(departureStopArrivaltime);
-          dispatch(followThisTrainFail())
+          departureStop = {...departureStop, stpId: departureStopArrivaltime.stpId} //replace stpId object with stpId number from API
+          const tripDurationInMin = estimateTravelTimeUsingScheduleTable(departureStop, arrivalStop, routeName);
+          console.log('after 502 error', tripDurationInMin);
+          const arrivalStopArrTime = moment(departureStopArrivaltime.arrT).add(tripDurationInMin, 'minutes').format('YYYY-MM-DDTHH:mm:ss');
+          const tripDepartureTime = { routeName, stop: departureStopArrivaltime.staNm, arrT: departureStopArrivaltime.arrT };
+          const tripArrivalTime = { routeName, stop: arrivalStop.name, arrT: arrivalStopArrTime }
+          dispatch(followThisTrainSuccess({ tripDepartureTime, tripArrivalTime }));
+          // dispatch(followThisTrainFail())
         }
       })
   }
