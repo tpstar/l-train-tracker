@@ -822,7 +822,7 @@ export const trainLines = [
         key: 1
       },
       5: {
-        name: '63rd',
+        name: 'Ashland/63rd or Cottage Grove',
         direction: 'S',
         direction2: 'E',
         key: 5

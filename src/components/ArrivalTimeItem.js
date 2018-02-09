@@ -6,9 +6,21 @@ import { waitingMin } from './helper';
 
 class ArrivalTimeItem extends Component {
 
+  renderDestStop(arrivaltime) {
+    const { sectextcolor } = this.props.trainline;
+    if (arrivaltime.rt === "G" && arrivaltime.trDr === "5") {
+      return (
+        <Text style={{color: sectextcolor}}>
+          {'   '}
+          {arrivaltime.destNm} bound
+        </Text>
+      )
+    }
+  }
+
   render() {
     const { trainline, boundFor, arrivaltime, onButtonPress } = this.props;
-    // console.log('arrivaltime: ',arrivaltime);
+    console.log('arrivaltime: ',arrivaltime);
     const { name, textcolor, sectextcolor } = trainline;
 
     let arrTime = moment(arrivaltime.arrT);
@@ -28,6 +40,7 @@ class ArrivalTimeItem extends Component {
            <Text style={{color: sectextcolor}}>
              {arrTime.format('h:mm a')}
            </Text>
+           {this.renderDestStop(arrivaltime)}
         </Button>
       </CardSection>
     )

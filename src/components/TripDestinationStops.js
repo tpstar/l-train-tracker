@@ -26,7 +26,7 @@ class TripDestinationStops extends Component {
 
   }
 
-  createPossibleDestinationStopList = ({ trainline, trainstop, boundFor }) => { //create possible destination stop list
+  createPossibleDestinationStopList = ({ trainline, trainstop, boundFor, arrivaltime }) => { //create possible destination stop list
     const tripLineStops = trainline.stops;
     const tripStopIndex = tripLineStops.findIndex((stop) =>
       stop.staId === trainstop.staId
@@ -34,7 +34,7 @@ class TripDestinationStops extends Component {
     // console.log(tripLine, boundFor);
     const tripBoundForKey = boundFor.key;
     var tripStops = [];
-    if (tripBoundForKey === 1) {
+    if (tripBoundForKey === 1) { // if direction is the reverse of the stop list
       tripStops = tripLineStops.slice(0, tripStopIndex).reverse()
     } else if (tripBoundForKey === 3) { //if the departure is in the loop
       // let lStaArrayIndex = -1;
@@ -44,7 +44,22 @@ class TripDestinationStops extends Component {
       tripStops = [...tripLineStops.slice(tripStopIndex + 1),
                    ...tripLineStops.slice(0, lStaArrayIndex).reverse()]
     } else if (tripBoundForKey === 5) {
-      tripStops = tripLineStops.slice(tripStopIndex + 1)
+      tripStops = tripLineStops.slice(tripStopIndex + 1);
+      if (arrivaltime.rt === "G") {
+        // if train route is Green line and if the train is heading South,
+        // there are two branches, Cottage Grove and Ashland/63rd bound
+        // choose one branch and stops on the other branch need to be removed from the list
+        console.log("Green train heading South!!!", tripStops);
+        if (arrivaltime.destSt === "30139") { //30139 is stpId for 'Cottage Grove'
+          tripStops.splice(-2, 2);
+        } else {
+          if (tripStops.length > 3) { //to prevent removing 'Ashland/63rd' when 'Halsted' is departure stop
+            tripStops.splice(-4, 2);
+          }
+        }
+    }
+
+
     }
     return tripStops;
   }
@@ -63,8 +78,8 @@ class TripDestinationStops extends Component {
 
 
   render() {
-    const { trainline, trainstop, boundFor } = this.props.navigation.state.params.departure;
-    const tripStops = this.createPossibleDestinationStopList({ trainline, trainstop, boundFor });
+    const { trainline, trainstop, boundFor, arrivaltime } = this.props.navigation.state.params.departure;
+    const tripStops = this.createPossibleDestinationStopList({ trainline, trainstop, boundFor, arrivaltime });
     return (
       <Card>
         <Header headerText={"Choose Destination Stop"} />
