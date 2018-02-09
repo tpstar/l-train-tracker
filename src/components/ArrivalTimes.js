@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import _ from 'lodash';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { Card, Header, Button, CardSection } from './common';
-import { arrivalTimeFetch, createFavStop } from '../actions';
+import { Card, Header, Button, CardSection, Spinner } from './common';
+import { fetchArrivalTime, createFavStop } from '../actions';
 import ArrivalTimeItem from './ArrivalTimeItem';
 import { NavigateTo } from './helper';
 
@@ -23,7 +23,7 @@ class ArrivalTimes extends Component {
   }
 
   onButtonPressCreateTrip( arrivaltime ) {
-    // console.log(arrivaltime)
+    console.log(arrivaltime)
     const { trainline, trainstop, boundFor } = this.props.navigation.state.params;
     const departure = { trainline, trainstop, boundFor, arrivaltime };
     this.props.navigation.dispatch(
@@ -36,7 +36,7 @@ class ArrivalTimes extends Component {
 
   componentWillMount() {
     const { trainline, trainstop, boundFor } = this.props.navigation.state.params; //from params in navigation dispatch
-    this.props.arrivalTimeFetch({ trainline, trainstop, boundFor }); // put trainline, trainstop, boundFor as argument
+    this.props.fetchArrivalTime({ trainline, trainstop, boundFor }); // put trainline, trainstop, boundFor as argument
   }
 
   static navigationOptions = ({ navigation }) => {
@@ -59,7 +59,7 @@ class ArrivalTimes extends Component {
   }
 
   renderSaveButton(trainline, trainstop, boundFor) {
-    const { favstops } = this.props;
+    const { favstops, arrivaldata } = this.props;
     const renderButton = () => {
       return (
       <Button
@@ -70,6 +70,9 @@ class ArrivalTimes extends Component {
         Save this Stop
       </Button>
     )}
+    if (arrivaldata.loading) {
+      return <Spinner size="large" />
+    }
     if (_.isEmpty(favstops)) {
       return renderButton();
     } else {
@@ -122,8 +125,8 @@ class ArrivalTimes extends Component {
 }
 
 const mapStateToProps = state => {
-  const { arrivaldata, favstops } = state; //arrivaldata from reducers/index.js and from action creator arrivalTimeFetch in this same file
+  const { arrivaldata, favstops } = state; //arrivaldata from reducers/index.js and from action creator fetchArrivalTime in this same file
   return { arrivaldata, favstops };
 }
 
-export default connect(mapStateToProps, { arrivalTimeFetch, createFavStop })(ArrivalTimes);
+export default connect(mapStateToProps, { fetchArrivalTime, createFavStop })(ArrivalTimes);

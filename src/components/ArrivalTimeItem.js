@@ -21,7 +21,7 @@ class ArrivalTimeItem extends Component {
       <CardSection>
         <Button
            onPress={()=>onButtonPress(arrivaltime)}
-           overwriteTextStyle={{color: textcolor, fontSize: 18}}
+           overwriteTextStyle={{color: textcolor, fontSize: 19}}
            overwriteButtonStyle={{borderColor: name, backgroundColor: name}}
          >
            {waitingMin(arrivaltime)} min {'     '}

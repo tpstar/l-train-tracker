@@ -3,6 +3,7 @@ import {
   CREATE_FAV_STOP,
   CREATE_FAV_TRIP,
   FETCH_ARRIVAL_TIME,
+  FETCH_ARRIVAL_TIME_SUCCESS,
   FOLLOW_TRAIN,
   FOLLOW_TRAIN_SUCCESS,
   FOLLOW_TRAIN_FAIL,
@@ -24,7 +25,7 @@ const fetchCTAArrivalAPIData = (stopId, routeName) => {
 const estimateTravelTimeUsingScheduleTable = (stopA, stopB, routeName) => {
   console.log(stopA, stopB, routeName);
 
-  const timeTable = timeTables[routeName]["weekdays"][stopA.boundFor.direction];
+  const timeTable = timeTables[routeName]["weekdays"]; //[stopA.boundFor.direction]; //don't need a direction since using stpId contains directional info
   const indexOfClosestFutureService = timeTable[stopA.stpId].findIndex((element)=>(moment(element, 'HH:mm A').diff(moment(stopA.arrT)) > 0));
   // console.log(indexOfClosestFutureService, timeTable[stopA.stpId][indexOfClosestFutureService], timeTable[stopA.stpId][indexOfClosestFutureService - 1])
   const diffFutureAndNow = moment(timeTable[stopA.stpId][indexOfClosestFutureService], 'HH:mm A').diff(stopA.arrT);
@@ -71,27 +72,31 @@ export const createFavTrip = ({ departureStop, arrivalStop, route }) => {
   }
 }
 
-export const arrivalTimeFetch = ({ trainline, trainstop, boundFor }) => {
+export const fetchArrivalTime = ({ trainline, trainstop, boundFor }) => {
   // console.log('stop platform id: ', trainstop.stpId[boundFor.direction]); //boundFor.direction is from data/index.js "N", "S", "L", ..
-  const stopId = trainstop.stpId[boundFor.direction] || trainstop.stpId[boundFor.direction2] //if not "N" and "S" try "E" and "W";
-  // console.log(trainline)
-  const routeName = trainline.rt; // route name to filter out other line arrivals
-  // console.log(routeName)
-  const url = `http://lapi.transitchicago.com/api/1.0/ttarrivals.aspx?key=${CTA_API_KEY}&stpid=${stopId}&rt=${routeName}&outputType=JSON&max=3`;
-  // console.log(url);
   return (dispatch) => {
+    dispatch({ type: FETCH_ARRIVAL_TIME });
+
+    const stopId = trainstop.stpId[boundFor.direction] || trainstop.stpId[boundFor.direction2] //if not "N" and "S" try "E" and "W";
+    // console.log(trainline)
+    const routeName = trainline.rt; // route name to filter out other line arrivals
+    // console.log(routeName)
+    const url = `http://lapi.transitchicago.com/api/1.0/ttarrivals.aspx?key=${CTA_API_KEY}&stpid=${stopId}&rt=${routeName}&outputType=JSON&max=3`;
+    // console.log(url);
+
     fetch(url)
       .then((data)=>data.json())
       .catch(error => console.error('Error:', error))
       .then((data)=> {
         dispatch(arrivalTimeSuccess(data.ctatt))
       })
+
   }
 }
 
 export const arrivalTimeSuccess = (data) => {
   return {
-    type: FETCH_ARRIVAL_TIME,
+    type: FETCH_ARRIVAL_TIME_SUCCESS,
     payload: data
   }
 }
@@ -109,7 +114,7 @@ export const fetchFollowTrainAPIData = ({ departureStop, arrivalStop, departureS
       .then((data)=>data.json())
       .catch(error => console.error('Error:', error))
       .then((data)=>{
-        // console.log(data.ctatt);
+        console.log('data from CTA follow train', data.ctatt);
         if (data.ctatt.errCd === "0") {
           let departureStopData = data.ctatt.eta.find((stop) => stop.staId == departureStop.staId);
           // used == instead of ===, because one is number and the other is string
@@ -165,6 +170,7 @@ export const fetchFollowTrainAPIData = ({ departureStop, arrivalStop, departureS
                 // const tripArrivalTimeFromCTAandGoogle = { routeName, stop: arrivalStopData.staNm, arrT: arrivalStopData.arrT };
                 // dispatch(followThisTrainSuccess({ tripDepartureTime, tripArrivalTime: tripArrivalTimeFromCTAandGoogle  }));
               })
+
 
           } else {
             const tripArrivalTimeFromCTAOnly = { routeName, stop: arrivalStopData.staNm, arrT: arrivalStopData.arrT };
