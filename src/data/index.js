@@ -1446,38 +1446,236 @@ export const trainLines = [
     rt: 'Y',
     textcolor: 'black',
     stops: [
-      // Demster-Skokie,
-      // Oakton-Skokie,
-      // Howard
-    ]
+      {
+         name: "Dempster-Skokie",
+         staId: 40140,
+         stpId: {
+           N: 30026,
+           S: 30027,
+         },
+      },
+      {
+         name: "Oakton-Skokie",
+         staId: 41680,
+         stpId: {
+           S: 30298,
+           N: 30297,
+         },
+      },
+      {
+         name: "Howard",
+         staId: 40900,
+         stpId: {
+           S: 30176,
+           N: 30175,
+         },
+      }
+    ],
+    boundFor: {
+      1: {
+        name: 'Dempster-Skokie',
+        direction: 'N',
+        key: 1
+      },
+      5: {
+        name: 'Howard',
+        direction: 'S',
+        key: 5
+      }
+    }
   },
   {
     name: 'pink',
     rt: 'Pink',
     textcolor: 'black',
     stops: [
-      // 54th/Cermak,
-      // Cicero,
-      // Kostner,
-      // Pulaski,
-      // Central Park,
-      // Kedzie,
-      // California,
-      // Western,
-      // Damen,
-      // 18th,
-      // Polk,
-      // Ashland,
-      // Morgan,
-      // Clinton,
-      // Clark/Lake,
-      // State/Lake,
-      // Washington/Wabsh,
-      // Adams/Wabash,
-      // Harold Washington Library-State/Van Buren,
-      // LaSalle/Van Buren,
-      // Quincy,
-      // Washington/Wells,
-    ]
+      {
+         name: "54th/Cermak",
+         staId: 40580,
+         stpId: {
+           E: 30113,
+           W: 30114,
+         },
+      },
+      {
+         name: "Cicero",
+         staId: 40420,
+         stpId: {
+           W: 30083,
+           E: 30082,
+         },
+      },
+      {
+         name: "Kostner",
+         staId: 40600,
+         stpId: {
+           E: 30117,
+           W: 30118,
+         },
+      },
+      {
+         name: "Pulaski",
+         staId: 40150,
+         stpId: {
+           E: 30028,
+           W: 30029,
+         },
+      },
+      {
+         name: "Central Park",
+         staId: 40780,
+         stpId: {
+           E: 30151,
+           W: 30152,
+         },
+      },
+      {
+         name: "Kedzie",
+         staId: 41040,
+         stpId: {
+           W: 30202,
+           E: 30201,
+         },
+      },
+      {
+         name: "California",
+         staId: 40440,
+         stpId: {
+           E: 30086,
+           W: 30087,
+         },
+      },
+      {
+         name: "Western",
+         staId: 40740,
+         stpId: {
+           E: 30143,
+           W: 30144,
+         },
+      },
+      {
+         name: "Damen",
+         staId: 40210,
+         stpId: {
+           W: 30041,
+           E: 30040,
+         },
+      },
+      {
+         name: "18th",
+         staId: 40830,
+         stpId: {
+           E: 30161,
+           W: 30162,
+         },
+      },
+      {
+         name: "Polk",
+         staId: 41030,
+         stpId: {
+           W: 30200,
+           E: 30199,
+         },
+      },
+      {
+         name: "Ashland",
+         staId: 40170,
+         stpId: {
+           E: 30033,
+           W: 30032,
+         },
+      },
+      {
+         name: "Morgan",
+         staId: 41510,
+         stpId: {
+           W: 30296,
+           E: 30295,
+         },
+      },
+      {
+         name: "Clinton",
+         staId: 41160,
+         stpId: {
+           W: 30222,
+           E: 30221,
+         },
+      },
+      {
+         name: "Clark/Lake",
+         staId: 40380,
+         stpId: {
+           L: 30074,
+         },
+      },
+      {
+         name: "State/Lake",
+         staId: 40260,
+         stpId: {
+           L: 30050,
+         },
+      },
+      {
+         name: "Washington/Wabash",
+         staId: 41700,
+         stpId: {
+           L: 30384,
+         },
+      },
+      {
+         name: "Adams/Wabash",
+         staId: 40680,
+         stpId: {
+           L: 30132,
+         },
+      },
+      {
+         name: "Harold Washington Library",
+         staId: 40850,
+         stpId: {
+           L: 30166,
+         },
+      },
+      {
+         name: "LaSalle/Van Buren",
+         staId: 40160,
+         stpId: {
+           L: 30031,
+         },
+      },
+      {
+         name: "Quincy/Wells",
+         staId: 40040,
+         stpId: {
+           L: 30007,
+         },
+      },
+      {
+         name: "Washington/Wells",
+         staId: 40730,
+         stpId: {
+           L: 30141,
+         },
+      }
+    ],
+    boundFor: {
+      1: {
+        name: '54th/Cermak',
+        direction: 'E',
+        key: 1
+      },
+      3: {
+        name: '54th/Cermak',
+        direction: 'E',
+        key: 3, //key for stops in the loop
+        loopStartStaArrayIndex: 14, //array index for 'Clark/Lake'
+      },
+      5: {
+        name: 'Loop',
+        direction: 'W',
+        direction2: 'L', //this is for a trip departing from East arriving to Loop (so arriving stop stpId can be found)
+        key: 5
+      },
+    }
   }
 ]
