@@ -12,7 +12,7 @@ class StopList extends Component {
     let routeTo = 'DirList';
     let boundFor = '';
     if (trainstop.stpId.L) { //console.log('You are in Loop!')
-      console.log(trainline.boundFor[3].name)
+      // console.log(trainline.boundFor[3].name)
       // need to skip choosing direction
       routeTo = 'ArrivalTimes';
       boundFor = { name: trainline.boundFor[3].name, direction: 'L', key: 3, direction2: trainline.boundFor[3].direction }

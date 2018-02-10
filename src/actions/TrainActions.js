@@ -23,9 +23,18 @@ const fetchCTAArrivalAPIData = (stopId, routeName) => {
 }
 
 const estimateTravelTimeUsingScheduleTable = (stopA, stopB, routeName) => {
-  console.log(stopA, stopB, routeName);
+  let dayOfWeek;
+  const dayOneToSeven = moment(stopA.arrT).day(); //Monday => 1 ... Sunday => 7
+  if (dayOneToSeven >= 1 && dayOneToSeven < 6) {
+    dayOfWeek = "weekdays";
+  } else if (dayOneToSeven === 6) {
+    dayOfWeek = "saturday";
+  } else if (dayOneToSeven === 7) {
+    dayOfWeek = "sunday";
+  }
+  console.log(dayOfWeek);
 
-  const timeTable = timeTables[routeName]["weekdays"]; //[stopA.boundFor.direction]; //don't need a direction since using stpId contains directional info
+  const timeTable = timeTables[routeName][dayOfWeek]; //[stopA.boundFor.direction]; //don't need a direction since using stpId contains directional info
   const indexOfClosestFutureService = timeTable[stopA.stpId].findIndex((element)=>(moment(element, 'HH:mm A').diff(moment(stopA.arrT)) > 0));
   // console.log(indexOfClosestFutureService, timeTable[stopA.stpId][indexOfClosestFutureService], timeTable[stopA.stpId][indexOfClosestFutureService - 1])
   const diffFutureAndNow = moment(timeTable[stopA.stpId][indexOfClosestFutureService], 'HH:mm A').diff(stopA.arrT);
@@ -156,20 +165,20 @@ export const fetchFollowTrainAPIData = ({ departureStop, arrivalStop, departureS
 
 
             /// calculating googleapis data for comparison
-            const lastStopName = lastStopDataCtaApiCanGive.staNm;
-            const arrivalStopName = arrivalStop.name;
-            const googleMapsUrl = `https://maps.googleapis.com/maps/api/directions/json?origin=cta+${routeName}+${lastStopName}&destination=cta+${routeName}+${arrivalStopName}&key=${Google_Maps_API_KEY}&mode=transit`;
-            fetch(googleMapsUrl)
-              .then((data)=>data.json())
-              .catch(error => console.error('Error:', error))
-              .then((data)=>{
-                const tripDurationInSec = data.routes[0].legs[0].duration.value;
-                console.log(tripDurationInSec, 'sec');
-                arrivalStopData = {staNm: arrivalStop.name, arrT: moment(lastStopDataCtaApiCanGive.arrT).add(tripDurationInSec, 'seconds').format('YYYY-MM-DDTHH:mm:ss')}
-                console.log(arrivalStopData);
-                // const tripArrivalTimeFromCTAandGoogle = { routeName, stop: arrivalStopData.staNm, arrT: arrivalStopData.arrT };
-                // dispatch(followThisTrainSuccess({ tripDepartureTime, tripArrivalTime: tripArrivalTimeFromCTAandGoogle  }));
-              })
+            // const lastStopName = lastStopDataCtaApiCanGive.staNm;
+            // const arrivalStopName = arrivalStop.name;
+            // const googleMapsUrl = `https://maps.googleapis.com/maps/api/directions/json?origin=cta+${routeName}+${lastStopName}&destination=cta+${routeName}+${arrivalStopName}&key=${Google_Maps_API_KEY}&mode=transit`;
+            // fetch(googleMapsUrl)
+            //   .then((data)=>data.json())
+            //   .catch(error => console.error('Error:', error))
+            //   .then((data)=>{
+            //     const tripDurationInSec = data.routes[0].legs[0].duration.value;
+            //     console.log(tripDurationInSec, 'sec');
+            //     arrivalStopData = {staNm: arrivalStop.name, arrT: moment(lastStopDataCtaApiCanGive.arrT).add(tripDurationInSec, 'seconds').format('YYYY-MM-DDTHH:mm:ss')}
+            //     console.log(arrivalStopData);
+            //     // const tripArrivalTimeFromCTAandGoogle = { routeName, stop: arrivalStopData.staNm, arrT: arrivalStopData.arrT };
+            //     // dispatch(followThisTrainSuccess({ tripDepartureTime, tripArrivalTime: tripArrivalTimeFromCTAandGoogle  }));
+            //   })
 
 
           } else {
@@ -178,7 +187,7 @@ export const fetchFollowTrainAPIData = ({ departureStop, arrivalStop, departureS
           }
         } else if (data.ctatt.errCd === "502") {
 
-          departureStop = {...departureStop, stpId: departureStopArrivaltime.stpId} //replace stpId object with stpId number from API
+          departureStop = {...departureStop, stpId: departureStopArrivaltime.stpId, arrT: departureStopArrivaltime.arrT} //replace stpId object with stpId number from API
           const tripDurationInMin = estimateTravelTimeUsingScheduleTable(departureStop, arrivalStop, routeName);
           console.log('after 502 error', tripDurationInMin);
           const arrivalStopArrTime = moment(departureStopArrivaltime.arrT).add(tripDurationInMin, 'minutes').format('YYYY-MM-DDTHH:mm:ss');
