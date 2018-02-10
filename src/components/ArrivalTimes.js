@@ -89,8 +89,9 @@ class ArrivalTimes extends Component {
     }
   }
 
-  renderNoArrivals(arrivaltimes) {
-    if (arrivaltimes.length === 0) {
+  renderNoArrivals(arrivaldata) {
+    // console.log(arrivaldata);
+    if (arrivaldata.eta.length === 0 && arrivaldata.fetched) {
       return (
         <Header headerText={'No Arrivals in 30 min'} />
       )
@@ -124,7 +125,7 @@ class ArrivalTimes extends Component {
           {this.renderSaveButton(trainline, trainstop, boundFor)}
         </CardSection>
         <Header headerText={`Updated ${timestamp}`} />
-        {this.renderNoArrivals(arrivaltimes)}
+        {this.renderNoArrivals(arrivaldata)}
         <FlatList
           data={arrivaltimes}
           renderItem={({ item }) => <ArrivalTimeItem

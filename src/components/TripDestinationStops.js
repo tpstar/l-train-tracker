@@ -31,7 +31,7 @@ class TripDestinationStops extends Component {
     const tripStopIndex = tripLineStops.findIndex((stop) =>
       stop.staId === trainstop.staId
     )
-    console.log(tripStopIndex);
+    // console.log(tripStopIndex);
     const tripBoundForKey = boundFor.key;
     var tripStops = [];
     if (tripBoundForKey === 1) { // if direction is the reverse of the stop list

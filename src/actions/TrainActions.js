@@ -102,7 +102,7 @@ export const arrivalTimeSuccess = (data) => {
 }
 
 export const fetchFollowTrainAPIData = ({ departureStop, arrivalStop, departureStopArrivaltime, routeName }) => {
-  console.log(departureStop, arrivalStop, departureStopArrivaltime, routeName)
+  // console.log(departureStop, arrivalStop, departureStopArrivaltime, routeName)
   return (dispatch) => {
     dispatch({ type: FOLLOW_TRAIN });
 
