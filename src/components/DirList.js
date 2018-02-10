@@ -26,7 +26,7 @@ class DirList extends Component {
 
   checkPurpleExpress(trainline, trainstop) {
     const trainstopIndex = trainline.stops.findIndex((stop)=> stop.staId === trainstop.staId);
-    console.log(trainstopIndex);
+    // console.log(trainstopIndex);
     if (trainstopIndex < 8) {
       return 'Howard or Loop';
     } else if (trainstopIndex === 8) {

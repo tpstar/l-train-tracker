@@ -27,6 +27,7 @@ class TripDestinationStops extends Component {
   }
 
   createPossibleDestinationStopList = ({ trainline, trainstop, boundFor, arrivaltime }) => { //create possible destination stop list
+    // console.log(trainline);
     const tripLineStops = trainline.stops;
     const tripStopIndex = tripLineStops.findIndex((stop) =>
       stop.staId === trainstop.staId
@@ -36,8 +37,8 @@ class TripDestinationStops extends Component {
     var tripStops = [];
     if (tripBoundForKey === 1) { // if direction is the reverse of the stop list
       tripStops = tripLineStops.slice(0, tripStopIndex).reverse();
-      if (arrivaltime.rt === "G" && tripStopIndex > 27) {
-        //if the route is green line and depart from either Ashland or Halsted
+      if (trainline.name === 'green' && tripStopIndex > 27) {
+        //if the route is green line and depaname from either Ashland or Halsted
         //Cottage Grove and King Drive need to be removed from the list
         if (tripStopIndex === 28) { //if departing from Halsted
           tripStops.splice(0, 2)
@@ -54,7 +55,7 @@ class TripDestinationStops extends Component {
                    ...tripLineStops.slice(0, lStaArrayIndex).reverse()]
     } else if (tripBoundForKey === 5) {
       tripStops = tripLineStops.slice(tripStopIndex + 1);
-      if (arrivaltime.rt === "G") {
+      if (trainline.name === 'green') {
         // if train route is Green line and if the train is heading South,
         // there are two branches, Cottage Grove and Ashland/63rd bound
         // choose one branch and stops on the other branch need to be removed from the list
@@ -66,9 +67,11 @@ class TripDestinationStops extends Component {
             tripStops.splice(-4, 2);
           }
         }
-    }
-
-
+      } else if (trainline.name === 'purple' && tripStopIndex < 9) {
+        //tripStopIndex of Howard is 8
+        console.log(tripStopIndex, arrivaltime);
+        tripStops.splice(-17, 17); //number of stops in express branch is 17
+      }
     }
     return tripStops;
   }
