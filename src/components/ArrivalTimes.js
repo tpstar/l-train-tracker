@@ -89,6 +89,14 @@ class ArrivalTimes extends Component {
     }
   }
 
+  renderNoArrivals(arrivaltimes) {
+    if (arrivaltimes.length === 0) {
+      return (
+        <Header headerText={'No Arrivals in 30 min'} />
+      )
+    }
+  }
+
   render() {
     const { trainline, trainstop, boundFor } = this.props.navigation.state.params;
     //from params in NavigationActions either from StopList or DirList
@@ -116,6 +124,7 @@ class ArrivalTimes extends Component {
           {this.renderSaveButton(trainline, trainstop, boundFor)}
         </CardSection>
         <Header headerText={`Updated ${timestamp}`} />
+        {this.renderNoArrivals(arrivaltimes)}
         <FlatList
           data={arrivaltimes}
           renderItem={({ item }) => <ArrivalTimeItem
