@@ -20,7 +20,6 @@ class StopList extends Component {
       // and key was set to "3"
       // direction2 is direction after the loop (e.g. orange line heads south after the loop)
       // this is for find stpId for arrival stop in the action fetchFollowTrainAPIData
-
     }
     this.props.navigation.dispatch(
       {

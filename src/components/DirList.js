@@ -25,17 +25,28 @@ class DirList extends Component {
   };
   render() {
     const { trainline, trainstop } = this.props.navigation.state.params; //{trainline: "red"} from params in NavigationActions
-    // console.log(trainline, trainstop)
-    let destinationStop = {...trainline.boundFor}
+    console.log(trainline, trainstop)
+    let destinationStops = {...trainline.boundFor}
     if (trainline.boundFor[3]) {
-      destinationStop = _.pick(destinationStop, [1, 5]); //remove boundFor[3]
+      destinationStops = _.pick(destinationStops, [1, 5]); //remove boundFor[3]
+    }
+    console.log(destinationStops);
+    if (trainstop.staId === trainline.stops[0].staId) {
+      destinationStops[1].isTerminal = true;
+    } else {
+      destinationStops[1].isTerminal = false;
+    }
+    if (trainstop.staId === trainline.stops[trainline.stops.length - 1].staId) {
+      destinationStops[5].isTerminal = true;
+    } else {
+      destinationStops[5].isTerminal = false;
     }
 
     return (
       <Card>
         <Header headerText={"Choose Direction"} />
         <FlatList
-          data={Object.values(destinationStop)}
+          data={Object.values(destinationStops)}
           renderItem={({item}) => <DirListItem
                         boundFor={item}
                         onButtonPress={this.onButtonPress.bind(this)}

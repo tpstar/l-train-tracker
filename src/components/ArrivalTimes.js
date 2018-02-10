@@ -101,10 +101,17 @@ class ArrivalTimes extends Component {
     }
     const arrivaltimes = arrivaldata.eta;
 
+    let bound = '';
+    if (!boundFor.isTerminal) { // if arrival is not for terminal arrival
+      bound = ' bound';
+    } else {
+      bound = ' (Terminal Arrival)';
+    }
+
     return (
       <Card>
         <Header headerText={`Arrivals at ${trainstop.name}`} />
-        <Header headerText={`${boundFor.name} bound`} />
+        <Header headerText={boundFor.name + bound} />
         <CardSection>
           {this.renderSaveButton(trainline, trainstop, boundFor)}
         </CardSection>
