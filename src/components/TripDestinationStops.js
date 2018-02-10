@@ -90,8 +90,15 @@ class TripDestinationStops extends Component {
 
 
   render() {
+
     const { trainline, trainstop, boundFor, arrivaltime } = this.props.navigation.state.params.departure;
     const tripStops = this.createPossibleDestinationStopList({ trainline, trainstop, boundFor, arrivaltime });
+    if (tripStops.length === 0) {
+      // if terminal === stop, show message saying no more stops
+      return (
+        <Header headerText={"Terminal Arrival!"} />
+      )
+    }
     return (
       <Card>
         <Header headerText={"Choose Destination Stop"} />
