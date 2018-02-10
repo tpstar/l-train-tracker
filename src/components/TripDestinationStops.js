@@ -31,11 +31,20 @@ class TripDestinationStops extends Component {
     const tripStopIndex = tripLineStops.findIndex((stop) =>
       stop.staId === trainstop.staId
     )
-    // console.log(tripLine, boundFor);
+    console.log(tripStopIndex);
     const tripBoundForKey = boundFor.key;
     var tripStops = [];
     if (tripBoundForKey === 1) { // if direction is the reverse of the stop list
-      tripStops = tripLineStops.slice(0, tripStopIndex).reverse()
+      tripStops = tripLineStops.slice(0, tripStopIndex).reverse();
+      if (arrivaltime.rt === "G" && tripStopIndex > 27) {
+        //if the route is green line and depart from either Ashland or Halsted
+        //Cottage Grove and King Drive need to be removed from the list
+        if (tripStopIndex === 28) { //if departing from Halsted
+          tripStops.splice(0, 2)
+        } else if (tripStopIndex === 29) { //if departing from Ashland
+          tripStops.splice(1, 2)
+        }
+      }
     } else if (tripBoundForKey === 3) { //if the departure is in the loop
       // let lStaArrayIndex = -1;
       // if (tripLine.boundFor[3]) { //if the departure is one of the stops in the loop line

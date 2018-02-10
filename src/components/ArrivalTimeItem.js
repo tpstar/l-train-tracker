@@ -20,7 +20,7 @@ class ArrivalTimeItem extends Component {
 
   render() {
     const { trainline, boundFor, arrivaltime, onButtonPress } = this.props;
-    console.log('arrivaltime: ',arrivaltime);
+    // console.log('arrivaltime: ',arrivaltime);
     const { name, textcolor, sectextcolor } = trainline;
 
     let arrTime = moment(arrivaltime.arrT);
