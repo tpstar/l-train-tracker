@@ -29,10 +29,10 @@ const estimateTravelTimeUsingScheduleTable = (stopA, stopB, routeName) => {
     dayOfWeek = "weekdays";
   } else if (dayOneToSeven === 6) {
     dayOfWeek = "saturday";
-  } else if (dayOneToSeven === 7) {
+  } else if (dayOneToSeven === 0) {
     dayOfWeek = "sunday";
   }
-  console.log(dayOfWeek);
+  console.log("day one to seven: ", dayOneToSeven, "day of week: ", dayOfWeek);
 
   const timeTable = timeTables[routeName][dayOfWeek]; //[stopA.boundFor.direction]; //don't need a direction since using stpId contains directional info
   const indexOfClosestFutureService = timeTable[stopA.stpId].findIndex((element)=>(moment(element, 'HH:mm A').diff(moment(stopA.arrT)) > 0));
