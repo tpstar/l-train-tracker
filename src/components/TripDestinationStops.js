@@ -38,7 +38,7 @@ class TripDestinationStops extends Component {
     if (tripBoundForKey === 1) { // if direction is the reverse of the stop list
       tripStops = tripLineStops.slice(0, tripStopIndex).reverse();
       if (trainline.name === 'green' && tripStopIndex > 27) {
-        //if the route is green line and depaname from either Ashland or Halsted
+        //if the route is green line and departure from either Ashland or Halsted
         //Cottage Grove and King Drive need to be removed from the list
         if (tripStopIndex === 28) { //if departing from Halsted
           tripStops.splice(0, 2)
@@ -71,7 +71,7 @@ class TripDestinationStops extends Component {
         //tripStopIndex of Howard is 8
         console.log(tripStopIndex, arrivaltime);
         tripStops.splice(-17, 17); //number of stops in express branch is 17
-      }
+      } //else if (trainline.name === 'blue') { need to delete stops from Racine when train service stops at UIC}
     }
     return tripStops;
   }
