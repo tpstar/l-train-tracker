@@ -104,6 +104,7 @@ export const fetchArrivalTime = ({ trainline, trainstop, boundFor }) => {
 }
 
 export const arrivalTimeSuccess = (data) => {
+  console.log(data)
   return {
     type: FETCH_ARRIVAL_TIME_SUCCESS,
     payload: data
