@@ -29,20 +29,20 @@ class TripDestinationStops extends Component {
   createPossibleDestinationStopList = ({ trainline, trainstop, boundFor, arrivaltime }) => { //create possible destination stop list
     // console.log(trainline);
     const tripLineStops = trainline.stops;
-    const tripStopIndex = tripLineStops.findIndex((stop) =>
+    const tripDepartureStopIndex = tripLineStops.findIndex((stop) =>
       stop.staId === trainstop.staId
     )
-    // console.log(tripStopIndex);
+    // console.log(tripDepartureStopIndex);
     const tripBoundForKey = boundFor.key;
     var tripStops = [];
     if (tripBoundForKey === 1) { // if direction is the reverse of the stop list
-      tripStops = tripLineStops.slice(0, tripStopIndex).reverse();
-      if (trainline.name === 'green' && tripStopIndex > 27) {
+      tripStops = tripLineStops.slice(0, tripDepartureStopIndex).reverse();
+      if (trainline.name === 'green' && tripDepartureStopIndex > 27) {
         //if the route is green line and departure from either Ashland or Halsted
         //Cottage Grove and King Drive need to be removed from the list
-        if (tripStopIndex === 28) { //if departing from Halsted
+        if (tripDepartureStopIndex === 28) { //if departing from Halsted
           tripStops.splice(0, 2)
-        } else if (tripStopIndex === 29) { //if departing from Ashland
+        } else if (tripDepartureStopIndex === 29) { //if departing from Ashland
           tripStops.splice(1, 2)
         }
       }
@@ -51,10 +51,10 @@ class TripDestinationStops extends Component {
       // if (tripLine.boundFor[3]) { //if the departure is one of the stops in the loop line
       let lStaArrayIndex = trainline.boundFor[3].loopStartStaArrayIndex;
       // }
-      tripStops = [...tripLineStops.slice(tripStopIndex + 1),
+      tripStops = [...tripLineStops.slice(tripDepartureStopIndex + 1),
                    ...tripLineStops.slice(0, lStaArrayIndex).reverse()]
     } else if (tripBoundForKey === 5) {
-      tripStops = tripLineStops.slice(tripStopIndex + 1);
+      tripStops = tripLineStops.slice(tripDepartureStopIndex + 1);
       if (trainline.name === 'green') {
         // if train route is Green line and if the train is heading South,
         // there are two branches, Cottage Grove and Ashland/63rd bound
@@ -67,11 +67,15 @@ class TripDestinationStops extends Component {
             tripStops.splice(-4, 2);
           }
         }
-      } else if (trainline.name === 'purple' && tripStopIndex < 9) {
-        //tripStopIndex of Howard is 8
-        console.log(tripStopIndex, arrivaltime);
+      } else if (trainline.name === 'purple' && tripDepartureStopIndex < 9) {
+        //tripDepartureStopIndex of Howard is 8, if the arrival stop is
+        console.log("Purple train heading South! Not an express!", tripDepartureStopIndex, arrivaltime);
+        //if the train is express show all the stops, if not cut out the express part
         tripStops.splice(-17, 17); //number of stops in express branch is 17
-      } //else if (trainline.name === 'blue') { need to delete stops from Racine when train service stops at UIC}
+      }
+      else if (trainline.name === 'blue') {
+        console.log(tripDepartureStopIndex, arrivaltime);
+      }
     }
     return tripStops;
   }

@@ -697,8 +697,8 @@ export const trainLines = [
          name: "State/Lake",
          staId: 40260,
          stpId: {
-           N: 30051,
-           E: 30050,
+           N: 30051, //Outer Loop
+           S: 30050, //Inner Loop
          },
       },
       {
@@ -785,16 +785,16 @@ export const trainLines = [
          name: "King Drive", // King Drive (Harlem-bound boarding only) Cottage Grove branch,
          staId: 41140,
          stpId: {
-           E: 30217,
-           W: 30218,
+           S: 30217,
+           N: 30218,
          },
       },
       {
          name: "Cottage Grove",
          staId: 40720,
          stpId: {
-           W: 30140,
-           E: 30139,
+           N: 30140,
+           S: 30139,
          },
       },
       {
@@ -818,13 +818,13 @@ export const trainLines = [
       1: {
         name: 'Harlem',
         direction: 'N',
-        direction2: 'W',
+        // direction2: 'W',
         key: 1
       },
       5: {
         name: 'Ashland/63rd or Cottage Grove',
         direction: 'S',
-        direction2: 'E',
+        // direction2: 'E',
         key: 5
       },
 

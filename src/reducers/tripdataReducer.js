@@ -8,7 +8,7 @@ const INITIAL_STATE = {
 }
 
 export default (state = INITIAL_STATE, action) => {
-  // console.log('state: ', state, 'action: ', action);
+  console.log('state: ', state, 'action: ', action);
   switch (action.type) {
     case FOLLOW_TRAIN:
       return { ...INITIAL_STATE, loading: true };

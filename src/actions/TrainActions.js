@@ -32,11 +32,12 @@ const estimateTravelTimeUsingScheduleTable = (stopA, stopB, routeName) => {
   } else if (dayOneToSeven === 0) {
     dayOfWeek = "sunday";
   }
-  console.log("day one to seven: ", dayOneToSeven, "day of week: ", dayOfWeek);
+  // console.log("day one to seven: ", dayOneToSeven, "day of week: ", dayOfWeek);
 
   const timeTable = timeTables[routeName][dayOfWeek]; //[stopA.boundFor.direction]; //don't need a direction since using stpId contains directional info
   const indexOfClosestFutureService = timeTable[stopA.stpId].findIndex((element)=>(moment(element, 'HH:mm A').diff(moment(stopA.arrT)) > 0));
-  // console.log(indexOfClosestFutureService, timeTable[stopA.stpId][indexOfClosestFutureService], timeTable[stopA.stpId][indexOfClosestFutureService - 1])
+  // find a train service column, closest future service in the table
+  console.log(indexOfClosestFutureService, timeTable[stopA.stpId][indexOfClosestFutureService], timeTable[stopA.stpId][indexOfClosestFutureService - 1])
   const diffFutureAndNow = moment(timeTable[stopA.stpId][indexOfClosestFutureService], 'HH:mm A').diff(stopA.arrT);
   const diffPastAndNow = -moment(timeTable[stopA.stpId][indexOfClosestFutureService - 1], 'HH:mm A').diff(stopA.arrT);
 
@@ -48,10 +49,20 @@ const estimateTravelTimeUsingScheduleTable = (stopA, stopB, routeName) => {
 
   const stopB_stpId = stopB.stpId[stopA.boundFor.direction] || stopB.stpId[stopA.boundFor.direction2];
 
-  const scheduledDepartureTime = timeTable[stopA.stpId][indexOfClosestService];
-  const scheduledArrivalTime = timeTable[stopB_stpId][indexOfClosestService];
-  // console.log(indexOfClosestService, scheduledDepartureTime, scheduledArrivalTime);
-
+  let scheduledDepartureTime = timeTable[stopA.stpId][indexOfClosestService];
+  let scheduledArrivalTime = timeTable[stopB_stpId][indexOfClosestService];
+  console.log(indexOfClosestService, scheduledDepartureTime, scheduledArrivalTime);
+  if (scheduledArrivalTime === "-") {
+    if (timeTable[stopA_stpId][indexOfClosestService + 1]) {
+      console.log('I am in if clause!')
+      scheduledDepartureTime = timeTable[stopA.stpId][indexOfClosestService + 1];
+      scheduledArrivalTime = timeTable[stopB_stpId][indexOfClosestService + 1];
+    } else {
+      scheduledDepartureTime = timeTable[stopA.stpId][indexOfClosestService - 1];
+      scheduledArrivalTime = timeTable[stopB_stpId][indexOfClosestService - 1];
+    }
+  }
+  console.log(indexOfClosestService, scheduledDepartureTime, scheduledArrivalTime);
   const tripDurationInMilliSec = moment(scheduledArrivalTime, 'HH:mm A').diff(moment(scheduledDepartureTime, 'HH:mm A'))
 
   let tripDurationInMin = tripDurationInMilliSec/60000;
