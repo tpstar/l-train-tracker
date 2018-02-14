@@ -21,7 +21,8 @@ class TripEstimates extends Component {
   }
 
   renderTime(time, error) {
-    if (!error && time) {
+    // console.log(_.isEmpty(time));
+    if (!error && !_.isEmpty(time)) { //if there is no error and if the arrival time data object is not empty render time
       let arrTime = moment(time.arrT);
       let seconds = arrTime.second()
       if (Math.round(seconds/60) === 1) { //round up to minutes
@@ -29,6 +30,10 @@ class TripEstimates extends Component {
       }
       return (
         <Header headerText={`at ${arrTime.format('h:mm a')}`} />
+      )
+    } else {
+      return (
+        <Header headerText={'Loading...'} />
       )
     }
   }
@@ -99,7 +104,7 @@ class TripEstimates extends Component {
     const { tripDepartureTime, tripArrivalTime, error } = this.props.tripdata;
     const { departureStop, arrivalStop, route } = this.props.navigation.state.params;
     // console.log( "is state to props called twice in render?", tripdata ) // once with empty object and once with object with data
-
+    console.log('tripDepartureTime: ', tripDepartureTime, 'tripArrivalTime: ', tripArrivalTime);
     return (
       <Card>
         <Header headerText={`Departure: ${departureStop.name}`} />

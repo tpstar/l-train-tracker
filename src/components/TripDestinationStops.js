@@ -13,6 +13,7 @@ class TripDestinationStops extends Component {
 
   onButtonPress(trainline, arrivalStop){
     const { trainstop, boundFor, arrivaltime } = this.props.navigation.state.params.departure;
+    console.log('arrivaltime: ', arrivaltime)
     const departureStop = {...trainstop, boundFor};
     const route = { name: trainline.name, textcolor: trainline.textcolor, rt: trainline.rt};
 
@@ -35,7 +36,7 @@ class TripDestinationStops extends Component {
     // console.log(tripDepartureStopIndex);
     const tripBoundForKey = boundFor.key;
     var tripStops = [];
-    if (tripBoundForKey === 1) { // if direction is the reverse of the stop list
+    if (tripBoundForKey === 1) { // if the direction is the reverse of the stop list (e.g. heading North)
       tripStops = tripLineStops.slice(0, tripDepartureStopIndex).reverse();
       if (trainline.name === 'green' && tripDepartureStopIndex > 27) {
         //if the route is green line and departure from either Ashland or Halsted
@@ -53,7 +54,7 @@ class TripDestinationStops extends Component {
       // }
       tripStops = [...tripLineStops.slice(tripDepartureStopIndex + 1),
                    ...tripLineStops.slice(0, lStaArrayIndex).reverse()]
-    } else if (tripBoundForKey === 5) {
+    } else if (tripBoundForKey === 5) { //if the direction is the same order of the stop list (e.g. heading South)
       tripStops = tripLineStops.slice(tripDepartureStopIndex + 1);
       if (trainline.name === 'green') {
         // if train route is Green line and if the train is heading South,
@@ -68,7 +69,7 @@ class TripDestinationStops extends Component {
           }
         }
       } else if (trainline.name === 'purple' && tripDepartureStopIndex < 9) {
-        //tripDepartureStopIndex of Howard is 8, if the arrival stop is
+        //tripDepartureStopIndex of Howard is 8
         console.log("Purple train heading South! Not an express!", tripDepartureStopIndex, arrivaltime);
         //if the train is express show all the stops, if not cut out the express part
         tripStops.splice(-17, 17); //number of stops in express branch is 17

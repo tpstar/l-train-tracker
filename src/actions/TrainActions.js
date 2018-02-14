@@ -23,6 +23,7 @@ const fetchCTAArrivalAPIData = (stopId, routeName) => {
 }
 
 const estimateTravelTimeUsingScheduleTable = (stopA, stopB, routeName) => {
+  console.log(stopA, stopB, routeName);
   let dayOfWeek;
   const dayOneToSeven = moment(stopA.arrT).day(); //Monday => 1 ... Sunday => 7
   if (dayOneToSeven >= 1 && dayOneToSeven < 6) {
@@ -37,10 +38,10 @@ const estimateTravelTimeUsingScheduleTable = (stopA, stopB, routeName) => {
   const timeTable = timeTables[routeName][dayOfWeek]; //[stopA.boundFor.direction]; //don't need a direction since using stpId contains directional info
   const indexOfClosestFutureService = timeTable[stopA.stpId].findIndex((element)=>(moment(element, 'HH:mm A').diff(moment(stopA.arrT)) > 0));
   // find a train service column, closest future service in the table
-  console.log(indexOfClosestFutureService, timeTable[stopA.stpId][indexOfClosestFutureService], timeTable[stopA.stpId][indexOfClosestFutureService - 1])
+  // console.log(indexOfClosestFutureService, timeTable[stopA.stpId][indexOfClosestFutureService], timeTable[stopA.stpId][indexOfClosestFutureService - 1])
   const diffFutureAndNow = moment(timeTable[stopA.stpId][indexOfClosestFutureService], 'HH:mm A').diff(stopA.arrT);
   const diffPastAndNow = -moment(timeTable[stopA.stpId][indexOfClosestFutureService - 1], 'HH:mm A').diff(stopA.arrT);
-
+  // console.log(diffFutureAndNow, diffPastAndNow)
   let indexOfClosestService=indexOfClosestFutureService;
 
   if (diffFutureAndNow > diffPastAndNow && indexOfClosestFutureService != 0) {
@@ -52,8 +53,9 @@ const estimateTravelTimeUsingScheduleTable = (stopA, stopB, routeName) => {
   let scheduledDepartureTime = timeTable[stopA.stpId][indexOfClosestService];
   let scheduledArrivalTime = timeTable[stopB_stpId][indexOfClosestService];
   console.log(indexOfClosestService, scheduledDepartureTime, scheduledArrivalTime);
-  if (scheduledArrivalTime === "-") {
-    if (timeTable[stopA_stpId][indexOfClosestService + 1]) {
+  if (scheduledArrivalTime === "-" || scheduledDepartureTime === "-") {
+    //this is to handle green line schedule table for two branch terminals
+    if (timeTable[stopA_stpId][indexOfClosestService + 1]) { // if indexOfClosestService was the last index
       console.log('I am in if clause!')
       scheduledDepartureTime = timeTable[stopA.stpId][indexOfClosestService + 1];
       scheduledArrivalTime = timeTable[stopB_stpId][indexOfClosestService + 1];
@@ -123,7 +125,7 @@ export const arrivalTimeSuccess = (data) => {
 }
 
 export const fetchFollowTrainAPIData = ({ departureStop, arrivalStop, departureStopArrivaltime, routeName }) => {
-  // console.log(departureStop, arrivalStop, departureStopArrivaltime, routeName)
+  console.log(departureStop, arrivalStop, departureStopArrivaltime, routeName)
   return (dispatch) => {
     dispatch({ type: FOLLOW_TRAIN });
 
