@@ -1661,18 +1661,18 @@ export const trainLines = [
     boundFor: {
       1: {
         name: '54th/Cermak',
-        direction: 'E',
+        direction: 'W',
         key: 1
       },
       3: {
         name: '54th/Cermak',
-        direction: 'E',
+        direction: 'W',
         key: 3, //key for stops in the loop
         loopStartStaArrayIndex: 14, //array index for 'Clark/Lake'
       },
       5: {
         name: 'Loop',
-        direction: 'W',
+        direction: 'E',
         direction2: 'L', //this is for a trip departing from East arriving to Loop (so arriving stop stpId can be found)
         key: 5
       },
