@@ -10,22 +10,18 @@ import {
   DELETE_FAV_STOP } from './types';
 import { CTA_API_KEY, Google_Maps_API_KEY } from '../config';
 import { timeTables } from '../data/timetable';
+import { isPurpleExpress } from '../components/helper';
 
 
-const fetchCTAArrivalAPIData = (stopId, routeName) => {
-  console.log("fetchCTA: ", stopId, routeName)
-  const url = `http://lapi.transitchicago.com/api/1.0/ttarrivals.aspx?key=${CTA_API_KEY}&stpid=${stopId}&rt=${routeName}&outputType=JSON&max=3`;
-  const CTAArrivalDataPromise = fetch(url)
-        .then((data)=>data.json())
-        .catch(error => console.error('Error:', error))
-        // .then((data)=>data.ctatt)
-  return CTAArrivalDataPromise;
-}
-
-const estimateTravelTimeUsingScheduleTable = (stopA, stopB, routeName) => {
-  console.log(stopA, stopB, routeName);
+const estimateTravelTimeUsingScheduleTable = (stopA, stopB, route) => {
+  // console.log(stopA, stopB, route);
+  console.log("is Purple Express?", route.isPurpleExp);
+  if (route.isPurpleExp) { // if route is purple express, then use a separate time schedule table for the express
+    route.name = 'purpleExpress';
+  }
+  console.log(route.name);
   let dayOfWeek;
-  const dayOneToSeven = moment(stopA.arrT).day(); //Monday => 1 ... Sunday => 7
+  const dayOneToSeven = moment(stopA.arrT).day(); //Sunday => 0 ... Saturday => 6
   if (dayOneToSeven >= 1 && dayOneToSeven < 6) {
     dayOfWeek = "weekdays";
   } else if (dayOneToSeven === 6) {
@@ -35,7 +31,7 @@ const estimateTravelTimeUsingScheduleTable = (stopA, stopB, routeName) => {
   }
   // console.log("day one to seven: ", dayOneToSeven, "day of week: ", dayOfWeek);
 
-  const timeTable = timeTables[routeName][dayOfWeek]; //[stopA.boundFor.direction]; //don't need a direction since using stpId contains directional info
+  const timeTable = timeTables[route.name][dayOfWeek]; //[stopA.boundFor.direction]; //don't need a direction since using stpId contains directional info
   const indexOfClosestFutureService = timeTable[stopA.stpId].findIndex((element)=>(moment(element, 'HH:mm A').diff(moment(stopA.arrT)) > 0));
   // find a train service column, closest future service in the table
   // console.log(indexOfClosestFutureService, timeTable[stopA.stpId][indexOfClosestFutureService], timeTable[stopA.stpId][indexOfClosestFutureService - 1])
@@ -117,14 +113,15 @@ export const fetchArrivalTime = ({ trainline, trainstop, boundFor }) => {
 }
 
 export const arrivalTimeSuccess = (data) => {
-  console.log(data)
+  // console.log(data)
   return {
     type: FETCH_ARRIVAL_TIME_SUCCESS,
     payload: data
   }
 }
 
-export const fetchFollowTrainAPIData = ({ departureStop, arrivalStop, departureStopArrivaltime, routeName }) => {
+export const fetchFollowTrainAPIData = ({ departureStop, arrivalStop, departureStopArrivaltime, route }) => {
+  const routeName = route.name;
   console.log(departureStop, arrivalStop, departureStopArrivaltime, routeName)
   return (dispatch) => {
     dispatch({ type: FOLLOW_TRAIN });
@@ -167,7 +164,7 @@ export const fetchFollowTrainAPIData = ({ departureStop, arrivalStop, departureS
             //if departureStop.boundFor.direction is L and the arrival stop is not in the loop it needs to be N or S, direction2 is direction after the loop (from StopList.js)
             //also in case of Orange line, leaving from South to Loop needs to change direction from N to L
 
-            const tripDurationInMin = estimateTravelTimeUsingScheduleTable(lastStop, arrivalStop, routeName);
+            const tripDurationInMin = estimateTravelTimeUsingScheduleTable(lastStop, arrivalStop, route);
 
             console.log('trip duration', tripDurationInMin, 'min');
 
@@ -202,7 +199,7 @@ export const fetchFollowTrainAPIData = ({ departureStop, arrivalStop, departureS
         } else if (data.ctatt.errCd === "502") {
 
           departureStop = {...departureStop, stpId: departureStopArrivaltime.stpId, arrT: departureStopArrivaltime.arrT} //replace stpId object with stpId number from API
-          const tripDurationInMin = estimateTravelTimeUsingScheduleTable(departureStop, arrivalStop, routeName);
+          const tripDurationInMin = estimateTravelTimeUsingScheduleTable(departureStop, arrivalStop, route);
           console.log('after 502 error', tripDurationInMin);
           const arrivalStopArrTime = moment(departureStopArrivaltime.arrT).add(tripDurationInMin, 'minutes').format('YYYY-MM-DDTHH:mm:ss');
           const tripDepartureTime = { routeName, stop: departureStopArrivaltime.staNm, arrT: departureStopArrivaltime.arrT };
@@ -236,18 +233,28 @@ export const deleteFavStop = (favstop) => {
 
 export const fetchTrip = ({ departureStop, arrivalStop, route }) => {
   // console.log('stop platform id: ', departureStop.stpId[departureStop.boundFor.direction]); //departureStop.boundFor.direction is from data/index.js "N", "S", "L", ..
-  // console.log(route, departureStop)
+  console.log("I am in fetchTrip", route, departureStop)
+  const routeName = route.rt;
   const stopId = departureStop.stpId[departureStop.boundFor.direction] || departureStop.stpId[departureStop.boundFor.direction2] //if not "N" and "S" try "E" and "W";
-  const routeName = route.name; //e.g. "red"
 
   const url = `http://lapi.transitchicago.com/api/1.0/ttarrivals.aspx?key=${CTA_API_KEY}&stpid=${stopId}&rt=${routeName}&outputType=JSON&max=3`;
+  // console.log(url);
   return (dispatch) => {
     fetch(url)
       .then((data)=>data.json())
       .catch(error => console.error('Error:', error))
       .then((data)=> {
-        // console.log(data.ctatt.eta)
-        dispatch(fetchFollowTrainAPIData({ departureStop, arrivalStop, departureStopArrivaltime: data.ctatt.eta[0], routeName }))
+        console.log(data.ctatt.eta);
+        //call isPurpleExpress(arrivaldata) and dispatch with updated route.isPurpleExp
+        const departureStopArrivaltime = data.ctatt.eta[0];
+        console.log(route, departureStopArrivaltime);
+        let isPurpleExp = false;
+        if (departureStopArrivaltime.rt === 'P') { //if route is purple line
+          isPurpleExp = isPurpleExpress(departureStopArrivaltime);
+        }
+        route = {...route, isPurpleExp};
+        console.log(route);
+        dispatch(fetchFollowTrainAPIData({ departureStop, arrivalStop, departureStopArrivaltime, route }))
       })
   }
 }

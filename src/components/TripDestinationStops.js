@@ -2,20 +2,28 @@ import React, { Component } from 'react';
 import { HeaderBackButton } from 'react-navigation';
 import { View, FlatList } from 'react-native';
 import _ from 'lodash';
+import moment from 'moment';
 import { connect } from 'react-redux';
-// import { trainLines } from '../data';
 import { Card, Header } from './common';
 import StopListItem from './StopListItem';
 import TripEstimates from './TripEstimates';
 import { fetchFollowTrainAPIData } from '../actions';
+import { isPurpleExpress } from './helper';
 
 class TripDestinationStops extends Component {
 
+
+
   onButtonPress(trainline, arrivalStop){
     const { trainstop, boundFor, arrivaltime } = this.props.navigation.state.params.departure;
-    console.log('arrivaltime: ', arrivaltime)
+    console.log('arrivaltime: ', arrivaltime);
+    let isPurpleExp = false;
+    if (arrivaltime.rt === 'P') { //if route is purple line
+      isPurpleExp = isPurpleExpress(arrivaltime);
+    }
+    console.log(isPurpleExp);
     const departureStop = {...trainstop, boundFor};
-    const route = { name: trainline.name, textcolor: trainline.textcolor, rt: trainline.rt};
+    const route = { name: trainline.name, textcolor: trainline.textcolor, rt: trainline.rt, isPurpleExp};
 
     this.props.navigation.dispatch(
       {
@@ -23,8 +31,7 @@ class TripDestinationStops extends Component {
         routeName: 'TripEstimates',
         params: { departureStop, arrivalStop, route }
       })
-    this.props.fetchFollowTrainAPIData({ departureStop, arrivalStop, departureStopArrivaltime: arrivaltime, routeName: trainline.name});
-
+    this.props.fetchFollowTrainAPIData({ departureStop, arrivalStop, departureStopArrivaltime: arrivaltime, route});
   }
 
   createPossibleDestinationStopList = ({ trainline, trainstop, boundFor, arrivaltime }) => { //create possible destination stop list
@@ -36,6 +43,7 @@ class TripDestinationStops extends Component {
     // console.log(tripDepartureStopIndex);
     const tripBoundForKey = boundFor.key;
     var tripStops = [];
+
     if (tripBoundForKey === 1) { // if the direction is the reverse of the stop list (e.g. heading North)
       tripStops = tripLineStops.slice(0, tripDepartureStopIndex).reverse();
       if (trainline.name === 'green' && tripDepartureStopIndex > 27) {
@@ -68,11 +76,15 @@ class TripDestinationStops extends Component {
             tripStops.splice(-4, 2);
           }
         }
-      } else if (trainline.name === 'purple' && tripDepartureStopIndex < 9) {
-        //tripDepartureStopIndex of Howard is 8
-        console.log("Purple train heading South! Not an express!", tripDepartureStopIndex, arrivaltime);
-        //if the train is express show all the stops, if not cut out the express part
-        tripStops.splice(-17, 17); //number of stops in express branch is 17
+      } else if (trainline.name === 'purple' && tripDepartureStopIndex < 9) { //tripDepartureStopIndex of Howard is 8
+        // if train route is Purple line and if the train is heading South (tripBoundForKey === 5) and the departure stop is north of Howard,
+        // it can be either express or the service can end at Howard
+        console.log("is purple express?", isPurpleExpress(arrivaltime))
+        if (isPurpleExpress(arrivaltime)) {
+          // do nothing; if the train is express show all purple line stops, do not cut out the express part
+        } else {
+          tripStops.splice(-17, 17); // cut out the express part; number of stops in express branch is 17
+        }
       }
       else if (trainline.name === 'blue') {
         console.log(tripDepartureStopIndex, arrivaltime);
