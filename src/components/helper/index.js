@@ -31,9 +31,9 @@ export const isPurpleExpress = (arrivaltime) => {
     //30203 is stpId for 'Linden', meaning heading to Loop and coming back to Linden
     console.log("express!!!", arrivaltime);
     return true;
-  // } else if (arrivaltime.destNm === 'Howard') {
-  //   console.log("not an express", arrivaltime);
-  //   return false;
+  } else if (arrivaltime.destNm === 'Howard') { // turn this off if you want to test rush hour express service
+    console.log("not an express", arrivaltime);
+    return false;
   } else {
     console.log("not sure", arrivaltime);
 
@@ -54,7 +54,7 @@ export const isPurpleExpress = (arrivaltime) => {
         return false;
       }
     };
-    // return isRushHour(arrivaltime.stpId, arrivaltime.arrT);
-    return isRushHour(arrivaltime.stpId, "2018-02-16T09:10:21");
+    return isRushHour(arrivaltime.stpId, arrivaltime.arrT);
+    // return isRushHour(arrivaltime.stpId, "2018-02-16T09:10:21"); // to test rush hour service
   }
 };

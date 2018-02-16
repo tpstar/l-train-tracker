@@ -21,7 +21,7 @@ class ArrivalTimeItem extends Component {
   render() {
     const { trainline, boundFor, arrivaltime, onButtonPress } = this.props;
     // console.log('arrivaltime: ',arrivaltime);
-    const { name, textcolor, sectextcolor } = trainline;
+    const { primarycolor, textcolor, sectextcolor } = trainline;
 
     let arrTime = moment(arrivaltime.arrT);
     let seconds = arrTime.second()
@@ -34,7 +34,7 @@ class ArrivalTimeItem extends Component {
         <Button
            onPress={()=>onButtonPress(arrivaltime)}
            overwriteTextStyle={{color: textcolor, fontSize: 19}}
-           overwriteButtonStyle={{borderColor: name, backgroundColor: name}}
+           overwriteButtonStyle={{borderColor: primarycolor, backgroundColor: primarycolor}}
          >
            {waitingMin(arrivaltime)} min {'     '}
            <Text style={{color: sectextcolor}}>

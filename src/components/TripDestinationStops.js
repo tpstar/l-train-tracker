@@ -23,7 +23,13 @@ class TripDestinationStops extends Component {
     }
     console.log(isPurpleExp);
     const departureStop = {...trainstop, boundFor};
-    const route = { name: trainline.name, textcolor: trainline.textcolor, rt: trainline.rt, isPurpleExp};
+    const route = {
+      name: trainline.name,
+      textcolor: trainline.textcolor,
+      primarycolor: trainline.primarycolor,
+      sectextcolor: trainline.sectextcolor,
+      rt: trainline.rt,
+      isPurpleExp};
 
     this.props.navigation.dispatch(
       {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import { Icon } from 'react-native-elements';
+import { Text } from 'react-native';
 import Swipeout from 'react-native-swipeout';
 import { CardSection, Button } from './common';
 
@@ -26,10 +26,17 @@ class FavStopListItem extends Component {
           <Button
             onPress={()=>onButtonPress(favtrip)}
             overwriteTextStyle={{color: favtrip.route.textcolor}}
-            overwriteButtonStyle={{borderColor: favtrip.route.name,
-                                   backgroundColor: favtrip.route.name}}
+            overwriteButtonStyle={{borderColor: favtrip.route.primarycolor,
+                                   backgroundColor: favtrip.route.primarycolor}}
           >
-            From {favtrip.departureStop.name} To {favtrip.arrivalStop.name}
+            <Text style={{color: favtrip.route.sectextcolor}}>
+              From
+            </Text>
+            {' ' + favtrip.departureStop.name + ' '}
+            <Text style={{color: favtrip.route.sectextcolor}}>
+              To
+            </Text>
+            {' ' + favtrip.arrivalStop.name}
           </Button>
         </CardSection>
       </Swipeout>

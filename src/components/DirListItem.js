@@ -14,7 +14,7 @@ class DirListItem extends Component {
         <Button
           onPress={()=>onButtonPress(boundFor)}
           overwriteTextStyle={{color: trainline.textcolor}}
-          overwriteButtonStyle={{borderColor: trainline.name, backgroundColor: trainline.name}}
+          overwriteButtonStyle={{borderColor: trainline.primarycolor, backgroundColor: trainline.primarycolor}}
         >
           {boundFor.name} {terminalArrival}
         </Button>

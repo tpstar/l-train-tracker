@@ -104,7 +104,7 @@ class TripEstimates extends Component {
     const { tripDepartureTime, tripArrivalTime, error } = this.props.tripdata;
     const { departureStop, arrivalStop, route } = this.props.navigation.state.params;
     // console.log( "is state to props called twice in render?", tripdata ) // once with empty object and once with object with data
-    // console.log('tripDepartureTime: ', tripDepartureTime, 'tripArrivalTime: ', tripArrivalTime);
+    console.log('tripDepartureTime: ', tripDepartureTime, 'tripArrivalTime: ', tripArrivalTime);
     return (
       <Card>
         <Header headerText={`Departure: ${departureStop.name}`} />

@@ -11,7 +11,7 @@ class StopListItem extends Component {
         <Button
            onPress={()=>onButtonPress(trainline, trainstop)}
            overwriteTextStyle={{color: trainline.textcolor}}
-           overwriteButtonStyle={{borderColor: trainline.name, backgroundColor: trainline.name}}
+           overwriteButtonStyle={{borderColor: trainline.primarycolor, backgroundColor: trainline.primarycolor}}
          >
            {trainstop.name}
         </Button>

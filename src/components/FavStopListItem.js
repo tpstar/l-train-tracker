@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import { Icon } from 'react-native-elements';
+import { Text } from 'react-native';
 import Swipeout from 'react-native-swipeout';
 import { CardSection, Button } from './common';
 
@@ -25,10 +25,14 @@ class FavStopListItem extends Component {
           <Button
             onPress={()=>onButtonPress(favstop)}
             overwriteTextStyle={{color: favstop.trainline.textcolor}}
-            overwriteButtonStyle={{borderColor: favstop.trainline.name,
-                                   backgroundColor: favstop.trainline.name}}
+            overwriteButtonStyle={{borderColor: favstop.trainline.primarycolor,
+                                   backgroundColor: favstop.trainline.primarycolor}}
           >
-            {favstop.trainstop.name} ({favstop.boundFor.name} bound)
+            {favstop.trainstop.name}
+            <Text style={{color: favstop.trainline.sectextcolor}}>
+              {'   '}
+              {favstop.boundFor.name} bound
+            </Text>
           </Button>
         </CardSection>
       </Swipeout>

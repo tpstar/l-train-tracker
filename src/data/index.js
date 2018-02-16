@@ -1,8 +1,9 @@
 export const trainLines = [
   {
     name: 'red',
+    primarycolor: '#D32F2F',
     textcolor: 'white',
-    sectextcolor: '#ffcdd2',
+    sectextcolor: '#FFCDD2',
     rt: 'Red', //rt is to specify route name when fetching arrival data, see TrainAction.js creator
     stops: [
       {
@@ -286,8 +287,9 @@ export const trainLines = [
   {
     name: 'blue',
     rt: 'Blue',
+    primarycolor: '#1976D2',
     textcolor: 'white',
-    sectextcolor: '#bbdefb',
+    sectextcolor: '#BBDEFB',
     stops: [
       {
          name: "O\'Hare",
@@ -570,8 +572,9 @@ export const trainLines = [
   {
     name: 'green',
     rt: 'G',
-    textcolor: 'white',
-    sectextcolor: '#c8e6c9',
+    primarycolor: '#4CAF50',
+    textcolor: 'black',
+    sectextcolor: '#1B5E20',
     stops: [
       {
          name: "Harlem/Lake",
@@ -834,8 +837,9 @@ export const trainLines = [
   {
     name: 'orange',
     rt: 'Org',
+    primarycolor: '#FF9800',
     textcolor: 'black',
-    sectextcolor: '#bf360c',
+    sectextcolor: '#BF360C',
     stops: [
       {
         name: "Midway",
@@ -981,8 +985,9 @@ export const trainLines = [
   {
     name: 'brown',
     rt: 'Brn',
+    primarycolor: '#795548',
     textcolor: 'white',
-    sectextcolor: '#d7ccc8',
+    sectextcolor: '#D7CCC8',
     stops: [
       {
          name: "Kimball",
@@ -1216,8 +1221,9 @@ export const trainLines = [
   {
     name: 'purple',
     rt: 'P',
+    primarycolor: '#7B1FA2',
     textcolor: 'white',
-    sectextcolor: '#d7ccc8',
+    sectextcolor: '#E1BEE7',
     stops: [
       {
          name: "Linden",
@@ -1444,7 +1450,9 @@ export const trainLines = [
   {
     name: 'yellow',
     rt: 'Y',
+    primarycolor: '#FFD600',
     textcolor: 'black',
+    sectextcolor: '#F57F17',
     stops: [
       {
          name: "Dempster-Skokie",
@@ -1487,7 +1495,9 @@ export const trainLines = [
   {
     name: 'pink',
     rt: 'Pink',
+    primarycolor: '#F06292',
     textcolor: 'black',
+    sectextcolor: '#F8BBD0',
     stops: [
       {
          name: "54th/Cermak",
