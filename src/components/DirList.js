@@ -65,7 +65,10 @@ class DirList extends Component {
 
     return (
       <Card>
-        <Header headerText={"Choose Direction"} />
+        <Header
+          headerText={"Choose Direction"}
+          overwriteTextStyle={{color: '#212121', fontWeight: 'bold'}}
+        />
         <FlatList
           data={Object.values(destinationStops)}
           renderItem={({item}) => <DirListItem

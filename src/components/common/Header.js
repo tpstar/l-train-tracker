@@ -8,7 +8,12 @@ const Header = (props) => {
 
   return (
     <View style={viewStyle}>
-      <Text style={{...textStyle, ...props.overwriteTextStyle}}>{props.headerText}</Text>
+      <Text style={textStyle}>
+        {props.secondaryText}
+        <Text style={{...textStyle, ...props.overwriteTextStyle}}>
+          {props.headerText}
+        </Text>
+      </Text>
     </View>
   );
 };
@@ -27,7 +32,7 @@ const styles = {
     position: 'relative'
   },
   textStyle: {
-    fontSize: 20
+    fontSize: 20,
   }
 };
 

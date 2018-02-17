@@ -29,7 +29,10 @@ class LineList extends Component {
   render() {
     return (
       <Card>
-        <Header headerText={"Choose Train Line"} />
+        <Header
+          headerText={"Choose Train Line"}
+          overwriteTextStyle={{color: '#212121', fontWeight: 'bold'}}
+        />
         <FlatList
           data={trainLines}
           renderItem={({item}) => <LineListItem trainline={item} onButtonPress={this.onButtonPress.bind(this)}/>}

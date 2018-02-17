@@ -55,6 +55,6 @@ export const isPurpleExpress = (arrivaltime) => {
       }
     };
     return isRushHour(arrivaltime.stpId, arrivaltime.arrT);
-    // return isRushHour(arrivaltime.stpId, "2018-02-16T09:10:21"); // to test rush hour service
+    // return isRushHour(arrivaltime.stpId, "2018-02-16T22:10:21"); // to test rush hour service
   }
 };

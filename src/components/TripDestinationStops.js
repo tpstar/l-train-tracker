@@ -124,7 +124,10 @@ class TripDestinationStops extends Component {
     }
     return (
       <Card>
-        <Header headerText={"Choose Destination Stop"} />
+        <Header
+          headerText={"Choose Destination Stop"}
+          overwriteTextStyle={{color: '#212121', fontWeight: 'bold'}}
+        />
         <FlatList
           data={tripStops}
           renderItem={({ item }) => <StopListItem

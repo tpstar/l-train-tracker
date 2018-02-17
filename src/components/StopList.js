@@ -47,7 +47,10 @@ class StopList extends Component {
 
     return (
       <Card>
-        <Header headerText={"Choose Stop"} />
+        <Header
+          headerText={"Choose Stop"}
+          overwriteTextStyle={{color: '#212121', fontWeight: 'bold'}}
+        />
         <FlatList
           data={trainStops}
           renderItem={({ item }) => <StopListItem

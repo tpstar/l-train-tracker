@@ -64,10 +64,10 @@ class ArrivalTimes extends Component {
       return (
       <Button
         onPress={()=>this.onButtonPressSave(trainline, trainstop, boundFor)}
-        // overwriteTextStyle={{color: `${trainline.textcolor}`}}
-        // overwriteButtonStyle={{borderColor: `${trainline.name}`, backgroundColor: `${trainline.name}`}}
+        overwriteTextStyle={{color: '#E8EAF6'}}
+        overwriteButtonStyle={{borderColor: '#9FA8DA', backgroundColor: `#9FA8DA`}}
       >
-        Save this Stop
+         Save this Stop
       </Button>
     )}
     if (arrivaldata.loading) {
@@ -119,12 +119,22 @@ class ArrivalTimes extends Component {
 
     return (
       <Card>
-        <Header headerText={`Arrivals at ${trainstop.name}`} />
-        <Header headerText={boundFor.name + bound} />
+        <Header
+          headerText={`Arrivals at ${trainstop.name}`}
+          overwriteTextStyle={{color: '#212121', fontWeight: 'bold'}}
+        />
+
+        <Header
+          headerText={boundFor.name + bound}
+          overwriteTextStyle={{fontSize: 18}}
+        />
         <CardSection>
           {this.renderSaveButton(trainline, trainstop, boundFor)}
         </CardSection>
-        <Header headerText={`Updated ${timestamp}`} />
+        <Header
+          headerText={`Updated ${timestamp}`}
+          overwriteTextStyle={{fontSize: 18}}
+        />
         {this.renderNoArrivals(arrivaldata)}
         <FlatList
           data={arrivaltimes}

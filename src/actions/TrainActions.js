@@ -32,6 +32,7 @@ const estimateTravelTimeUsingScheduleTable = (stopA, stopB, route) => {
   // console.log("day one to seven: ", dayOneToSeven, "day of week: ", dayOfWeek);
 
   const timeTable = timeTables[route.name][dayOfWeek]; //[stopA.boundFor.direction]; //don't need a direction since using stpId contains directional info
+  console.log(timeTable);
   const indexOfClosestFutureService = timeTable[stopA.stpId].findIndex((element)=>(moment(element, 'HH:mm A').diff(moment(stopA.arrT)) > 0));
   // find a train service column, closest future service in the table
   // console.log(indexOfClosestFutureService, timeTable[stopA.stpId][indexOfClosestFutureService], timeTable[stopA.stpId][indexOfClosestFutureService - 1])

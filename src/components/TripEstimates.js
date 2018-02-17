@@ -29,7 +29,11 @@ class TripEstimates extends Component {
         arrTime = moment(arrTime).add(1, 'minutes')
       }
       return (
-        <Header headerText={`at ${arrTime.format('h:mm a')}`} />
+        <Header
+          overwriteTextStyle={{color: '#3F51B5', fontWeight: 'bold'}}
+          secondaryText='at '
+          headerText={arrTime.format('h:mm a')}
+        />
       )
     } else {
       return (
@@ -104,12 +108,20 @@ class TripEstimates extends Component {
     const { tripDepartureTime, tripArrivalTime, error } = this.props.tripdata;
     const { departureStop, arrivalStop, route } = this.props.navigation.state.params;
     // console.log( "is state to props called twice in render?", tripdata ) // once with empty object and once with object with data
-    console.log('tripDepartureTime: ', tripDepartureTime, 'tripArrivalTime: ', tripArrivalTime);
+    // console.log('tripDepartureTime: ', tripDepartureTime, 'tripArrivalTime: ', tripArrivalTime);
     return (
       <Card>
-        <Header headerText={`Departure: ${departureStop.name}`} />
+        <Header
+          secondaryText='Departure: '
+          headerText={departureStop.name}
+          overwriteTextStyle={{color: '#3F51B5', fontWeight: 'bold'}}
+        />
         {this.renderTime(tripDepartureTime, error)}
-        <Header headerText={`Arrival: ${arrivalStop.name}`} />
+        <Header
+          secondaryText='Arrival: '
+          headerText={arrivalStop.name}
+          overwriteTextStyle={{color: '#3F51B5', fontWeight: 'bold'}}
+        />
         {this.renderError(error)}
         {this.renderTime(tripArrivalTime, error)}
         <CardSection>
