@@ -7,7 +7,8 @@ import {
   FOLLOW_TRAIN,
   FOLLOW_TRAIN_SUCCESS,
   FOLLOW_TRAIN_FAIL,
-  DELETE_FAV_STOP } from './types';
+  DELETE_FAV_STOP,
+  DELETE_FAV_TRIP } from './types';
 import { CTA_API_KEY, Google_Maps_API_KEY } from '../config';
 import { timeTables } from '../data/timetable';
 import { isPurpleExpress } from '../components/helper';
@@ -81,7 +82,14 @@ export const createFavStop = ({ trainline, trainstop, boundFor }) => {
     type: CREATE_FAV_STOP,
     payload: { trainline, trainstop, boundFor }
   }
-}
+};
+
+export const deleteFavStop = (favstop) => {
+  return {
+    type: DELETE_FAV_STOP,
+    payload: favstop
+  }
+};
 
 export const createFavTrip = ({ departureStop, arrivalStop, route }) => {
   // console.log(departureStop, arrivalStop, route);
@@ -89,7 +97,14 @@ export const createFavTrip = ({ departureStop, arrivalStop, route }) => {
     type: CREATE_FAV_TRIP,
     payload: { departureStop, arrivalStop, route }
   }
-}
+};
+
+export const deleteFavTrip = (favtrip) => {
+  return {
+    type: DELETE_FAV_TRIP,
+    payload: favtrip
+  }
+};
 
 export const fetchArrivalTime = ({ trainline, trainstop, boundFor }) => {
   // console.log('stop platform id: ', trainstop.stpId[boundFor.direction]); //boundFor.direction is from data/index.js "N", "S", "L", ..
@@ -197,7 +212,7 @@ export const fetchFollowTrainAPIData = ({ departureStop, arrivalStop, departureS
             const tripArrivalTimeFromCTAOnly = { routeName, stop: arrivalStopData.staNm, arrT: arrivalStopData.arrT };
             dispatch(followThisTrainSuccess({ tripDepartureTime, tripArrivalTime: tripArrivalTimeFromCTAOnly }));
           }
-        } else if (data.ctatt.errCd === "502") {
+        } else if (data.ctatt.errCd === "502" || data.ctatt.errCd === "503") {
 
           departureStop = {...departureStop, stpId: departureStopArrivaltime.stpId, arrT: departureStopArrivaltime.arrT} //replace stpId object with stpId number from API
           const tripDurationInMin = estimateTravelTimeUsingScheduleTable(departureStop, arrivalStop, route);
@@ -222,13 +237,6 @@ export const followThisTrainSuccess = ({ tripDepartureTime, tripArrivalTime }) =
 export const followThisTrainFail = () => {
   return {
     type: FOLLOW_TRAIN_FAIL
-  }
-}
-
-export const deleteFavStop = (favstop) => {
-  return {
-    type: DELETE_FAV_STOP,
-    payload: favstop
   }
 }
 

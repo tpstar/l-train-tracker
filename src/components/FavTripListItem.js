@@ -10,7 +10,7 @@ class FavStopListItem extends Component {
     const swipeBtns = [
       {
         text: 'DELETE',
-        backgroundColor: 'red',
+        backgroundColor: '#B71C1C',
         underlayColor: 'rgba(0, 0, 0, 1, 0.6)',
         onPress: () => onSlidePress(favtrip)
       }

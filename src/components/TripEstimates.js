@@ -30,7 +30,7 @@ class TripEstimates extends Component {
       }
       return (
         <Header
-          overwriteTextStyle={{color: '#3F51B5', fontWeight: 'bold'}}
+          overwriteTextStyle={{color: '#212121', fontWeight: 'bold'}}
           secondaryText='at '
           headerText={arrTime.format('h:mm a')}
         />
@@ -77,8 +77,8 @@ class TripEstimates extends Component {
       return (
       <Button
         onPress={()=>this.onButtonPressSave(departureStop, arrivalStop, route)}
-        // overwriteTextStyle={{color: `${trainline.textcolor}`}}
-        // overwriteButtonStyle={{borderColor: `${trainline.name}`, backgroundColor: `${trainline.name}`}}
+        overwriteTextStyle={{color: '#E8EAF6'}}
+        overwriteButtonStyle={{borderColor: '#9FA8DA', backgroundColor: `#9FA8DA`}}
       >
         Save this Trip
       </Button>
@@ -108,19 +108,19 @@ class TripEstimates extends Component {
     const { tripDepartureTime, tripArrivalTime, error } = this.props.tripdata;
     const { departureStop, arrivalStop, route } = this.props.navigation.state.params;
     // console.log( "is state to props called twice in render?", tripdata ) // once with empty object and once with object with data
-    // console.log('tripDepartureTime: ', tripDepartureTime, 'tripArrivalTime: ', tripArrivalTime);
+    console.log('tripDepartureTime: ', tripDepartureTime, 'tripArrivalTime: ', tripArrivalTime, 'route: ', route);
     return (
       <Card>
         <Header
           secondaryText='Departure: '
           headerText={departureStop.name}
-          overwriteTextStyle={{color: '#3F51B5', fontWeight: 'bold'}}
+          overwriteTextStyle={{color: '#212121', fontWeight: 'bold'}}
         />
         {this.renderTime(tripDepartureTime, error)}
         <Header
           secondaryText='Arrival: '
           headerText={arrivalStop.name}
-          overwriteTextStyle={{color: '#3F51B5', fontWeight: 'bold'}}
+          overwriteTextStyle={{color: '#212121', fontWeight: 'bold'}}
         />
         {this.renderError(error)}
         {this.renderTime(tripArrivalTime, error)}
