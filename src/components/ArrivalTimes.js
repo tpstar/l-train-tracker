@@ -90,10 +90,12 @@ class ArrivalTimes extends Component {
   }
 
   renderNoArrivals(arrivaldata) {
-    // console.log(arrivaldata);
-    if (arrivaldata.eta.length === 0 && arrivaldata.fetched) {
+    if (arrivaldata.error) {
       return (
-        <Header headerText={'No Arrivals in 30 min'} />
+        <Header
+          headerText={arrivaldata.error}
+          overwriteTextStyle={{color: '#212121', fontWeight: 'bold'}}
+        />
       )
     }
   }

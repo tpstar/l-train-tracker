@@ -15,7 +15,7 @@ class TripEstimates extends Component {
   renderError(error) {
     if (error) {
       return (
-        <Header headerText={error} overwriteTextStyle={{color: 'red'}}/>
+        <Header headerText={error} overwriteTextStyle={{color: 'red', fontWeight: 'bold'}}/>
       )
     }
   }
@@ -35,7 +35,7 @@ class TripEstimates extends Component {
           headerText={arrTime.format('h:mm a')}
         />
       )
-    } else {
+    } else if (!error) {
       return (
         <Header headerText={'Loading...'} />
       )
@@ -107,8 +107,8 @@ class TripEstimates extends Component {
   render() {
     const { tripDepartureTime, tripArrivalTime, error } = this.props.tripdata;
     const { departureStop, arrivalStop, route } = this.props.navigation.state.params;
-    // console.log( "is state to props called twice in render?", tripdata ) // once with empty object and once with object with data
-    console.log('tripDepartureTime: ', tripDepartureTime, 'tripArrivalTime: ', tripArrivalTime, 'route: ', route);
+    console.log( "is state to props called twice in render?", this.props.tripdata ) // once with empty object and once with object with data
+    // console.log('tripDepartureTime: ', tripDepartureTime, 'tripArrivalTime: ', tripArrivalTime, 'route: ', route);
     return (
       <Card>
         <Header
@@ -122,8 +122,8 @@ class TripEstimates extends Component {
           headerText={arrivalStop.name}
           overwriteTextStyle={{color: '#212121', fontWeight: 'bold'}}
         />
-        {this.renderError(error)}
         {this.renderTime(tripArrivalTime, error)}
+        {this.renderError(error)}
         <CardSection>
           {this.renderSaveButton(departureStop, arrivalStop, route)}
         </CardSection>

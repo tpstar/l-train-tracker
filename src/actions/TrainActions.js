@@ -4,11 +4,14 @@ import {
   CREATE_FAV_TRIP,
   FETCH_ARRIVAL_TIME,
   FETCH_ARRIVAL_TIME_SUCCESS,
+  NOTIFY_NO_ARRIVALS,
   FOLLOW_TRAIN,
   FOLLOW_TRAIN_SUCCESS,
   FOLLOW_TRAIN_FAIL,
   DELETE_FAV_STOP,
-  DELETE_FAV_TRIP } from './types';
+  DELETE_FAV_TRIP,
+  FETCH_TRIP_FAIL
+} from './types';
 import { CTA_API_KEY, Google_Maps_API_KEY } from '../config';
 import { timeTables } from '../data/timetable';
 import { isPurpleExpress } from '../components/helper';
@@ -33,7 +36,7 @@ const estimateTravelTimeUsingScheduleTable = (stopA, stopB, route) => {
   // console.log("day one to seven: ", dayOneToSeven, "day of week: ", dayOfWeek);
 
   const timeTable = timeTables[route.name][dayOfWeek]; //[stopA.boundFor.direction]; //don't need a direction since using stpId contains directional info
-  console.log(timeTable);
+  // console.log(timeTable);
   const indexOfClosestFutureService = timeTable[stopA.stpId].findIndex((element)=>(moment(element, 'HH:mm A').diff(moment(stopA.arrT)) > 0));
   // find a train service column, closest future service in the table
   // console.log(indexOfClosestFutureService, timeTable[stopA.stpId][indexOfClosestFutureService], timeTable[stopA.stpId][indexOfClosestFutureService - 1])
@@ -74,8 +77,6 @@ const estimateTravelTimeUsingScheduleTable = (stopA, stopB, route) => {
   return tripDurationInMin;
 }
 
-
-
 export const createFavStop = ({ trainline, trainstop, boundFor }) => {
   // console.log(trainline, trainstop, boundFor);
   return  {
@@ -92,7 +93,7 @@ export const deleteFavStop = (favstop) => {
 };
 
 export const createFavTrip = ({ departureStop, arrivalStop, route }) => {
-  // console.log(departureStop, arrivalStop, route);
+  console.log(departureStop, arrivalStop, route);
   return  {
     type: CREATE_FAV_TRIP,
     payload: { departureStop, arrivalStop, route }
@@ -110,7 +111,6 @@ export const fetchArrivalTime = ({ trainline, trainstop, boundFor }) => {
   // console.log('stop platform id: ', trainstop.stpId[boundFor.direction]); //boundFor.direction is from data/index.js "N", "S", "L", ..
   return (dispatch) => {
     dispatch({ type: FETCH_ARRIVAL_TIME });
-
     const stopId = trainstop.stpId[boundFor.direction] || trainstop.stpId[boundFor.direction2] //if not "N" and "S" try "E" and "W";
     // console.log(trainline)
     const routeName = trainline.rt; // route name to filter out other line arrivals
@@ -130,9 +130,14 @@ export const fetchArrivalTime = ({ trainline, trainstop, boundFor }) => {
 
 export const arrivalTimeSuccess = (data) => {
   // console.log(data)
-  return {
-    type: FETCH_ARRIVAL_TIME_SUCCESS,
-    payload: data
+  return (dispatch) => {
+    dispatch({
+      type: FETCH_ARRIVAL_TIME_SUCCESS,
+      payload: data
+    });
+    if (!data.eta) { //if there is no arrival data
+      dispatch({ type: NOTIFY_NO_ARRIVALS })
+    }
   }
 }
 
@@ -242,28 +247,40 @@ export const followThisTrainFail = () => {
 
 export const fetchTrip = ({ departureStop, arrivalStop, route }) => {
   // console.log('stop platform id: ', departureStop.stpId[departureStop.boundFor.direction]); //departureStop.boundFor.direction is from data/index.js "N", "S", "L", ..
-  console.log("I am in fetchTrip", route, departureStop)
+  // console.log("I am in fetchTrip", route, departureStop);
+  //fetch arrival time
   const routeName = route.rt;
   const stopId = departureStop.stpId[departureStop.boundFor.direction] || departureStop.stpId[departureStop.boundFor.direction2] //if not "N" and "S" try "E" and "W";
 
   const url = `http://lapi.transitchicago.com/api/1.0/ttarrivals.aspx?key=${CTA_API_KEY}&stpid=${stopId}&rt=${routeName}&outputType=JSON&max=3`;
   // console.log(url);
   return (dispatch) => {
-    fetch(url)
+    fetch(url) //fetch arrival times for departure stop first
       .then((data)=>data.json())
       .catch(error => console.error('Error:', error))
       .then((data)=> {
-        console.log(data.ctatt.eta);
-        //call isPurpleExpress(arrivaldata) and dispatch with updated route.isPurpleExp
         const departureStopArrivaltime = data.ctatt.eta[0];
-        console.log(route, departureStopArrivaltime);
-        let isPurpleExp = false;
-        if (departureStopArrivaltime.rt === 'P') { //if route is purple line
-          isPurpleExp = isPurpleExpress(departureStopArrivaltime);
+        console.log(route, data.ctatt);
+
+        if(!data.ctatt.eta) { //if no arrival time data for departure stop
+          dispatch(fetchTripFail('No Service in 30 min'))
+        } else {
+          // call isPurpleExpress(arrivaldata) and dispatch with updated route.isPurpleExp
+          let isPurpleExp = false;
+          if (departureStopArrivaltime.rt === 'P') { //if route is purple line
+            isPurpleExp = isPurpleExpress(departureStopArrivaltime);
+          }
+          route = {...route, isPurpleExp};
+          // console.log(route);
+          dispatch(fetchFollowTrainAPIData({ departureStop, arrivalStop, departureStopArrivaltime, route }))
         }
-        route = {...route, isPurpleExp};
-        console.log(route);
-        dispatch(fetchFollowTrainAPIData({ departureStop, arrivalStop, departureStopArrivaltime, route }))
       })
+  }
+}
+
+export const fetchTripFail = (error) => {
+  return {
+    type: FETCH_TRIP_FAIL,
+    payload: error
   }
 }

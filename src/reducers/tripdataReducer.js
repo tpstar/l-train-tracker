@@ -1,4 +1,9 @@
-import { FOLLOW_TRAIN, FOLLOW_TRAIN_SUCCESS, FOLLOW_TRAIN_FAIL } from '../actions/types';
+import {
+  FOLLOW_TRAIN,
+  FOLLOW_TRAIN_SUCCESS,
+  FOLLOW_TRAIN_FAIL,
+  FETCH_TRIP_FAIL
+} from '../actions/types';
 
 const INITIAL_STATE = {
   error: '',
@@ -16,6 +21,9 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, ...INITIAL_STATE, ...action.payload };
     case FOLLOW_TRAIN_FAIL: //catch 502 error from CTA, used schedule table to take care of 502 error
       return { ...state, loading: false, error: 'Train tracking data are not available at this time, please try again later!' }
+    case FETCH_TRIP_FAIL:
+      console.log(action.payload)
+      return { ...state, error: action.payload, loading: false }
     default:
       return state;
   }
