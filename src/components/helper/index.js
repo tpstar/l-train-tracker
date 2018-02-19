@@ -17,12 +17,16 @@ export const NavigateTo = (navigation, iconName, routeName) => {
 }
 
 export const waitingMin = (arrivaltime) => {
-  return(
-    Math.round(
-    parseFloat(
-      moment(arrivaltime.arrT).diff(moment(arrivaltime.prdt))
-    )/60/1000 //milliseconds to minutes
-  ))
+  let time = Math.round(
+      parseFloat(
+        moment(arrivaltime.arrT).diff(moment(arrivaltime.prdt))
+      )/60/1000 //milliseconds to minutes
+    );
+  if (time === 1) {
+    return 'DUE';
+  } else {
+    return time + ' min';
+  }
 };
 
 export const isPurpleExpress = (arrivaltime) => {

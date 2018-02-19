@@ -36,7 +36,7 @@ class ArrivalTimeItem extends Component {
            overwriteTextStyle={{color: textcolor, fontSize: 19}}
            overwriteButtonStyle={{borderColor: primarycolor, backgroundColor: primarycolor}}
          >
-           {waitingMin(arrivaltime)} min {'     '}
+           {waitingMin(arrivaltime) + '     '}
            <Text style={{color: sectextcolor}}>
              {arrTime.format('h:mm a')}
            </Text>
