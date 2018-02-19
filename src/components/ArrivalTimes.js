@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import _ from 'lodash';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { Card, Header, Button, CardSection, Spinner } from './common';
+import { Card, Header, Button, CardSection, Spinner, HeaderTrain } from './common';
 import { fetchArrivalTime, createFavStop } from '../actions';
 import ArrivalTimeItem from './ArrivalTimeItem';
 import { NavigateTo } from './helper';
@@ -121,9 +121,10 @@ class ArrivalTimes extends Component {
 
     return (
       <Card>
-        <Header
-          headerText={`Arrivals at ${trainstop.name}`}
+        <HeaderTrain
+          headerText={`  Arrivals at ${trainstop.name}`}
           overwriteTextStyle={{color: '#212121', fontWeight: 'bold'}}
+          trainColor={trainline.primarycolor}
         />
 
         <Header
