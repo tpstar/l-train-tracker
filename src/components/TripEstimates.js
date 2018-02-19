@@ -15,7 +15,7 @@ class TripEstimates extends Component {
   renderError(error) {
     if (error) {
       return (
-        <Header headerText={error} overwriteTextStyle={{color: 'red', fontWeight: 'bold'}}/>
+        <Header headerText={error} overwriteTextStyle={{color: '#E57373', fontWeight: 'bold'}}/>
       )
     }
   }

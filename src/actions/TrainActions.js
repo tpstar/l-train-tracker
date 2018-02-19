@@ -15,6 +15,7 @@ import {
 import { CTA_API_KEY, Google_Maps_API_KEY } from '../config';
 import { timeTables } from '../data/timetable';
 import { isPurpleExpress } from '../components/helper';
+import { trainLines } from '../data';
 
 
 const estimateTravelTimeUsingScheduleTable = (stopA, stopB, route) => {
@@ -32,8 +33,9 @@ const estimateTravelTimeUsingScheduleTable = (stopA, stopB, route) => {
     dayOfWeek = "saturday";
   } else if (dayOneToSeven === 0) {
     dayOfWeek = "sunday";
+    // dayOfWeek = "weekdays"; //to test rush hour
   }
-  // console.log("day one to seven: ", dayOneToSeven, "day of week: ", dayOfWeek);
+  console.log("day one to seven: ", dayOneToSeven, "day of week: ", dayOfWeek);
 
   const timeTable = timeTables[route.name][dayOfWeek]; //[stopA.boundFor.direction]; //don't need a direction since using stpId contains directional info
   // console.log(timeTable);
@@ -247,11 +249,10 @@ export const followThisTrainFail = () => {
 
 export const fetchTrip = ({ departureStop, arrivalStop, route }) => {
   // console.log('stop platform id: ', departureStop.stpId[departureStop.boundFor.direction]); //departureStop.boundFor.direction is from data/index.js "N", "S", "L", ..
-  // console.log("I am in fetchTrip", route, departureStop);
+  // console.log("I am in fetchTrip", route, arrivalStop);
   //fetch arrival time
   const routeName = route.rt;
   const stopId = departureStop.stpId[departureStop.boundFor.direction] || departureStop.stpId[departureStop.boundFor.direction2] //if not "N" and "S" try "E" and "W";
-
   const url = `http://lapi.transitchicago.com/api/1.0/ttarrivals.aspx?key=${CTA_API_KEY}&stpid=${stopId}&rt=${routeName}&outputType=JSON&max=3`;
   // console.log(url);
   return (dispatch) => {
@@ -269,10 +270,24 @@ export const fetchTrip = ({ departureStop, arrivalStop, route }) => {
           let isPurpleExp = false;
           if (departureStopArrivaltime.rt === 'P') { //if route is purple line
             isPurpleExp = isPurpleExpress(departureStopArrivaltime);
+            route = {...route, isPurpleExp};
+            console.log(route);
+            const isSavedTripPurpleExpress = () => { //check if the arrival stop is stop in the express branch
+              const tripDepartureStopIndex = trainLines[5].stops.findIndex((stop) =>
+                stop.staId === arrivalStop.staId
+              )
+              console.log(tripDepartureStopIndex);
+              return (tripDepartureStopIndex > 8); //tripDepartureStopIndex for Howard is 8
+            }
+
+            if (isSavedTripPurpleExpress() && !route.isPurpleExp) {
+              dispatch(fetchTripFail('No service in 30 min'))
+            } else {
+              dispatch(fetchFollowTrainAPIData({ departureStop, arrivalStop, departureStopArrivaltime, route }))
+            }
+          } else { // if train route is not purple
+            dispatch(fetchFollowTrainAPIData({ departureStop, arrivalStop, departureStopArrivaltime, route }))
           }
-          route = {...route, isPurpleExp};
-          // console.log(route);
-          dispatch(fetchFollowTrainAPIData({ departureStop, arrivalStop, departureStopArrivaltime, route }))
         }
       })
   }

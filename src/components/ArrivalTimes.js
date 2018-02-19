@@ -94,7 +94,7 @@ class ArrivalTimes extends Component {
       return (
         <Header
           headerText={arrivaldata.error}
-          overwriteTextStyle={{color: '#212121', fontWeight: 'bold'}}
+          overwriteTextStyle={{color: '#E57373', fontWeight: 'bold'}}
         />
       )
     }

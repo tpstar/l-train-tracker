@@ -38,16 +38,18 @@ export const isPurpleExpress = (arrivaltime) => {
     console.log("not sure", arrivaltime);
 
     const isRushHour = (departureStop_stpId, departureStop_arrT) => {
+      console.log(departureStop_arrT)
       //check if it's rushperiod;
       const dayOneToSeven = moment(departureStop_arrT).day(); //Sunday => 0 ... Saturday => 6
       console.log(dayOneToSeven)
       if (dayOneToSeven === 0 || dayOneToSeven === 6) {
         return false; //during weekends, no rushperiod and no purple line express
       }
-
       const departureStopArrTime = moment(departureStop_arrT);
-      const rushHourArrTimes = rushHour[departureStop_stpId].map((time) => moment(time, 'HH:mm A'));
 
+      const rushHourArrTimes = rushHour[departureStop_stpId].map((time) => moment(time, 'HH:mm A'));
+      // const rushHourArrTimes = rushHour[departureStop_stpId].map((time) => moment(time, 'HH:mm A').subtract(2, 'days'));
+      console.log(departureStopArrTime > rushHourArrTimes[0], departureStopArrTime, rushHourArrTimes[0] )
       if ((departureStopArrTime > rushHourArrTimes[0] && departureStopArrTime < rushHourArrTimes[1]) || (departureStopArrTime > rushHourArrTimes[2] && departureStopArrTime < rushHourArrTimes[3])) {
         return true;
       } else {
@@ -55,6 +57,6 @@ export const isPurpleExpress = (arrivaltime) => {
       }
     };
     return isRushHour(arrivaltime.stpId, arrivaltime.arrT);
-    // return isRushHour(arrivaltime.stpId, "2018-02-16T22:10:21"); // to test rush hour service
+    // return isRushHour(arrivaltime.stpId, "2018-02-16T07:18:21"); // to test rush hour service
   }
 };
