@@ -7,8 +7,7 @@ import _ from 'lodash';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { Card, Header, Button, CardSection, Spinner } from './common';
 import { createFavTrip } from '../actions';
-
-import { NavigateTo } from './helper';
+import { NavigateTo, waitingMin } from './helper';
 
 class TripEstimates extends Component {
 
@@ -105,12 +104,12 @@ class TripEstimates extends Component {
   }
 
   render() {
-    const { tripDepartureTime, tripArrivalTime, error } = this.props.tripdata;
+    const { tripDepartureTime, tripArrivalTime, error, timestamp } = this.props.tripdata;
     const { departureStop, arrivalStop, route } = this.props.navigation.state.params;
-    console.log( "is state to props called twice in render?", this.props.tripdata ) // once with empty object and once with object with data
-    // console.log('tripDepartureTime: ', tripDepartureTime, 'tripArrivalTime: ', tripArrivalTime, 'route: ', route);
+    // console.log( "is state to props called twice in render?", route ) // once with empty object and once with object with data
+    console.log('tripDepartureTime: ', tripDepartureTime, 'tripArrivalTime: ', tripArrivalTime, 'route: ', route);
     return (
-      <Card>
+      <Card overwriteCardStyle={{borderColor: route.sectextcolor}}>
         <Header
           secondaryText='Departure: '
           headerText={departureStop.name}
@@ -123,6 +122,10 @@ class TripEstimates extends Component {
           overwriteTextStyle={{color: '#212121', fontWeight: 'bold'}}
         />
         {this.renderTime(tripArrivalTime, error)}
+        <Header
+          headerText={`Updated ${moment(timestamp).format('h:mm a')}`}
+          overwriteTextStyle={{fontSize: 18}}
+        />
         {this.renderError(error)}
         <CardSection>
           {this.renderSaveButton(departureStop, arrivalStop, route)}

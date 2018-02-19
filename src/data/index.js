@@ -1302,8 +1302,8 @@ export const trainLines = [
          name: "Wilson",
          staId: 40540,
          stpId: {
-           S: 30106,
-           N: 30105,
+           S: 30385,
+           N: 30386,
          },
       },
       {

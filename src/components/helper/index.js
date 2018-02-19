@@ -30,7 +30,7 @@ export const waitingMin = (arrivaltime) => {
 };
 
 export const isPurpleExpress = (arrivaltime) => {
-  console.log(arrivaltime)
+  // console.log(arrivaltime)
   if (arrivaltime.destSt === "30203") {
     //30203 is stpId for 'Linden', meaning heading to Loop and coming back to Linden
     console.log("express!!!", arrivaltime);

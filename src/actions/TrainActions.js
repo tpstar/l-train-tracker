@@ -35,16 +35,20 @@ const estimateTravelTimeUsingScheduleTable = (stopA, stopB, route) => {
     dayOfWeek = "sunday";
     // dayOfWeek = "weekdays"; //to test rush hour
   }
-  console.log("day one to seven: ", dayOneToSeven, "day of week: ", dayOfWeek);
+  // console.log("day one to seven: ", dayOneToSeven, "day of week: ", dayOfWeek);
 
   const timeTable = timeTables[route.name][dayOfWeek]; //[stopA.boundFor.direction]; //don't need a direction since using stpId contains directional info
-  // console.log(timeTable);
+  console.log(timeTable, stopA.stpId);
   const indexOfClosestFutureService = timeTable[stopA.stpId].findIndex((element)=>(moment(element, 'HH:mm A').diff(moment(stopA.arrT)) > 0));
+
+  ///// if there is no scheduled time that is later than the arriving time it will give -1; error occurs only close to midnight (before midnight)
+  ///// if indexOfClosestFutureService is -1 assign it to the last index (length -1 )
+
   // find a train service column, closest future service in the table
-  // console.log(indexOfClosestFutureService, timeTable[stopA.stpId][indexOfClosestFutureService], timeTable[stopA.stpId][indexOfClosestFutureService - 1])
+  console.log(indexOfClosestFutureService, timeTable[stopA.stpId][indexOfClosestFutureService], timeTable[stopA.stpId][indexOfClosestFutureService - 1])
   const diffFutureAndNow = moment(timeTable[stopA.stpId][indexOfClosestFutureService], 'HH:mm A').diff(stopA.arrT);
   const diffPastAndNow = -moment(timeTable[stopA.stpId][indexOfClosestFutureService - 1], 'HH:mm A').diff(stopA.arrT);
-  // console.log(diffFutureAndNow, diffPastAndNow)
+  console.log(diffFutureAndNow, diffPastAndNow)
   let indexOfClosestService=indexOfClosestFutureService;
 
   if (diffFutureAndNow > diffPastAndNow && indexOfClosestFutureService != 0) {
@@ -167,7 +171,7 @@ export const fetchFollowTrainAPIData = ({ departureStop, arrivalStop, departureS
           //if CTA follow this train API does not include the departure stop data because the train already departed the stop
             departureStopData = departureStopArrivaltime;
           }
-          const tripDepartureTime = { routeName, stop: departureStopData.staNm, arrT: departureStopData.arrT };
+          const tripDepartureTime = { routeName, stop: departureStopData.staNm, arrT: departureStopData.arrT, departureStopData };
 
 
           if (!arrivalStopData) {
@@ -183,6 +187,7 @@ export const fetchFollowTrainAPIData = ({ departureStop, arrivalStop, departureS
               arrT: lastStopDataCtaApiCanGive.arrT,
               boundFor: departureStop.boundFor
             }
+            console.log(lastStop)
             const arrivalStopStpId = arrivalStop.stpId[departureStop.boundFor.direction] || arrivalStop.stpId[departureStop.boundFor.direction2];
             //if departureStop.boundFor.direction is L and the arrival stop is not in the loop it needs to be N or S, direction2 is direction after the loop (from StopList.js)
             //also in case of Orange line, leaving from South to Loop needs to change direction from N to L
@@ -249,7 +254,7 @@ export const followThisTrainFail = () => {
 
 export const fetchTrip = ({ departureStop, arrivalStop, route }) => {
   // console.log('stop platform id: ', departureStop.stpId[departureStop.boundFor.direction]); //departureStop.boundFor.direction is from data/index.js "N", "S", "L", ..
-  // console.log("I am in fetchTrip", route, arrivalStop);
+  console.log("I am in fetchTrip", route, arrivalStop, departureStop);
   //fetch arrival time
   const routeName = route.rt;
   const stopId = departureStop.stpId[departureStop.boundFor.direction] || departureStop.stpId[departureStop.boundFor.direction2] //if not "N" and "S" try "E" and "W";

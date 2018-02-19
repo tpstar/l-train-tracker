@@ -1,3 +1,4 @@
+import moment from 'moment';
 import {
   FOLLOW_TRAIN,
   FOLLOW_TRAIN_SUCCESS,
@@ -18,7 +19,7 @@ export default (state = INITIAL_STATE, action) => {
     case FOLLOW_TRAIN:
       return { ...INITIAL_STATE, loading: true };
     case FOLLOW_TRAIN_SUCCESS:
-      return { ...state, ...INITIAL_STATE, ...action.payload };
+      return { ...state, ...INITIAL_STATE, ...action.payload, timestamp: moment() };
     case FOLLOW_TRAIN_FAIL: //catch 502 error from CTA, used schedule table to take care of 502 error
       return { ...state, loading: false, error: 'Train tracking data are not available at this time, please try again later!' }
     case FETCH_TRIP_FAIL:
