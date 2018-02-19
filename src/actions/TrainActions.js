@@ -187,7 +187,7 @@ export const fetchFollowTrainAPIData = ({ departureStop, arrivalStop, departureS
               arrT: lastStopDataCtaApiCanGive.arrT,
               boundFor: departureStop.boundFor
             }
-            console.log(lastStop)
+            // console.log(lastStop)
             const arrivalStopStpId = arrivalStop.stpId[departureStop.boundFor.direction] || arrivalStop.stpId[departureStop.boundFor.direction2];
             //if departureStop.boundFor.direction is L and the arrival stop is not in the loop it needs to be N or S, direction2 is direction after the loop (from StopList.js)
             //also in case of Orange line, leaving from South to Loop needs to change direction from N to L
@@ -259,18 +259,17 @@ export const fetchTrip = ({ departureStop, arrivalStop, route }) => {
   const routeName = route.rt;
   const stopId = departureStop.stpId[departureStop.boundFor.direction] || departureStop.stpId[departureStop.boundFor.direction2] //if not "N" and "S" try "E" and "W";
   const url = `http://lapi.transitchicago.com/api/1.0/ttarrivals.aspx?key=${CTA_API_KEY}&stpid=${stopId}&rt=${routeName}&outputType=JSON&max=3`;
-  // console.log(url);
+  console.log(url);
   return (dispatch) => {
     fetch(url) //fetch arrival times for departure stop first
       .then((data)=>data.json())
       .catch(error => console.error('Error:', error))
       .then((data)=> {
-        const departureStopArrivaltime = data.ctatt.eta[0];
-        console.log(route, data.ctatt);
-
+        console.log(route, !data.ctatt.eta);
         if(!data.ctatt.eta) { //if no arrival time data for departure stop
           dispatch(fetchTripFail('No Service in 30 min'))
         } else {
+          const departureStopArrivaltime = data.ctatt.eta[0];
           // call isPurpleExpress(arrivaldata) and dispatch with updated route.isPurpleExp
           let isPurpleExp = false;
           if (departureStopArrivaltime.rt === 'P') { //if route is purple line

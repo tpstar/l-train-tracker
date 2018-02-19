@@ -5,7 +5,7 @@ import moment from 'moment';
 import { HeaderBackButton } from 'react-navigation';
 import _ from 'lodash';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { Card, Header, Button, CardSection, Spinner } from './common';
+import { Card, Header, Button, CardSection, Spinner, HeaderTrain } from './common';
 import { createFavTrip } from '../actions';
 import { NavigateTo, waitingMin } from './helper';
 
@@ -19,7 +19,7 @@ class TripEstimates extends Component {
     }
   }
 
-  renderTime(time, error) {
+  renderTime(time, error, secText) {
     // console.log(_.isEmpty(time));
     if (!error && !_.isEmpty(time)) { //if there is no error and if the arrival time data object is not empty render time
       let arrTime = moment(time.arrT);
@@ -29,9 +29,10 @@ class TripEstimates extends Component {
       }
       return (
         <Header
-          overwriteTextStyle={{color: '#212121', fontWeight: 'bold'}}
-          secondaryText='at '
+          secondaryText= {secText.text}
+          overwriteSecTextStyle={{color: secText.color, fontWeight: 'bold'}}
           headerText={arrTime.format('h:mm a')}
+          overwriteTextStyle={{color: '#212121', fontWeight: 'bold'}}
         />
       )
     } else if (!error) {
@@ -108,20 +109,27 @@ class TripEstimates extends Component {
     const { departureStop, arrivalStop, route } = this.props.navigation.state.params;
     // console.log( "is state to props called twice in render?", route ) // once with empty object and once with object with data
     console.log('tripDepartureTime: ', tripDepartureTime, 'tripArrivalTime: ', tripArrivalTime, 'route: ', route);
+    const secTextDeparture = {text: `${waitingMin(tripDepartureTime)}   `, color: '#455A64'}
+    const secTextArrival = {text: `${waitingMin(tripArrivalTime)}   `, color: '#455A64'}
     return (
       <Card overwriteCardStyle={{borderColor: route.sectextcolor}}>
+        <HeaderTrain
+          headerText={`  ${_.capitalize(route.name)} Line`}
+          overwriteTextStyle={{color: route.primarycolor, fontWeight: 'bold'}}
+          trainColor={route.primarycolor}
+        />
         <Header
           secondaryText='Departure: '
           headerText={departureStop.name}
           overwriteTextStyle={{color: '#212121', fontWeight: 'bold'}}
         />
-        {this.renderTime(tripDepartureTime, error)}
+        {this.renderTime(tripDepartureTime, error, secTextDeparture)}
         <Header
           secondaryText='Arrival: '
           headerText={arrivalStop.name}
           overwriteTextStyle={{color: '#212121', fontWeight: 'bold'}}
         />
-        {this.renderTime(tripArrivalTime, error)}
+        {this.renderTime(tripArrivalTime, error, secTextArrival)}
         <Header
           headerText={`Updated ${moment(timestamp).format('h:mm a')}`}
           overwriteTextStyle={{fontSize: 18}}
