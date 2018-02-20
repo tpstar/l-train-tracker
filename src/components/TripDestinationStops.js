@@ -7,12 +7,10 @@ import { connect } from 'react-redux';
 import { Card, Header } from './common';
 import StopListItem from './StopListItem';
 import TripEstimates from './TripEstimates';
-import { fetchFollowTrainAPIData } from '../actions';
+import { fetchTrip } from '../actions';
 import { isPurpleExpress } from './helper';
 
 class TripDestinationStops extends Component {
-
-
 
   onButtonPress(trainline, arrivalStop){
     const { trainstop, boundFor, arrivaltime } = this.props.navigation.state.params.departure;
@@ -35,9 +33,9 @@ class TripDestinationStops extends Component {
       {
         type: 'Navigation/NAVIGATE',
         routeName: 'TripEstimates',
-        params: { departureStop, arrivalStop, route }
-      })
-    this.props.fetchFollowTrainAPIData({ departureStop, arrivalStop, departureStopArrivaltime: arrivaltime, route});
+        params: { departureStop, arrivalStop, route, departureStopArrTime: arrivaltime }
+      }
+    )
   }
 
   createPossibleDestinationStopList = ({ trainline, trainstop, boundFor, arrivaltime }) => { //create possible destination stop list
@@ -74,7 +72,7 @@ class TripDestinationStops extends Component {
         // if train route is Green line and if the train is heading South,
         // there are two branches, Cottage Grove and Ashland/63rd bound
         // choose one branch and stops on the other branch need to be removed from the list
-        console.log("Green train heading South!!!", tripStops);
+        // console.log("Green train heading South!!!", tripStops);
         if (arrivaltime.destSt === "30139") { //30139 is stpId for 'Cottage Grove'
           tripStops.splice(-2, 2);
         } else {
@@ -142,4 +140,4 @@ class TripDestinationStops extends Component {
   }
 }
 
-export default connect(null, { fetchFollowTrainAPIData })(TripDestinationStops);
+export default connect(null, { fetchTrip })(TripDestinationStops);

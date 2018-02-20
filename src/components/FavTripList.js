@@ -5,7 +5,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { CardSection } from './common';
 import FavTripListItem from './FavTripListItem';
 import { fetchTrip, deleteFavTrip } from '../actions';
-// import { NavigateTo } from './helper';
+import { NavigateTo } from './helper';
 
 class FavTipList extends Component {
 
@@ -20,9 +20,6 @@ class FavTipList extends Component {
         params: { departureStop, arrivalStop, route }
       }
     )
-    // console.log(departureStop, arrivalStop)
-    // this.props.fetchTrip({ departureStop, arrivalStop, departureStopArrivaltime: arrivaltime, routeName: trainline.name})
-    this.props.fetchTrip({ departureStop, arrivalStop, route })
   }
 
   onSlidePress(favtrip) {
@@ -42,7 +39,7 @@ class FavTipList extends Component {
     }
     return {
       title: "Favorite Trips",
-      // headerRight: NavigateTo(navigation, 'search', 'LineList'), //NavigationActions.navigate({ routeName }) with Material icon name
+      headerRight: NavigateTo(navigation, 'search', 'LineList'), //NavigationActions.navigate({ routeName }) with Material icon name
                            // navigation, material icon name, route name
       headerLeft: drawerButton(navigation)
     }

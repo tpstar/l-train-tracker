@@ -5,7 +5,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { rushHour } from '../../data';
 
 export const NavigateTo = (navigation, iconName, routeName, params) => {
-  console.log(params);
+  // console.log(params);
   const navToRoute = NavigationActions.navigate({ routeName, params });
   return (
     <MaterialIcons
@@ -23,7 +23,7 @@ export const waitingMin = (arrivaltime) => {
         moment(arrivaltime.arrT).diff(moment(arrivaltime.prdt))
       )/60/1000 //milliseconds to minutes
     );
-  if (time === 1) {
+  if (time === 1 || time === 0) {
     return 'DUE';
   } else {
     return time + ' min';

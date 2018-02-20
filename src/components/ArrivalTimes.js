@@ -12,28 +12,6 @@ import { NavigateTo } from './helper';
 
 class ArrivalTimes extends Component {
 
-  onButtonPressSave(trainline, trainstop, boundFor) {
-    this.props.createFavStop({ trainline, trainstop, boundFor });
-    this.props.navigation.dispatch(
-      {
-        type: 'Navigation/NAVIGATE',
-        routeName: 'FavStopList', //To FavStopList
-      }
-    )
-  }
-
-  onButtonPressCreateTrip( arrivaltime ) {
-    // console.log(arrivaltime)
-    const { trainline, trainstop, boundFor } = this.props.navigation.state.params;
-    const departure = { trainline, trainstop, boundFor, arrivaltime };
-    this.props.navigation.dispatch(
-      {
-        type: 'Navigation/NAVIGATE',
-        routeName: 'TripDestinationStops',
-        params: { departure }
-      })
-  }
-
   componentWillMount() {
     const { trainline, trainstop, boundFor } = this.props.navigation.state.params; //from params in navigation dispatch
     this.props.fetchArrivalTime({ trainline, trainstop, boundFor }); // put trainline, trainstop, boundFor as argument
@@ -57,6 +35,28 @@ class ArrivalTimes extends Component {
                            // navigation, material icon name, route name, params
       headerLeft: drawerButton(navigation)
     }
+  }
+
+  onButtonPressSave(trainline, trainstop, boundFor) {
+    this.props.createFavStop({ trainline, trainstop, boundFor });
+    this.props.navigation.dispatch(
+      {
+        type: 'Navigation/NAVIGATE',
+        routeName: 'FavStopList', //To FavStopList
+      }
+    )
+  }
+
+  onButtonPressCreateTrip( arrivaltime ) {
+    // console.log(arrivaltime)
+    const { trainline, trainstop, boundFor } = this.props.navigation.state.params;
+    const departure = { trainline, trainstop, boundFor, arrivaltime };
+    this.props.navigation.dispatch(
+      {
+        type: 'Navigation/NAVIGATE',
+        routeName: 'TripDestinationStops',
+        params: { departure }
+      })
   }
 
   renderSaveButton(trainline, trainstop, boundFor) {

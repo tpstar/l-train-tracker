@@ -6,10 +6,49 @@ import { HeaderBackButton } from 'react-navigation';
 import _ from 'lodash';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { Card, Header, Button, CardSection, Spinner, HeaderTrain } from './common';
-import { createFavTrip } from '../actions';
-import { NavigateTo, waitingMin } from './helper';
+import { createFavTrip, fetchTrip } from '../actions';
+import { waitingMin } from './helper';
 
 class TripEstimates extends Component {
+
+  componentWillMount() {
+    const { departureStop, arrivalStop, route, departureStopArrTime } = this.props.navigation.state.params; //from params in navigation dispatch
+    this.props.fetchTrip({ departureStop, arrivalStop, route, departureStopArrTime });
+    // put trainline, trainstop, boundFor as argument
+  }
+
+  static navigationOptions = ({ navigation }) => {
+    const drawerButton = (navigation) => {
+      return (
+        <MaterialIcons
+          style={{padding: 5, color: '#3F51B5'}}
+          name="menu"
+          size={36}
+          onPress={() => { navigation.navigate('DrawerToggle')}}
+        />
+      )
+    }
+    const { departureStop, arrivalStop, route } = navigation.state.params;
+    const refresh = (navigation, params) => {
+      const refreshPage = () => {
+        navigation.navigate('TripEstimates', params)
+      }
+      return (
+        <MaterialIcons
+          style={{padding: 5, color: '#3F51B5'}}
+          name={'replay'}
+          size={36}
+          onPress={() => refreshPage()}
+        />
+      )
+    }
+    return {
+      title: "Trip Estimates",
+      headerRight: refresh(navigation, { departureStop, arrivalStop, route }), //NavigationActions.navigate({ routeName }) with Material icon name
+                           // navigation, material icon name, route name, params
+      headerLeft: drawerButton(navigation)
+    }
+  }
 
   renderError(error) {
     if (error) {
@@ -39,25 +78,6 @@ class TripEstimates extends Component {
       return (
         <Header headerText={'Loading...'} />
       )
-    }
-  }
-
-  static navigationOptions = ({ navigation }) => {
-    const drawerButton = (navigation) => {
-      return (
-        <MaterialIcons
-          style={{padding: 5, color: '#3F51B5'}}
-          name="menu"
-          size={36}
-          onPress={() => { navigation.navigate('DrawerToggle')}}
-        />
-      )
-    }
-    return {
-      title: "Trip Estimates",
-      headerRight: NavigateTo(navigation, 'search', 'LineList'), //NavigationActions.navigate({ routeName }) with Material icon name
-                           // navigation, material icon name, route name
-      headerLeft: drawerButton(navigation)
     }
   }
 
@@ -108,7 +128,7 @@ class TripEstimates extends Component {
     const { tripDepartureTime, tripArrivalTime, error, timestamp } = this.props.tripdata;
     const { departureStop, arrivalStop, route } = this.props.navigation.state.params;
     // console.log( "is state to props called twice in render?", route ) // once with empty object and once with object with data
-    console.log('tripDepartureTime: ', tripDepartureTime, 'tripArrivalTime: ', tripArrivalTime, 'route: ', route);
+    // console.log('tripDepartureTime: ', tripDepartureTime, 'tripArrivalTime: ', tripArrivalTime, 'route: ', route);
     const secTextDeparture = {text: `${waitingMin(tripDepartureTime)}   `, color: '#455A64'}
     const secTextArrival = {text: `${waitingMin(tripArrivalTime)}   `, color: '#455A64'}
     return (
@@ -149,4 +169,4 @@ const mapStateToProps = state => {
   return { tripdata, favtrips };
 }
 
-export default connect(mapStateToProps, { createFavTrip })(TripEstimates);
+export default connect(mapStateToProps, { createFavTrip, fetchTrip })(TripEstimates);
