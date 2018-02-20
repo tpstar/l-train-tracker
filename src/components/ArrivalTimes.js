@@ -50,10 +50,11 @@ class ArrivalTimes extends Component {
         />
       )
     }
+    const { trainline, trainstop, boundFor } = navigation.state.params;
     return {
       title: "Arrival Times",
-      headerRight: NavigateTo(navigation, 'search', 'LineList'), //NavigationActions.navigate({ routeName }) with Material icon name
-                           // navigation, material icon name, route name
+      headerRight: NavigateTo(navigation, 'replay', 'ArrivalTimes', { trainline, trainstop, boundFor }), //NavigationActions.navigate({ routeName }) with Material icon name
+                           // navigation, material icon name, route name, params
       headerLeft: drawerButton(navigation)
     }
   }

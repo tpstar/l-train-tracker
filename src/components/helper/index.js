@@ -4,8 +4,9 @@ import { HeaderBackButton, NavigationActions } from 'react-navigation';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { rushHour } from '../../data';
 
-export const NavigateTo = (navigation, iconName, routeName) => {
-  const navToRoute = NavigationActions.navigate({ routeName });
+export const NavigateTo = (navigation, iconName, routeName, params) => {
+  console.log(params);
+  const navToRoute = NavigationActions.navigate({ routeName, params });
   return (
     <MaterialIcons
       style={{padding: 5, color: '#3F51B5'}}

@@ -16,7 +16,7 @@ class FavStopList extends Component {
     this.props.navigation.dispatch(
       {
         type: 'Navigation/NAVIGATE',
-        routeName: 'ArrivalTimes', //To FavStopList
+        routeName: 'ArrivalTimes',
         params: { trainline, trainstop, boundFor }
       }
     )
