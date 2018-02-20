@@ -39,10 +39,14 @@ const estimateTravelTimeUsingScheduleTable = (stopA, stopB, route) => {
 
   const timeTable = timeTables[route.name][dayOfWeek]; //[stopA.boundFor.direction]; //don't need a direction since using stpId contains directional info
   // console.log(timeTable, stopA.stpId);
-  const indexOfClosestFutureService = timeTable[stopA.stpId].findIndex((element)=>(moment(element, 'HH:mm A').diff(moment(stopA.arrT)) > 0));
+  let indexOfClosestFutureService = timeTable[stopA.stpId].findIndex((element)=>(moment(element, 'HH:mm A').diff(moment(stopA.arrT)) > 0));
 
   ///// if there is no scheduled time that is later than the arriving time it will give -1; error occurs only close to midnight (before midnight)
   ///// if indexOfClosestFutureService is -1 assign it to the last index (length -1 )
+  console.log(indexOfClosestFutureService, timeTable[stopA.stpId].length, timeTable[stopA.stpId].slice(-1)[0]);
+  if (indexOfClosestFutureService === -1) { //if findIndex cannot find the time that is later than the arriving time for stopA
+    indexOfClosestFutureService = timeTable[stopA.stpId].slice(-1)[0];
+  }
 
   // find a train service column, closest future service in the table
   console.log(indexOfClosestFutureService, timeTable[stopA.stpId][indexOfClosestFutureService], timeTable[stopA.stpId][indexOfClosestFutureService - 1])
