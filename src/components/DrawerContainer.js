@@ -16,8 +16,9 @@ export default class DrawerContainer extends React.Component {
 
   render() {
     const { navigation } = this.props
+    const { containerStyle } = styles;
     return (
-        <List containerStyle={{marginTop: 0, paddingTop: 10, paddingBottom: 8, paddingLeft: 5, paddingRight: 5, flex: 1, backgroundColor: '#263238'}}>
+        <List containerStyle={{...containerStyle}}>
           <ListItem
             chevronColor={'#263238'}
             avatar={<Avatar
@@ -52,7 +53,7 @@ export default class DrawerContainer extends React.Component {
                 title={`${_.capitalize(item.name)} Line`}
                 titleStyle={{color:'white', fontSize: 16}}
                 leftIcon={{name: 'train', color: item.primarycolor }} //name from MaterialIcons
-                containerStyle={{ borderBottomColor: '#424242' }} 
+                containerStyle={{ borderBottomColor: '#424242' }}
               />
             ))
           }
@@ -60,3 +61,15 @@ export default class DrawerContainer extends React.Component {
     )
   }
 }
+
+const styles = {
+  containerStyle: {
+    marginTop: 0,
+    paddingTop: 2,
+    paddingBottom: 0,
+    paddingLeft: 5,
+    paddingRight: 5,
+    flex: 1,
+    backgroundColor: '#263238'
+  }
+};
