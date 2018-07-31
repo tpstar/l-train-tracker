@@ -1,4 +1,5 @@
 import React from 'react';
+import { ScrollView } from 'react-native';
 import _ from 'lodash';
 import { List, ListItem, Avatar } from 'react-native-elements';
 import { trainLines } from '../data';
@@ -18,6 +19,7 @@ export default class DrawerContainer extends React.Component {
     const { navigation } = this.props
     const { containerStyle } = styles;
     return (
+      <ScrollView>
         <List containerStyle={{...containerStyle}}>
           <ListItem
             chevronColor={'#263238'}
@@ -58,6 +60,7 @@ export default class DrawerContainer extends React.Component {
             ))
           }
         </List>
+      </ScrollView>
     )
   }
 }
